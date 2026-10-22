@@ -31,9 +31,7 @@ export default function Sidebar() {
                     <span className="nav__dot" aria-hidden="true" />
                 </NavLink>
                 ))}
-            </nav>
 
-            <div className="sidebar__footer">
                 <div className="total-box">
                     <p className="total-box__label">Total completion</p>
                     <p className="total-box__value">{totalCompletion}%</p>
@@ -52,7 +50,9 @@ export default function Sidebar() {
                     </div>
                     <p className="total-box__meta">Arthur Morgan · Chapter 4</p>
                 </div>
+            </nav>
 
+            <div className="sidebar__footer">
                 <div className="demo-note">
                     <p className="eyebrow eyebrow--gold">Demo save / manual tracking</p>
                     <p>

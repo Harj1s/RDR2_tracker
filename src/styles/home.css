@@ -1,0 +1,42 @@
+/* ---------- Stat row ---------- */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat-card {
+    padding: 14px 16px;
+    box-shadow: none;
+}
+
+.stat-card__label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.stat-card__value {
+    margin: 8px 0 6px;
+    font-family: var(--font-heading);
+    font-size: 28px;
+    line-height: 1.1;
+}
+
+.stat-card__value--red { color: var(--red); }
+.stat-card__value--slate { color: var(--slate); }
+.stat-card__value--gold { color: var(--gold); }
+.stat-card__value--sage { color: var(--sage); }
+
+.stat-card__detail {
+    font-size: 12px;
+}
+
+@media (max-width: 1100px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .stats { grid-template-columns: 1fr; }
+}

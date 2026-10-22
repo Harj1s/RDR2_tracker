@@ -7,7 +7,6 @@
 
 .stat-card {
     padding: 14px 16px;
-    box-shadow: none;
 }
 
 .stat-card__label {
@@ -206,6 +205,100 @@
 .beyond__footnote {
     margin-top: 6px;
     font-size: 11px;
+}
+
+/* ---------- The bigger picture ---------- */
+.picture {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.picture__chart {
+    flex: 0 0 420px;
+}
+
+.picture__side {
+    flex: 1;
+    min-width: 0;
+}
+
+.ring-chart {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.ring-chart__track {
+    fill: none;
+    stroke: var(--border);
+    opacity: 0.7;
+}
+
+.ring-chart__arc {
+    fill: none;
+    stroke-linecap: butt;
+    transition: stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ring-chart__value {
+    fill: var(--text-h);
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.ring-chart__label {
+    fill: var(--text-h);
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+}
+
+.ring-chart__note {
+    fill: var(--text);
+    font-size: 6px;
+}
+
+.legend {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.legend__row {
+    display: grid;
+    grid-template-columns: 8px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 0;
+    font-size: 12px;
+}
+
+.legend__swatch {
+    width: 8px;
+    height: 8px;
+}
+
+.legend__label {
+    color: var(--text-h);
+}
+
+.legend__value {
+    font-weight: 500;
+}
+
+.picture__note {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ring-chart__arc {
+        transition: none;
+    }
 }
 
 /* ---------- Responsive ---------- */

@@ -64,3 +64,18 @@ export const sideGoals: SideGoal[] = [
     { id: 'g1', label: 'Satchel collection', done: 3, total: 7, tone: 'red' },
     { id: 'g2', label: 'Gold Rush', done: 18, total: 70, unit: ' gold', tone: 'gold' },
 ]
+
+export type CompletionRing = {
+    id: string
+    label: string
+    percent: number
+    color: string // any CSS color, here the variables from index.css
+}
+
+export const completionRings: CompletionRing[] = [
+    { id: 'missions', label: 'Missions & events', percent: 72, color: 'var(--red)' },
+    { id: 'collectibles', label: 'Collectibles', percent: 48, color: 'var(--gold)' },
+    { id: 'compendium', label: 'Compendium', percent: 66, color: 'var(--sage)' },
+    { id: 'player', label: 'Player', percent: 58, color: 'var(--slate)' },
+    { id: 'misc', label: 'Miscellaneous', percent: 70, color: 'var(--brick)' },
+]

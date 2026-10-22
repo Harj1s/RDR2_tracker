@@ -3,6 +3,7 @@ import type { Tone } from '../components/StatCard.tsx'
 import NextOnTrail from '../components/NextOnTrail.tsx'
 import RecentEntries from '../components/RecentEntries.tsx'
 import BeyondCard from '../components/BeyondCard.tsx'
+import BiggerPicture from '../components/BiggerPicture.tsx'
 import { progress } from '../data/progress.ts'
 
 type Stat = {
@@ -61,15 +62,7 @@ export default function Home() {
             </section>
 
             <div className="home-grid">
-                {/* Ring chart replaces this placeholder in the next step */}
-                <section className="card">
-                    <header className="card__head">
-                        <h3 className="card__title">The bigger picture</h3>
-                        <span className="card__tag">In-game total completion</span>
-                    </header>
-                    <p>Ring chart goes here.</p>
-                </section>
-
+                <BiggerPicture />
                 <NextOnTrail />
                 <RecentEntries />
                 <BeyondCard />

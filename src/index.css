@@ -27,6 +27,8 @@
   --font-sans: 'Inter', system-ui, 'Segoe UI', sans-serif;
   --font-heading: 'Oswald', 'Arial Narrow', sans-serif;
   --font-serif: 'Lora', Georgia, serif;
+  --font-cursive: 'Island Moments';
+  --font-mono: 'Bpmf Iansui';
 
   font: 14px/150% var(--font-sans);
   color: var(--text);

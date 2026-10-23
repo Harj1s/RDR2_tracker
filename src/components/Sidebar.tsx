@@ -1,11 +1,16 @@
 import { NavLink } from 'react-router-dom'
-import { SlidersHorizontal } from 'lucide-react'
+import { RotateCcw, SlidersHorizontal } from 'lucide-react'
 import { navItems } from '../data/nav.ts'
+import { useProgress } from '../hooks/useProgress.ts'
 
 export default function Sidebar() {
+    const { totalCompletion, resetProgress } = useProgress()
 
-    //ToDo
-    const totalCompletion = 63.4
+    function handleReset() {
+        if (window.confirm('Reset all progress to the demo save?')) {
+            resetProgress()
+        }
+    }
 
     return (
         <aside className="sidebar">
@@ -61,6 +66,10 @@ export default function Sidebar() {
                     <button type="button" className="demo-note__settings">
                         <SlidersHorizontal size={14} strokeWidth={1.5} aria-hidden="true" />
                         Journal settings
+                    </button>
+                    <button type="button" className="demo-note__settings" onClick={handleReset}>
+                        <RotateCcw size={14} strokeWidth={1.5} aria-hidden="true" />
+                        Reset demo save
                     </button>
                 </div>
             </div>

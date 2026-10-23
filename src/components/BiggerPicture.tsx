@@ -1,7 +1,9 @@
 import RingChart from './RingChart.tsx'
-import { completionRings, progress } from '../data/progress.ts'
+import { useProgress } from '../hooks/useProgress.ts'
 
 export default function BiggerPicture() {
+    const { rings, totalCompletion } = useProgress()
+
     return (
         <section className="card">
             <header className="card__head">
@@ -12,8 +14,8 @@ export default function BiggerPicture() {
             <div className="picture">
                 <div className="picture__chart">
                     <RingChart
-                        rings={completionRings}
-                        centerValue={`${progress.totalCompletion}%`}
+                        rings={rings}
+                        centerValue={`${totalCompletion.toFixed(1)}%`}
                         centerLabel="TOTAL COMPLETION"
                         centerNote="From your sample save"
                     />
@@ -21,7 +23,7 @@ export default function BiggerPicture() {
 
                 <div className="picture__side">
                     <ul className="legend">
-                        {completionRings.map((ring) => (
+                        {rings.map((ring) => (
                             <li key={ring.id} className="legend__row">
                                 <span
                                     className="legend__swatch"

@@ -5,6 +5,8 @@ import RecentEntries from '../components/RecentEntries.tsx'
 import BeyondCard from '../components/BeyondCard.tsx'
 import BiggerPicture from '../components/BiggerPicture.tsx'
 import { progress } from '../data/progress.ts'
+import { useProgress } from '../hooks/useProgress.ts'
+import { nextMilestone } from '../lib/completion.ts'
 
 type Stat = {
     label: string
@@ -14,9 +16,9 @@ type Stat = {
 }
 
 export default function Home() {
-    const pointsToMilestone = (
-        progress.nextMilestone - progress.totalCompletion
-    ).toFixed(1)
+    const { totalCompletion } = useProgress()
+    const milestone = nextMilestone(totalCompletion)
+    const pointsToMilestone = (milestone - totalCompletion).toFixed(1)
 
     const stats: Stat[] = [
         {
@@ -39,7 +41,7 @@ export default function Home() {
         },
         {
             label: 'Next milestone',
-            value: `${progress.nextMilestone.toFixed(1)}%`,
+            value: `${milestone.toFixed(1)}%`,
             detail: `${pointsToMilestone} points from your next target`,
             tone: 'sage',
         },

@@ -3,28 +3,15 @@ import CheckListRow from '../components/CheckListRow.tsx'
 import Meter from '../components/Meter.tsx'
 import {
     collectibleCategories,
-    initialFound,
     type Collectible,
 } from '../data/collectibles.ts'
+import { useProgress } from '../hooks/useProgress.ts'
 
 export default function Collectibles() {
-    // Temporary local state. The useProgress hook will replace these two lines.
-    const [found, setFound] = useState<Set<string>>(() => new Set(initialFound))
+    const { found, toggleCollectible } = useProgress()
 
     const [filter, setFilter] = useState('all')
     const [hideFound, setHideFound] = useState(false)
-
-    function toggle(id: string) {
-        setFound((previous) => {
-            const next = new Set(previous)
-            if (next.has(id)) {
-                next.delete(id)
-            } else {
-                next.add(id)
-            }
-            return next
-        })
-    }
 
     const countFound = (items: Collectible[]) =>
         items.filter((item) => found.has(item.id)).length
@@ -153,7 +140,7 @@ export default function Collectibles() {
                                             label={item.name}
                                             detail={item.region}
                                             checked={found.has(item.id)}
-                                            onToggle={() => toggle(item.id)}
+                                            onToggle={() => toggleCollectible(item.id)}
                                         />
                                     ))}
                                 </ul>

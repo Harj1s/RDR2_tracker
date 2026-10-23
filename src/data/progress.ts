@@ -20,8 +20,6 @@ export type SideGoal = {
 }
 
 export const progress = {
-    totalCompletion: 63.4,
-    nextMilestone: 70,
     storyMissions: { completed: 62, location: 'Chapter 4 · Saint Denis' },
     strangers: { done: 6, total: 10 },
     achievements: { done: 24, total: 51 },

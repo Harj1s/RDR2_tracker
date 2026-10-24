@@ -1,24 +1,56 @@
 import { collectibleCategories } from "../data/collectibles";
+import { missionChapters } from '../data/missions'
 import { completionRings, type CompletionRing } from '../data/progress.ts'
+import type { TrackedGroup } from '../data/types.ts'
 
-const allCollectibleIds = collectibleCategories.flatMap((category) =>
-    category.items.map((item) => item.id),    
-)
+export function countTotal(groups: TrackedGroup[]): number {
+    return groups.reduce((sum, group) => sum + group.items.length, 0)
+}
 
-/* Share of collectibles found, as a whole percentage. */
-export function collectiblesPercent(found: ReadonlySet<string>): number {
-    const total = allCollectibleIds.length
+export function countDone(
+    groups: TrackedGroup[],
+    done: ReadonlySet<string>,
+): number {
+    return groups.reduce(
+        (sum, group) => sum + group.items.filter((item) => done.has(item.id)).length, 0,
+    )
+}
+
+/* Share of items done across the groups, as a whole percentage. */
+export function percentDone(
+    groups: TrackedGroup[],
+    done: ReadonlySet<string>,
+): number {
+    const total = countTotal(groups)
     if (total === 0) return 0
-    const done = allCollectibleIds.filter((id) => found.has(id)).length
-    return Math.round((done / total) * 100)
+    return Math.round((countDone(groups, done) / total) * 100)
+}
+
+/** Name of the latest group (in list order) that has at least one item done. */
+export function currentGroupName(
+    groups: TrackedGroup[],
+    done: ReadonlySet<string>,
+): string {
+    const started = groups.filter((group) =>
+        group.items.some((item) => done.has(item.id)),
+    )
+    return started.length > 0 ? started[started.length - 1].name : 'Not started'
+}
+
+/** Which rings are calculated from real data. Add a line when a new page
+ * goes live, e.g. strangers: strangerGroups.
+ */
+const liveRings: Record<string, TrackedGroup[]> = {
+    missions: missionChapters,
+    collectibles: collectibleCategories,
 }
 
 /* The ring list, with the Collectibles ring calculated from real ticks. */
-export function buildRings(found: ReadonlySet<string>): CompletionRing[] {
-    const collectibles = collectiblesPercent(found)
-    return completionRings.map((ring) =>
-    ring.id === 'collectibles' ? { ...ring, percent: collectibles } : ring,
-    )
+export function buildRings(done: ReadonlySet<string>): CompletionRing[] {
+    return completionRings.map((ring) => {
+        const groups = liveRings[ring.id]
+        return groups ? { ...ring, percent: percentDone(groups, done) } : ring
+    })
 }
 
 /**

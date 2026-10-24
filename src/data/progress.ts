@@ -20,7 +20,6 @@ export type SideGoal = {
 }
 
 export const progress = {
-    storyMissions: { completed: 62, location: 'Chapter 4 · Saint Denis' },
     strangers: { done: 6, total: 10 },
     achievements: { done: 24, total: 51 },
 
@@ -76,4 +75,14 @@ export const completionRings: CompletionRing[] = [
     { id: 'compendium', label: 'Compendium', percent: 66, color: 'var(--sage)' },
     { id: 'player', label: 'Player', percent: 58, color: 'var(--slate)' },
     { id: 'misc', label: 'Miscellaneous', percent: 70, color: 'var(--brick)' },
+]
+
+/** Ids ticked off in the demo save (missions, collectibles, ...). */
+export const initialDone: string[] = [
+    'm1-1', 'm1-2', 'm1-3',
+    'm2-1', 'm2-2', 'm2-3',
+    'm3-1', 'm3-2',
+    'm4-3',
+    'bone-1', 'bone-2', 'bone-3',
+    'dreamcatcher-1', 'dreamcatcher-2',
 ]

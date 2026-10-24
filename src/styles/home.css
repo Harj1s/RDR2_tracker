@@ -237,7 +237,7 @@
 
 .ring-chart__arc {
     fill: none;
-    stroke-linecap: butt;
+    stroke-linecap: round;
     transition: stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 

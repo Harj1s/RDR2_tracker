@@ -6,7 +6,8 @@ import BeyondCard from '../components/BeyondCard.tsx'
 import BiggerPicture from '../components/BiggerPicture.tsx'
 import { progress } from '../data/progress.ts'
 import { useProgress } from '../hooks/useProgress.ts'
-import { nextMilestone } from '../lib/completion.ts'
+import { missionChapters } from '../data/missions.ts'
+import { countDone, currentGroupName, nextMilestone } from '../lib/completion.ts'
 
 type Stat = {
     label: string
@@ -16,15 +17,15 @@ type Stat = {
 }
 
 export default function Home() {
-    const { totalCompletion } = useProgress()
+    const { totalCompletion, done } = useProgress()
     const milestone = nextMilestone(totalCompletion)
     const pointsToMilestone = (milestone - totalCompletion).toFixed(1)
 
     const stats: Stat[] = [
         {
             label: 'Story missions',
-            value: `${progress.storyMissions.completed} completed`,
-            detail: progress.storyMissions.location,
+            value: `${countDone(missionChapters, done)} completed`,
+            detail: currentGroupName(missionChapters, done),
             tone: 'red',
         },
         {

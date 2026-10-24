@@ -1,17 +1,9 @@
+import type { TrackedGroup, TrackedItem } from './types.ts'
+
 // Curated demo sample, not a full game database
 
-export type Collectible = {
-    id: string
-    name: string
-    region: string
-}
-
-export type CollectibleCategory = {
-    id: string
-    name: string
-    color: string
-    items: Collectible[]
-}
+export type Collectible = TrackedItem
+export type CollectibleCategory = TrackedGroup
 
 export const collectibleCategories: CollectibleCategory[] = [
     {
@@ -50,13 +42,4 @@ export const collectibleCategories: CollectibleCategory[] = [
             { id: 'dreamcatcher-5', name: 'Grizzlies dreamcatcher', region: 'Ambarino' },
         ],
     },
-]
-
-// Items ticked off in the demo save
-export const initialFound: string[] = [
-    'bone-1',
-    'bone-2',
-    'bone-3',
-    'dreamcatcher-1',
-    'dreamcatcher-2',
 ]

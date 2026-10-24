@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout.tsx'
 import Home from './pages/Home.tsx'
 import Collectibles from './pages/Collectibles.tsx'
+import Missions from './pages/Missions.tsx'
 import ComingSoon from './pages/ComingSoon.tsx'
 import { navItems } from './data/nav.ts'
 
@@ -10,6 +11,7 @@ import { navItems } from './data/nav.ts'
 
 const builtPages: Record<string, ReactElement> = {
   '/collectibles': <Collectibles />,
+  '/missions': <Missions />
 }
 
 export default function App() {

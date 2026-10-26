@@ -5,6 +5,7 @@ import './index.css'
 import './styles/layout.css'
 import './styles/home.css'
 import './styles/collectibles.css'
+import './styles/checklist.css'
 import App from './App.tsx'
 import ProgressProvider from './state/ProgressProvider.tsx'
 

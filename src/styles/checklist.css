@@ -1,0 +1,343 @@
+/* ---------- Selector tiles (chapters / categories) -------- */
+.tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 12px 14px;
+    text-align: left;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-h);
+    transition: border-color 0.15s;
+}
+
+.tile:hover {
+    border-color: var(--text);
+}
+
+.tile--active,
+.tile--active:hover {
+    background: var(--surface-dark);
+    border-color: var(--surface-dark);
+    color: var(--text-on-dark);
+}
+
+.tile__label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+}
+
+.tile--active .tile__label {
+    color: var(--text-muted-on-dark);
+}
+
+.tile__name {
+    font-size: 13px;
+}
+
+.tile__status {
+    font-size: 11px;
+    color: var(--text);
+}
+
+.tile__status--inProgress {
+    color: var(--gold);
+}
+
+.tile__status--locked {
+    opacity: 0.7;
+}
+
+/* ---------- Optional stat strip (Missions) ---------- */
+.stats--three {
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 16px;
+}
+
+/* ---------- Search bar ---------- */
+.searchbar {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.searchbar__field {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.searchbar__field:focus-within {
+    border-color: var(--gold);
+}
+
+.searchbar__field input {
+    flex: 1;
+    min-width: 0;
+    padding: 11px 0;
+    background: none;
+    border: 0;
+    outline: none;
+    font: inherit;
+    color: var(--text-h);
+}
+
+.searchbar__modes {
+    display: flex;
+    gap: 8px;
+}
+
+.mode {
+    padding: 0 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-h);
+    transition: border-color 0.15s;
+}
+
+.mode:hover {
+    border-color: var(--text);
+}
+
+.mode--active,
+.mode--active:hover {
+    background: var(--surface-dark);
+    border-color: var(--surface-dark);
+    color: var(--text-on-dark);
+}
+
+/* ---------- Two-column split ---------- */
+.split {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+/* ---------- Item list ---------- */
+.card.list {
+    padding: 0; /* rows run edge to edge */
+}
+
+.list__head {
+    padding: 20px 24px 14px;
+}
+
+.list__rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--border);
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 18px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.row:hover {
+    background: color-mix(in srgb, var(--surface-dark) 4%, var(--surface));
+}
+
+/* Tinted background for the "next up" row. Listed together with :hover
+    so the hover rule above does not override it. */
+.row--next,
+.row--next:hover {
+    background: color-mix(in srgb, var(--red) 12%, var(--surface));
+}
+
+.row--selected {
+    box-shadow: inset 3px 0 0 var(--red);
+}
+
+.row--locked {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.row__title {
+    font-size: 13px;
+    color: var(--text-h);
+}
+
+.row__sub {
+    font-size: 11px;
+}
+
+.row__status {
+    font-size: 11px;
+}
+
+.row--next .row--status {
+    color: var(--red);
+}
+
+/* Custom checkbox: empty square, sage with a tick, red square when next */
+.row__check {
+    appearance: none;
+    display: grid;
+    place-content: center;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+}
+
+.row__check:checked {
+    background: var(--sage);
+    border-color: var(--sage);
+}
+
+.row__check:checked::after {
+    content: '';
+    width: 8px;
+    height: 4px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: translateY(-1px) rotate(-45deg);
+}
+
+.row--next .row__check:not(:checked) {
+    background: var(--red);
+    border-color: var(--red);
+}
+
+.list__foot {
+    padding: 14px 24px;
+    font-size: 11px;
+}
+
+/* ---------- Detail panel content ---------- */
+.detail__title {
+    font-size: 20px;
+}
+
+.detail__badge {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 2px 8px;
+    border: 1px solid var(--red);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red);
+}
+
+.detail__lead {
+    margin-top: 16px;
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--text-h);
+}
+
+.detail__text {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.detail__section {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.objectives {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.objectives label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-h);
+    cursor: pointer;
+}
+
+.objectives input {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    accent-color: var(--gold);
+}
+
+.detail__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.button--ghost {
+    background: transparent;
+    color: var(--text-h);
+    border: 1px solid var(--border);
+}
+
+.button--ghost:hover {
+    filter: none;
+    background: var(--surface);
+}
+
+/* -------- Banner under the lists ---------- */
+.banner {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: color-mix(in srgb, var(--red) 12% var(--surface));
+    border: 1px solid color-mix(in srgb, var(--red) 25%, var(--border));
+    font-size: 12px;
+    color: var(--text-h);
+}
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 1100px) {
+    .split {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .stats--three {
+        grid-template-columns: 1fr;
+    }
+    .searchbar {
+        flex-direction: column;
+    }
+    .searchbar__modes .mode {
+        flex: 1;
+        padding: 10px 0;
+    }
+}

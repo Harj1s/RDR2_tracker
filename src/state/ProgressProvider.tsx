@@ -34,6 +34,7 @@ function loadDone(): string[] {
 
 export default function ProgressProvider({ children }: { children: ReactNode }) {
     const [doneList, setDoneList] = useState<string[]>(loadDone)
+    const [pinned, setPinned] = useState<string>('')
 
     // Save whenever the list changes.
     useEffect(() => {
@@ -52,6 +53,10 @@ export default function ProgressProvider({ children }: { children: ReactNode }) 
         )
     }, [])
 
+    const togglePinned = useCallback((id: string) => {
+        setPinned((previous) => (previous === id ? '' : id))
+    }, [])
+
     const resetProgress = useCallback(() => setDoneList(initialDone), [])
 
     const value = useMemo<ProgressContextValue>(() => {
@@ -60,11 +65,13 @@ export default function ProgressProvider({ children }: { children: ReactNode }) 
         return {
             done,
             toggleItem,
+            pinned,
+            togglePinned,
             resetProgress,
             rings,
             totalCompletion: totalCompletion(rings),
         }
-    }, [doneList, toggleItem, resetProgress])
+    }, [doneList, pinned, toggleItem, togglePinned, resetProgress])
 
     return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>
 }

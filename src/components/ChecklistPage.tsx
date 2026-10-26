@@ -1,157 +1,119 @@
-import { useState, type CSSProperties } from 'react'
-import ChecklistRow from './ChecklistRow'
-import Meter from './Meter'
+import type { ReactNode } from 'react'
+import { Search } from 'lucide-react'
+import type { TrackedGroup, TrackedItem } from '../data/types'
+import type { ItemStatus } from '../lib/checklist'
+
 import { useProgress } from '../hooks/useProgress'
-import { countDone, countTotal } from '../lib/completion'
-import { totalOf } from '../lib/checklist'
-import type { TrackedGroup } from '../data/types'
+import { statusOf } from '../lib/checklist'
+
+
 
 type ChecklistPageProps = {
     eyebrow: string
     title: string
     subtitle: string
-    /** Caption under the big count, e.g. "Collectibles recorded". */
-    countCaption: string
-    /** Label for the "hide done" switch, e.g. "Hide recorded". */
-    hideLabel: string
     groups: TrackedGroup[]
+
+    searchPlaceholder: string
+    modeLabels: { all: string; todo: string; done: string }
+
+    listTitle: (group: TrackedGroup) => string
+    renderTile: (group: TrackedGroup, index: number) => ReactNode
+    renderDetail: (item: TrackedItem | null, group: TrackedGroup) => ReactNode
+    statusLabel: (status: ItemStatus) => string
+
+    renderStats?: () => ReactNode
+    listFooter?: (group: TrackedGroup) => ReactNode
+    banner?: ReactNode
 }
 
-// One page component for every checklist in the app.
 export default function ChecklistPage({
-    eyebrow,
-    title,
-    subtitle,
-    countCaption,
-    hideLabel,
-    groups,
+    eyebrow, title, subtitle, groups,
+    searchPlaceholder, modeLabels,
+    listTitle, renderTile, renderDetail, statusLabel,
+    renderStats, listFooter, banner,
 }: ChecklistPageProps) {
     const { done, toggleItem } = useProgress()
-    const [filter, setFilter] = useState('all')
-    const [hideDone, setHideDone] = useState(false)
+    const group = groups[0] // Step 3 makes this selectable
 
-    const visibleGroups = 
-        filter === 'all' ? groups : groups.filter((group) => group.id === filter)
+    return (
+        <>
+            <section className="page-head">
+                <p className="eyebrow eyebrow--red">{eyebrow}</p>
+                <h2 className="page-title">{title}</h2>
+                <p className="page-subtitle">{subtitle}</p>
+            </section>
 
-        return (
-            <>
-                <section className="page-head">
-                    <p className="eyebrow eyebrow--red">{eyebrow}</p>
-                    <h2 className="page-title">{title}</h2>
-                    <p className="page-subtitle">{subtitle}</p>
-                </section>
+            <div className="tiles">
+                {groups.map((g, index) => (
+                    <button key={g.id} type="button" className="tile">
+                        {renderTile(g, index)}
+                    </button>
+                ))}
+            </div>
 
-                {/* Summary */}
-                <section className="card summary" aria-label={`${eyebrow} summary`}>
-                    <div className="summary__total">
-                        <p className="summary__count">
-                            {countDone(groups, done)} / {countTotal(groups)}
-                        </p>
-                        <p className="summary__caption">{countCaption}</p>
-                    </div>
+            {renderStats?.()}
 
-                    <div className="summary__cats">
-                        {groups.map((group) => {
-                            const count = countDone([group], done)
+            <div className="searchbar">
+                <label className="searchbar__field">
+                    <Search size={16} strokeWidth={1.5} aria-hidden="true" />
+                    <input type="search" placeholder={searchPlaceholder} />
+                </label>
+                <div className="searchbar__modes">
+                    <button type="button" className="mode mode--active">
+                        {modeLabels.all}
+                    </button>
+                    <button type="button" className="mode mode--active">
+                        {modeLabels.todo}
+                    </button>
+                    <button type="button" className="mode mode--active">
+                        {modeLabels.done}
+                    </button>
+                </div>
+            </div>
+            
+            <div className="split">
+                <section className="card list">
+                    <header className="list__head">
+                        <h3 className="card__title">{listTitle(group)}</h3>
+                    </header>
+
+                    <ul className="list__rows">
+                        {group.items.map((item) => {
+                            const status = statusOf(item, group, done)
+
                             return (
-                                <div
-                                    key={group.id}
-                                    className="summary__cat"
-                                    style={{ '--accent': group.color } as CSSProperties}
-                                >
-                                    <p className="summary__cat-head">
-                                        <span>{group.name}</span>
-                                        <span>
-                                            {count} / {totalOf(group)}
-                                        </span>
-                                    </p>
-                                    <Meter value={count} max={totalOf(group)} label={group.name} />
-                                </div>
+                                <li key={item.id} className={`row row--${status}`}>
+                                    <input
+                                        type="checkbox"
+                                        className="row__check"
+                                        checked={done.has(item.id)}
+                                        onChange={() => toggleItem(item.id)}
+                                        aria-label={item.name}
+                                    />
+                                    <div>
+                                        <p className="row__title">{item.name}</p>
+                                        <p className="row__sub">{item.subtitle}</p>
+                                    </div>
+                                    <span className="row__status">
+                                        {statusLabel(status)}
+                                    </span>
+                                </li>
                             )
                         })}
-                    </div>
+                    </ul>
+
+                    {listFooter && (
+                        <footer className="list__foot">{listFooter(group)}</footer>
+                    )}
                 </section>
 
-                {/* Filters */}
-                <div className="toolbar">
-                    <div className="tabs" role="group" aria-label="Filter">
-                        <button
-                            type="button"
-                            className={filter === 'all' ? 'tab tab--active' : 'tab'}
-                            aria-pressed={filter === 'all'}
-                            onClick={() => setFilter('all')}
-                        >
-                            All
-                        </button>
-                        {groups.map((group) => (
-                            <button
-                                key={group.id}
-                                type="button"
-                                className={filter === group.id ? 'tab tab--active' : 'tab'}
-                                aria-pressed={filter === group.id}
-                                onClick={() => setFilter(group.id)}
-                            >
-                                {group.name}
-                            </button>
-                        ))}
-                    </div>
+                <aside className="card">
+                    {renderDetail(group.items[0] ?? null, group)}
+                </aside>
+            </div>
 
-                    <label className="toggle">
-                        <input
-                            type="checkbox"
-                            checked={hideDone}
-                            onChange={(event) => setHideDone(event.target.checked)}
-                        />
-                        {hideLabel}
-                    </label>
-                </div>
-
-                {/* Lists */}
-                <div className="collect-grid">
-                    {visibleGroups.map((group) => {
-                        const items = group.items.filter(
-                            (item) => !hideDone || !done.has(item.id),
-                        )
-                        const count = countDone([group], done)
-
-                        return (
-                            <section
-                                key={group.id}
-                                className="card"
-                                style={{ '--accent': group.color } as CSSProperties}
-                            >
-                                <header className="card__head">
-                                    <h3 className="card__title">{group.name}</h3>
-                                    <span className="card__tag">
-                                        {count} / {totalOf(group)}
-                                    </span>
-                                </header>
-
-                                <Meter
-                                    value={count}
-                                    max={totalOf(group)}
-                                    label={`${group.name} progress`}
-                                />
-
-                                {items.length === 0 ? (
-                                    <p className="collect-empty">Everything here is done.</p>
-                                ) : (
-                                    <ul className="checklist">
-                                        {items.map((item) => (
-                                            <ChecklistRow
-                                                key={item.id}
-                                                label={item.name}
-                                                detail={item.description}
-                                                checked={done.has(item.id)}
-                                                onToggle={() => toggleItem(item.id)}
-                                            />
-                                        ))}
-                                    </ul>
-                                )}
-                            </section>
-                        )
-                    })}
-                </div>
-            </>
-        )
+            {banner}
+        </>
+    )
 }

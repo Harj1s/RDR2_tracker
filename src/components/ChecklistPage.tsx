@@ -1,8 +1,9 @@
 import { useState, type CSSProperties } from 'react'
-import ChecklistRow from './CheckListRow'
+import ChecklistRow from './ChecklistRow'
 import Meter from './Meter'
 import { useProgress } from '../hooks/useProgress'
 import { countDone, countTotal } from '../lib/completion'
+import { totalOf } from '../lib/checklist'
 import type { TrackedGroup } from '../data/types'
 
 type ChecklistPageProps = {
@@ -61,10 +62,10 @@ export default function ChecklistPage({
                                     <p className="summary__cat-head">
                                         <span>{group.name}</span>
                                         <span>
-                                            {count} / {group.items.length}
+                                            {count} / {totalOf(group)}
                                         </span>
                                     </p>
-                                    <Meter value={count} max={group.items.length} label={group.name} />
+                                    <Meter value={count} max={totalOf(group)} label={group.name} />
                                 </div>
                             )
                         })}
@@ -122,13 +123,13 @@ export default function ChecklistPage({
                                 <header className="card__head">
                                     <h3 className="card__title">{group.name}</h3>
                                     <span className="card__tag">
-                                        {count} / {group.items.length}
+                                        {count} / {totalOf(group)}
                                     </span>
                                 </header>
 
                                 <Meter
                                     value={count}
-                                    max={group.items.length}
+                                    max={totalOf(group)}
                                     label={`${group.name} progress`}
                                 />
 

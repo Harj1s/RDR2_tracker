@@ -2,9 +2,10 @@ import { collectibleCategories } from "../data/collectibles";
 import { missionChapters } from '../data/missions'
 import { completionRings, type CompletionRing } from '../data/progress.ts'
 import type { TrackedGroup } from '../data/types.ts'
+import { totalOf } from './checklist'
 
 export function countTotal(groups: TrackedGroup[]): number {
-    return groups.reduce((sum, group) => sum + group.items.length, 0)
+    return groups.reduce((sum, group) => sum + totalOf(group), 0)
 }
 
 export function countDone(

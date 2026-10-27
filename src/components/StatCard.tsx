@@ -1,4 +1,4 @@
-export type Tone = 'red' | 'slate' | 'gold' | 'sage'
+export type Tone = 'red' | 'slate' | 'gold' | 'sage' | 'dark'
 
 type StatCardProps = {
     label: string

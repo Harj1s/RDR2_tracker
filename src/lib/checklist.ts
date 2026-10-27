@@ -71,3 +71,32 @@ export function filterItems(
     })
 
 }
+
+//** Number of gold objectives ticked, across all groups. */
+export function goldEarned(
+    groups: TrackedGroup[],
+    done: ReadonlySet<string>
+): number {
+    const items = groups.flatMap((group) => group.items)
+    let count = 0
+
+    for (const item of items) {
+       for (const objective of item.gold ?? []) {
+        if (done.has(objective.id)) count++
+       }
+    }
+
+    return count
+}
+
+//** Index of the chapter the player is on. */
+export function currentGroupIndex(
+    groups: TrackedGroup[],
+    done: ReadonlySet<string>
+): number {
+    for (let i = 0; i < groups.length; i++) {
+        const status = chapterStatus(groups, i, done)
+        if (status !== 'complete' && status !=='locked') return i
+    }
+    return Math.max(0, groups.length - 1)
+}

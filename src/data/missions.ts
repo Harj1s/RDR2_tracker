@@ -132,7 +132,7 @@ export const missionChapters: TrackedGroup[] = [
             },
             {
                 id: 'm2-4',
-                name: '',
+                name: 'Good, Honest, Snake Oil',
                 subtitle: '',
                 tagline: 'Tagline for m2-4',
                 description: 'FIX ',
@@ -144,7 +144,7 @@ export const missionChapters: TrackedGroup[] = [
             },
             {
                 id: 'm2-5',
-                name: '',
+                name: 'Who is Not without Sin',
                 subtitle: '',
                 tagline: 'Tagline for m2-5',
                 description: 'FIX ',
@@ -156,7 +156,7 @@ export const missionChapters: TrackedGroup[] = [
             },
             {
                 id: 'm2-6',
-                name: '',
+                name: 'Money Lending and Other Sins III',
                 subtitle: '',
                 tagline: 'Tagline for m2-6',
                 description: 'FIX ',
@@ -168,7 +168,7 @@ export const missionChapters: TrackedGroup[] = [
             },
             {
                 id: 'm2-7',
-                name: '',
+                name: 'Exit Pursued by a Bruised Ego',
                 subtitle: '',
                 tagline: 'Tagline for m2-7',
                 description: 'FIX ',
@@ -180,7 +180,7 @@ export const missionChapters: TrackedGroup[] = [
             },
             {
                 id: 'm2-8',
-                name: '',
+                name: 'Paying a Social Call',
                 subtitle: '',
                 tagline: 'Tagline for m2-8',
                 description: 'FIX ',
@@ -344,6 +344,18 @@ export const missionChapters: TrackedGroup[] = [
                 gold: [
                     { id: 'm2-21:gold-1', text: '' },
                     { id: 'm2-21:gold-2', text: '' },
+                ]
+            },
+            {
+                id: 'm2-22',
+                name: '',
+                subtitle: '',
+                tagline: 'Tagline for m2-22',
+                description: 'FIX ',
+                region: 'New Hanover',
+                gold: [
+                    { id: 'm2-22:gold-1', text: '' },
+                    { id: 'm2-22:gold-2', text: '' },
                 ]
             },
         ],

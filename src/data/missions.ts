@@ -50,6 +50,46 @@ export const missionChapters: TrackedGroup[] = [
                     { id: 'm1-3:gold-5', text: 'Complete the mission without taking any health items' },
                 ]
             },
+            {
+                id: 'm1-4',
+                name: 'The Aftermath of Genesis',
+                subtitle: 'Simon Pearson',
+                tagline: 'Tagline for m1-4',
+                description: "FIX With the gang low on supplies and starving, Mr. Pearson sends Arthur and Charles out hunting.",
+                region: 'Ambarino',
+                gold: [
+                    { id: 'm1-4:gold-1', text: 'Kill each deer with one arrow' },
+                    { id: 'm1-4:gold-2', text: 'Do not spook either deer' },
+                    { id: 'm1-4:gold-3', text: 'Get a clean kill on the second deer' },
+                ]
+            },
+            {
+                id: 'm1-5',
+                name: 'Who the Hell is Leviticus Cornwall?',
+                subtitle: 'John Marston / Dutch van der Linde',
+                tagline: 'Tagline for m1-5',
+                description: "FIX In need of money, and with the plans and explosives stolen from the O'Driscolls' camp, the gang rides out to rob Leviticus Cornwall's private train.",
+                region: 'Ambarino',
+                gold: [
+                    { id: 'm1-5:gold-1', text: 'Save Lenny when he is hanging from the train' },
+                    { id: 'm1-5:gold-2', text: 'After stopping the train, take out the guards within 1 minute 30 seconds' },
+                    { id: 'm1-5:gold-3', text: 'Take no damage during the shootout' },
+                    { id: 'm1-5:gold-4', text: 'Get 10 headshots' },
+                    { id: 'm1-5:gold-5', text: 'Complete the mission without taking any health items' },
+                ]
+            },
+                        {
+                id: 'm1-6',
+                name: 'Eastward Bound',
+                subtitle: 'Dutch van der Linde',
+                tagline: 'Tagline for m1-6',
+                description: "FIX With renewed strength and the weather finally stable, the gang rides down from the mountains to set up camp at Horseshoe Overlook.",
+                region: 'New Hanover',
+                gold: [
+                    { id: 'm1-6:gold-1', text: 'Pick up Javier when entering Horseshoe Overlook' },
+                    { id: 'm1-6:gold-2', text: 'Complete within 6 minutes' },
+                ]
+            }
         ],
     },
     {

@@ -335,9 +335,9 @@
 
 .detail__actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    gap: 8px;
+    gap: 16px;
     margin-top: 20px;
 }
 

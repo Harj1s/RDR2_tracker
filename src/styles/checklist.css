@@ -186,6 +186,7 @@
 }
 
 .row--locked {
+    background: color-mix(in srgb, var(--surface-dark) 15%, var(--surface));
     opacity: 0.6;
     cursor: default;
 }
@@ -193,6 +194,30 @@
 .row--locked .row__select,
 .row--locked .row__check {
     cursor: default;
+}
+
+.row--exiting {
+    overflow: hidden;
+    animation: checklist-row-exit 240ms ease-in forwards;
+}
+
+@keyframes checklist-row-exit {
+    from {
+        max-height: 100px;
+        opacity: 1;
+    }
+
+    to {
+        max-height: 0;
+        opacity: 0;
+        border-bottom-width: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .row--exiting {
+        animation-duration: 1ms;
+    }
 }
 
 .row__check:disabled {

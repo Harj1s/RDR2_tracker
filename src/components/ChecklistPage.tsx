@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Search } from 'lucide-react'
 import type { TrackedGroup, TrackedItem } from '../data/types'
@@ -15,13 +15,18 @@ type ChecklistPageProps = {
     subtitle: string
     groups: TrackedGroup[]
     defaultGroupId?: string
+    sortUnlockedFirst?: boolean
 
     searchPlaceholder: string
     modeLabels: { all: string; todo: string; done: string }
 
     listTitle: (group: TrackedGroup) => string
     renderTile: (group: TrackedGroup, index: number) => ReactNode
-    renderDetail: (item: TrackedItem | null, group: TrackedGroup) => ReactNode
+    renderDetail: (
+        item: TrackedItem | null,
+        group: TrackedGroup,
+        toggleChecklistItem: (id: string) => void,
+    ) => ReactNode
     statusLabel: (status: ItemStatus) => string
 
     renderStats?: () => ReactNode
@@ -33,10 +38,11 @@ const MODES: FilterMode[] = ['all', 'todo', 'done']
 
 export default function ChecklistPage({
     eyebrow, title, subtitle, groups, defaultGroupId,
-    searchPlaceholder, modeLabels,
+    sortUnlockedFirst, searchPlaceholder, modeLabels,
     listTitle, renderTile, renderDetail, statusLabel,
     renderStats, listFooter, banner,
 }: ChecklistPageProps) {
+
     const { done, toggleItem } = useProgress()
 
     // What the player has chosen, null means "nothing chosen yet, use the default".
@@ -44,6 +50,7 @@ export default function ChecklistPage({
     const [itemId, setItemId] = useState<string | null>(null)
     const [search, setSearch] = useState('')
     const [mode, setMode] = useState<FilterMode>('all')
+    const [exitingItems, setExitingItems] = useState(new Map<string, ItemStatus>())
 
     // Everything below is derived each render, so it can never go stale.
     const group =
@@ -51,7 +58,43 @@ export default function ChecklistPage({
         groups.find((g) => g.id === defaultGroupId) ??
         groups[0]
 
-    const visible = filterItems(group.items, search, mode, done)
+    const filtered = filterItems(group.items, search, mode, done)
+    const delayedCompleted = mode === 'todo'
+        ? group.items.filter((item) =>
+            exitingItems.has(item.id) &&
+            done.has(item.id) &&
+            filterItems([item], search, 'all', done).length > 0,
+        )
+        : []
+    const filteredIds = new Set(filtered.map((item) => item.id))
+    const displayItems = [
+        ...filtered,
+        ...delayedCompleted.filter((item) => !filteredIds.has(item.id)),
+    ]
+    const statusRank: Record<ItemStatus, number> = {
+        done: 0,
+        next: 1,
+        todo: 2,
+        locked: 3,
+    }
+    const completionOrder = new Map(
+        [...done].map((id, index) => [id, index]),
+    )
+
+    const visible = sortUnlockedFirst
+        ? [...displayItems].sort((a, b) => {
+            const aStatus = exitingItems.get(a.id) ?? statusOf(a, group, done)
+            const bStatus = exitingItems.get(b.id) ?? statusOf(b, group, done)
+            const statusDifference = statusRank[aStatus] - statusRank[bStatus]
+
+            if (statusDifference !== 0) return statusDifference
+            if (aStatus === 'done') {
+                return (completionOrder.get(a.id) ?? Number.MAX_SAFE_INTEGER) -
+                    (completionOrder.get(b.id) ?? Number.MAX_SAFE_INTEGER)
+            }
+            return a.id.localeCompare(b.id, undefined, { numeric: true })
+        })
+        : displayItems
 
     // The chosen item, or the "next up" one, or the first visible one.
     // If a filter hides the chosen item, this falls back instead of showing
@@ -67,7 +110,101 @@ export default function ChecklistPage({
         setItemId(null)
         setSearch('')
         setMode('all')
+        setExitingItems(new Map())
     }
+
+    function toggleChecklistItem(id: string) {
+        const item = group.items.find((candidate) => candidate.id === id)
+
+        if (item && mode === 'todo' && !done.has(id)) {
+            setExitingItems((previous) =>
+                new Map(previous).set(id, statusOf(item, group, done)),
+            )
+        } else {
+            setExitingItems((previous) => {
+                if (!previous.has(id)) return previous
+                const next = new Map(previous)
+                next.delete(id)
+                return next
+            })
+        }
+
+        toggleItem(id)
+    }
+
+        // For smooth list transition
+    const rowElements = useRef(new Map<string, HTMLLIElement>())
+    const previousPositions = useRef(
+        new Map<string, { top: number, left: number }>(),
+    )
+    const previousOrder = useRef<string[] | null>(null)
+    const rowAnimations = useRef(new Map<string, Animation>())
+
+    useLayoutEffect(() => {
+        const visibleIds = visible.map((item) => item.id)
+        const previous = previousOrder.current
+        const currentIds = new Set(visibleIds)
+
+        const sameItems =
+            previous !== null &&
+            previous.length === visibleIds.length &&
+            previous.every((id) => currentIds.has(id))
+
+        const orderChanged =
+            sameItems &&
+            previous.some((id, index) => id !== visibleIds[index])
+        
+        const reduceMotion = window
+            .matchMedia('(prefers-reduced-motion: reduce)')
+            .matches
+        
+        // If rows were added/removed, don't animate the layout reflow.
+        if (!sameItems || reduceMotion) {
+            for (const animation of rowAnimations.current.values()) {
+                animation.cancel()
+            }
+            rowAnimations.current.clear()
+        }
+        
+        const nextPositions = new Map<string, { top: number, left: number }>()
+
+        for (const item of visible) {
+            const element = rowElements.current.get(item.id)
+            if (!element) continue
+
+            const { top, left } = element.getBoundingClientRect()
+            const previousPosition = previousPositions.current.get(item.id)
+
+            if (orderChanged && !reduceMotion && previousPosition) {
+                const deltaX = previousPosition.left - left
+                const deltaY = previousPosition.top - top
+
+                if (deltaX !== 0 || deltaY !== 0) {
+                    rowAnimations.current.get(item.id)?.cancel()
+                    
+                    const animation = element.animate(
+                        [
+                            { transform: `translate(${deltaX}px, ${deltaY}px)` },
+                            { transform: 'translate(0, 0)' },
+                        ],
+                        { duration: 200, easing: 'ease-out' },
+                    )
+
+                    rowAnimations.current.set(item.id, animation)
+                    animation.onfinish = () => {
+                        if (rowAnimations.current.get(item.id) === animation) {
+                            rowAnimations.current.delete(item.id)
+                        }
+                    }
+                }
+            }
+
+            nextPositions.set(item.id, { top, left })
+        }
+
+        previousPositions.current = nextPositions
+        previousOrder.current = visibleIds
+    }, [visible])
 
     return (
         <>
@@ -100,7 +237,10 @@ export default function ChecklistPage({
                         type="search"
                         placeholder={searchPlaceholder}
                         value={search}
-                        onChange={(event) => setSearch(event.target.value)}
+                        onChange={(event) => {
+                            setSearch(event.target.value)
+                            setExitingItems(new Map())
+                        }}
                     />
                 </label>
                 <div className="searchbar__modes">
@@ -110,7 +250,10 @@ export default function ChecklistPage({
                             type="button"
                             className={m === mode ? 'mode mode--active' : 'mode'}
                             aria-pressed={m === mode}
-                            onClick={() => setMode(m)}
+                            onClick={() => {
+                                setMode(m)
+                                setExitingItems(new Map())
+                            }}
                         >
                             {modeLabels[m]}
                         </button>
@@ -135,8 +278,27 @@ export default function ChecklistPage({
                                 return (
                                     <li 
                                         key={item.id}
+                                        onAnimationEnd={(event) => {
+                                            if (event.target !== event.currentTarget) return
+                                            setExitingItems((previous) => {
+                                                if (!previous.has(item.id)) return previous
+                                                const next = new Map(previous)
+                                                next.delete(item.id)
+                                                return next
+                                            })
+                                        }}
+                                        ref={(element) => {
+                                            if (element) {
+                                                rowElements.current.set(item.id, element)
+                                            } else {
+                                                rowElements.current.delete(item.id)
+                                            }
+                                        }}
                                         className={
                                             `row row--${status}` +
+                                            (exitingItems.has(item.id) && done.has(item.id)
+                                                ? ' row--exiting'
+                                                : '') +
                                             (isSelected ? ' row--selected' : '')
                                         }
                                     >
@@ -144,7 +306,8 @@ export default function ChecklistPage({
                                             type="checkbox"
                                             className="row__check"
                                             checked={done.has(item.id)}
-                                            onChange={() => toggleItem(item.id)}
+                                            disabled={status === 'locked'}
+                                            onChange={() => toggleChecklistItem(item.id)}
                                             aria-label={item.name}
                                         />
                                         <button
@@ -173,7 +336,7 @@ export default function ChecklistPage({
                 </section>
 
                 <aside className="card">
-                    {renderDetail(selected, group)}
+                    {renderDetail(selected, group, toggleChecklistItem)}
                 </aside>
             </div>
 

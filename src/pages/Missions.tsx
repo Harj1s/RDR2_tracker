@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
 import ChecklistPage from '../components/ChecklistPage'
-import Statcard from '../components/StatCard'
 import { missionChapters } from '../data/missions'
 import { useProgress } from '../hooks/useProgress'
-import { countDone } from '../lib/completion'
-import { chapterStatus, currentGroupIndex, goldEarned } from '../lib/checklist'
+import { chapterStatus, currentGroupIndex, goldEarned, statusOf } from '../lib/checklist'
 import type { ChapterStatus, ItemStatus } from '../lib/checklist'
 import StatCard from '../components/StatCard'
 
@@ -34,6 +32,7 @@ export default function Missions() {
             subtitle="Mark each story mission as you finish it, chapter by chapter."
             groups={missionChapters}
             defaultGroupId={current.id}
+            sortUnlockedFirst
             searchPlaceholder="Search this chapter..."
             modeLabels={{ all: 'All missions', todo: 'Incomplete', done: 'Completed' }}
             listTitle={(group) => `${group.label} / ${group.name}`}
@@ -66,12 +65,13 @@ export default function Missions() {
                     />
                 </section>
             )}
-            renderDetail={(item) => {
+            renderDetail={(item, group, toggleMission) => {
                 if (!item) {
                     return <p>Select a mission to see its details.</p>
                 }
 
                 const isDone = done.has(item.id)
+                const isLocked = !isDone && statusOf(item, group, done) === 'locked'
 
                 return (
                     <>
@@ -110,9 +110,10 @@ export default function Missions() {
                             <button
                                 type="button"
                                 className="button"
-                                onClick={() => toggleItem(item.id)}
+                                disabled={isLocked}
+                                onClick={() => toggleMission(item.id)}
                             >
-                                {isDone ? 'Mark incomplete' : 'Mark completed'}
+                                {isLocked ? 'Locked' : isDone ? 'Mark incomplete' : 'Mark completed'}
                             </button>
                             <Link to="/map" className="button button--ghost">
                                 Show meeting point

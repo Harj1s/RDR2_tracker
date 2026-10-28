@@ -1,95 +1,20 @@
-import type { TrackedGroup } from './types'
+import type { TrackedGroup, TrackedItem } from './types'
 
-// DEMO SAMPLE. Names are placeholders written from memory and may sit in the
-// wrong chapter. Replace with a list you have verified before launching.
+type MissionChapterLayout = Omit<TrackedGroup, 'items'> & { items: { id: string }[] }
 
-export const missionChapters: TrackedGroup[] = [
+const missionChapterLayouts: MissionChapterLayout[] = [
     {
         id: 'ch1',
         name: 'Colter',
         label: 'Chapter 01',
         color: 'var(--red)',
         items: [
-            {
-                id: 'm1-1',
-                name: 'Outlaws from the West',
-                subtitle: 'Dutch van der Linde',
-                tagline: 'Tagline for m1-1',
-                description: 'FIX Half frozen, close to death, and on the run, the Van der Linde gang find shelter in an old abandoned mining town. Dutch, Arthur, and Micah head out to look for supplies.',
-                region: 'Ambarino',
-                gold: [
-                    { id: 'm1-1:gold-1', text: 'Take no damage during the shootout' },
-                    { id: 'm1-1:gold-2', text: 'Loot 6 or more items from Adler Ranch' },
-                    { id: 'm1-1:gold-3', text: 'Complete with at least 80% accuracy' },
-                ]
-            },
-            { 
-                id: 'm1-2',
-                name: 'Enter, Pursued by a Memory',
-                subtitle: 'Abigail Roberts',
-                tagline: 'Tagline for m1-2',
-                description: 'FIX John Marston has not returned from an earlier scouting trip. Arthur Morgan and Javier Escuella ride out into the snow to look for him.',
-                region: 'Ambarino',
-                gold: [
-                    { id: 'm1-2:gold-1', text: 'Kill all the wolves without taking any damage' },
-                    { id: 'm1-2:gold-2', text: 'Complete with at least 80% accuracy' },
-                ]
-            },
-            { 
-                id: 'm1-3',
-                name: 'Old Friends',
-                subtitle: 'Bill Williamson',
-                tagline: 'Tagline for m1-3',
-                description: "FIX Looking for information on the O'Driscolls' planned train job, Dutch leads the gang to attack their camp at Ewing Basin.",
-                region: 'Ambarino',
-                gold: [
-                    { id: 'm1-3:gold-1', text: 'Catch and hogtie Kieran within 45 seconds' },
-                    { id: 'm1-3:gold-2', text: "Kill 3 O'driscolls in the same Dead Eye use" },
-                    { id: 'm1-3:gold-3', text: 'Complete within 15 minutes and 30 seconds' },
-                    { id: 'm1-3:gold-4', text: 'Get 15 headshots' },
-                    { id: 'm1-3:gold-5', text: 'Complete the mission without taking any health items' },
-                ]
-            },
-            {
-                id: 'm1-4',
-                name: 'The Aftermath of Genesis',
-                subtitle: 'Simon Pearson',
-                tagline: 'Tagline for m1-4',
-                description: "FIX With the gang low on supplies and starving, Mr. Pearson sends Arthur and Charles out hunting.",
-                region: 'Ambarino',
-                gold: [
-                    { id: 'm1-4:gold-1', text: 'Kill each deer with one arrow' },
-                    { id: 'm1-4:gold-2', text: 'Do not spook either deer' },
-                    { id: 'm1-4:gold-3', text: 'Get a clean kill on the second deer' },
-                ]
-            },
-            {
-                id: 'm1-5',
-                name: 'Who the Hell is Leviticus Cornwall?',
-                subtitle: 'John Marston / Dutch van der Linde',
-                tagline: 'Tagline for m1-5',
-                description: "FIX In need of money, and with the plans and explosives stolen from the O'Driscolls' camp, the gang rides out to rob Leviticus Cornwall's private train.",
-                region: 'Ambarino',
-                gold: [
-                    { id: 'm1-5:gold-1', text: 'Save Lenny when he is hanging from the train' },
-                    { id: 'm1-5:gold-2', text: 'After stopping the train, take out the guards within 1 minute 30 seconds' },
-                    { id: 'm1-5:gold-3', text: 'Take no damage during the shootout' },
-                    { id: 'm1-5:gold-4', text: 'Get 10 headshots' },
-                    { id: 'm1-5:gold-5', text: 'Complete the mission without taking any health items' },
-                ]
-            },
-                        {
-                id: 'm1-6',
-                name: 'Eastward Bound',
-                subtitle: 'Dutch van der Linde',
-                tagline: 'Tagline for m1-6',
-                description: "FIX With renewed strength and the weather finally stable, the gang rides down from the mountains to set up camp at Horseshoe Overlook.",
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm1-6:gold-1', text: 'Pick up Javier when entering Horseshoe Overlook' },
-                    { id: 'm1-6:gold-2', text: 'Complete within 6 minutes' },
-                ]
-            }
+            { id: 'm1-1' },
+            { id: 'm1-2' },
+            { id: 'm1-3' },
+            { id: 'm1-4' },
+            { id: 'm1-5' },
+            { id: 'm1-6' }
         ],
     },
     {
@@ -98,266 +23,28 @@ export const missionChapters: TrackedGroup[] = [
         label: 'Chapter 02',
         color: 'var(--gold)',
         items: [
-            {
-                id: 'm2-1',
-                name: 'Polite Society, Valentine Style',
-                subtitle: 'Uncle',
-                tagline: 'Tagline for m2-1',
-                description: 'FIX In search of new leads for the gang, Karen, Tilly and Mary-Beth convince Arthur and Uncle to ride out to Valentine with them.',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-1:gold-1', text: 'Return the lost wagon horse to its owner' },
-                    { id: 'm2-1:gold-2', text: 'Find Kieran within 45 seconds' },
-                ]
-            },
-            {
-                id: 'm2-2',
-                name: 'Americans at Rest',
-                subtitle: 'Javier Escuella',
-                tagline: 'Tagline for m2-2',
-                description: "FIX Bill starts a brawl in Smithfield's Saloon in Valentine as Javier, Charles and Arthur attempt to charm the locals.",
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-2:gold-1', text: 'Save Javier within 15 seconds' },
-                    { id: 'm2-2:gold-2', text: 'Defeat Tommy within 1 minute and 30 seconds' },
-                ]
-            },
-            {
-                id: 'm2-3',
-                name: 'Money Lending and Other Sins I & II',
-                subtitle: 'Leopold Strauss',
-                tagline: 'Tagline for m2-3',
-                description: 'FIX At the camp, Strauss asks Arthur to retrieve money from three debtors that owe him money. Arthur must collect debts from ranch hand Chick Matthews, Polish smallholder farmer Mr. Wróbel, and ranch maid Lilly Millet.',
-                region: 'New Hanover'
-            },
-            {
-                id: 'm2-4',
-                name: 'Good, Honest, Snake Oil',
-                subtitle: '',
-                tagline: 'Tagline for m2-4',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-4:gold-1', text: '' },
-                    { id: 'm2-4:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-5',
-                name: 'Who is Not without Sin',
-                subtitle: '',
-                tagline: 'Tagline for m2-5',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-5:gold-1', text: '' },
-                    { id: 'm2-5:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-6',
-                name: 'Money Lending and Other Sins III',
-                subtitle: '',
-                tagline: 'Tagline for m2-6',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-6:gold-1', text: '' },
-                    { id: 'm2-6:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-7',
-                name: 'Exit Pursued by a Bruised Ego',
-                subtitle: '',
-                tagline: 'Tagline for m2-7',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-7:gold-1', text: '' },
-                    { id: 'm2-7:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-8',
-                name: 'Paying a Social Call',
-                subtitle: '',
-                tagline: 'Tagline for m2-8',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-8:gold-1', text: '' },
-                    { id: 'm2-8:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-9',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-9',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-9:gold-1', text: '' },
-                    { id: 'm2-9:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-10',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-10',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-10:gold-1', text: '' },
-                    { id: 'm2-10:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-11',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-11',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-11:gold-1', text: '' },
-                    { id: 'm2-11:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-12',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-12',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-12:gold-1', text: '' },
-                    { id: 'm2-12:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-13',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-13',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-13:gold-1', text: '' },
-                    { id: 'm2-13:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-14',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-14',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-14:gold-1', text: '' },
-                    { id: 'm2-14:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-15',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-15',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-15:gold-1', text: '' },
-                    { id: 'm2-15:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-16',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-16',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-16:gold-1', text: '' },
-                    { id: 'm2-16:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-17',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-17',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-17:gold-1', text: '' },
-                    { id: 'm2-17:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-18',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-18',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-18:gold-1', text: '' },
-                    { id: 'm2-18:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-19',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-19',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-19:gold-1', text: '' },
-                    { id: 'm2-19:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-20',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-20',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-20:gold-1', text: '' },
-                    { id: 'm2-20:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-21',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-21',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-21:gold-1', text: '' },
-                    { id: 'm2-21:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm2-22',
-                name: '',
-                subtitle: '',
-                tagline: 'Tagline for m2-22',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm2-22:gold-1', text: '' },
-                    { id: 'm2-22:gold-2', text: '' },
-                ]
-            },
+            { id: 'm2-1' },
+            { id: 'm2-2' },
+            { id: 'm2-3' },
+            { id: 'm2-4' },
+            { id: 'm2-5' },
+            { id: 'm2-6' },
+            { id: 'm2-7' },
+            { id: 'm2-8' },
+            { id: 'm2-9' },
+            { id: 'm2-10' },
+            { id: 'm2-11' },
+            { id: 'm2-12' },
+            { id: 'm2-13' },
+            { id: 'm2-14' },
+            { id: 'm2-15' },
+            { id: 'm2-16' },
+            { id: 'm2-17' },
+            { id: 'm2-18' },
+            { id: 'm2-19' },
+            { id: 'm2-20' },
+            { id: 'm2-21' },
+            { id: 'm2-22' },
         ],
     },
     {
@@ -366,223 +53,23 @@ export const missionChapters: TrackedGroup[] = [
         label: 'Chapter 03',
         color: 'var(--sage)',
         items: [
-            {
-                id: 'm3-1',
-                name: 'Further Questions of Female Suffrage',
-                subtitle: '',
-                tagline: 'Tagline for m3-1',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-1:gold-1', text: '' },
-                    { id: 'm3-1:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-2',
-                name: 'The New South',
-                subtitle: '',
-                tagline: 'Tagline for m3-2',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-2:gold-1', text: '' },
-                    { id: 'm3-2:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-3',
-                name: 'The Course of True Love - I & II',
-                subtitle: '',
-                tagline: 'Tagline for m3-3',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-3:gold-1', text: '' },
-                    { id: 'm3-3:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-4',
-                name: 'The Course of True Love - III',
-                subtitle: '',
-                tagline: 'Tagline for m3-4',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-4:gold-1', text: '' },
-                    { id: 'm3-4:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-5',
-                name: 'Money Lending and Other Sins - IV',
-                subtitle: '',
-                tagline: 'Tagline for m3-5',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-5:gold-1', text: '' },
-                    { id: 'm3-5:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-6',
-                name: 'American Distillation',
-                subtitle: '',
-                tagline: 'Tagline for m3-6',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-6:gold-1', text: '' },
-                    { id: 'm3-6:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-7',
-                name: 'An Honest Mistake',
-                subtitle: '',
-                tagline: 'Tagline for m3-7',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-7:gold-1', text: '' },
-                    { id: 'm3-7:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-8',
-                name: 'Preaching Forgiveness as He Went',
-                subtitle: '',
-                tagline: 'Tagline for m3-8',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-8:gold-1', text: '' },
-                    { id: 'm3-8:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-9',
-                name: 'Sodom? Back to Gomorrah',
-                subtitle: '',
-                tagline: 'Tagline for m3-9',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-9:gold-1', text: '' },
-                    { id: 'm3-9:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-10',
-                name: 'Advertising, the New American Art',
-                subtitle: 'Abigail Roberts/Hosea Matthews',
-                tagline: 'Tagline for m3-10',
-                description: 'FIX Catherine Braithwaite pays Hosea and Arthur to head into Rhodes and hand out the stolen moonshine for free at the local saloon.',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-10:gold-1', text: 'Headshot 5 Lemoyne Raiders in the saloon' },
-                    { id: 'm3-10:gold-2', text: 'Complete with at least 90% accuracy' },
-                    { id: 'm3-10:gold-3', text: 'Complete the mission without taking any health items' },
-                ]
-            },
-            {
-                id: 'm3-11',
-                name: 'Magicians for Sport',
-                subtitle: '',
-                tagline: 'Tagline for m3-11',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-11:gold-1', text: '' },
-                    { id: 'm3-11:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-12',
-                name: 'Horse Flesh for Dinner',
-                subtitle: '',
-                tagline: 'Tagline for m3-12',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-12:gold-1', text: '' },
-                    { id: 'm3-12:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-13',
-                name: 'Friends in Very Low Places',
-                subtitle: '',
-                tagline: 'Tagline for m3-13',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-13:gold-1', text: '' },
-                    { id: 'm3-13:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-14',
-                name: 'The Fine Joys of Tobacco',
-                subtitle: '',
-                tagline: 'Tagline for m3-14',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-14:gold-1', text: '' },
-                    { id: 'm3-14:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-15',
-                name: 'Blessed are the Peacemakers',
-                subtitle: '',
-                tagline: 'Tagline for m3-15',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-15:gold-1', text: '' },
-                    { id: 'm3-15:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-16',
-                name: 'A Short Walk in a Pretty Town',
-                subtitle: '',
-                tagline: 'Tagline for m3-16',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-16:gold-1', text: '' },
-                    { id: 'm3-16:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-17',
-                name: 'Blood Feuds, Ancient and Modern',
-                subtitle: '',
-                tagline: 'Tagline for m3-17',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-17:gold-1', text: '' },
-                    { id: 'm3-17:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm3-18',
-                name: 'The Battle of Shady Belle',
-                subtitle: '',
-                tagline: 'Tagline for m3-18',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm3-18:gold-1', text: '' },
-                    { id: 'm3-18:gold-2', text: '' },
-                ]
-            }
+            { id: 'm3-1' },
+            { id: 'm3-2' },
+            { id: 'm3-3' },
+            { id: 'm3-4' },
+            { id: 'm3-5' },
+            { id: 'm3-6' },
+            { id: 'm3-7' },
+            { id: 'm3-8' },
+            { id: 'm3-9' },
+            { id: 'm3-10' },
+            { id: 'm3-11' },
+            { id: 'm3-12' },
+            { id: 'm3-13' },
+            { id: 'm3-14' },
+            { id: 'm3-15' },
+            { id: 'm3-16' },
+            { id: 'm3-17' }
         ],
     },
     {
@@ -591,188 +78,20 @@ export const missionChapters: TrackedGroup[] = [
         label: 'Chapter 04',
         color: 'var(--slate)',
         items: [
-            {
-                id: 'm4-1',
-                name: 'The Joys of Civilization',
-                subtitle: '',
-                tagline: 'Tagline for m4-1',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-1:gold-1', text: '' },
-                    { id: 'm4-1:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-2',
-                name: 'Help a Brother Out',
-                subtitle: '',
-                tagline: 'Tagline for m4-2',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-2:gold-1', text: '' },
-                    { id: 'm4-2:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-3',
-                name: 'Brothers and Sisters, One and All',
-                subtitle: '',
-                tagline: 'Tagline for m4-3',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-3:gold-1', text: '' },
-                    { id: 'm4-3:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-4',
-                name: 'Angelo Bronte, a Man of Honor',
-                subtitle: '',
-                tagline: 'Tagline for m4-4',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-4:gold-1', text: '' },
-                    { id: 'm4-4:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-5',
-                name: 'No, No, and Thrice, No',
-                subtitle: '',
-                tagline: 'Tagline for m4-5',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-5:gold-1', text: '' },
-                    { id: 'm4-5:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-6',
-                name: 'Fatherhood and Other Dreams - I & II',
-                subtitle: '',
-                tagline: 'Tagline for m4-6',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-6:gold-1', text: '' },
-                    { id: 'm4-6:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-7',
-                name: 'Money Lending and Other Sins - V',
-                subtitle: '',
-                tagline: 'Tagline for m4-7',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-7:gold-1', text: '' },
-                    { id: 'm4-7:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-8',
-                name: 'The Gilded Cage',
-                subtitle: 'Hosea Matthews & Dutch van der Linde',
-                tagline: 'Tagline for m4-8',
-                description: 'FIX The gang attend a party hosted by the Mayor of Saint Denis. While at the party, they meet with Bronte, and look for job opportunities.',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-8:gold-1', text: 'While at the party, pour some drinks, compliment a guest\'s attire, accept a gift and save a life' },
-                    { id: 'm4-8:gold-2', text: 'Follow the servant without being detected' },
-                ]
-            },
-            {
-                id: 'm4-9',
-                name: 'A Fine Night of Debauchery',
-                subtitle: '',
-                tagline: 'Tagline for m4-9',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-9:gold-1', text: '' },
-                    { id: 'm4-9:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-10',
-                name: 'American Fathers - I & II',
-                subtitle: '',
-                tagline: 'Tagline for m4-10',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-10:gold-1', text: '' },
-                    { id: 'm4-10:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-11',
-                name: 'Horsemen, Apocalypses',
-                subtitle: '',
-                tagline: 'Tagline for m4-11',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-11:gold-1', text: '' },
-                    { id: 'm4-11:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-12',
-                name: 'Urban Pleasures',
-                subtitle: '',
-                tagline: 'Tagline for m4-12',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-12:gold-1', text: '' },
-                    { id: 'm4-12:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-13',
-                name: 'Country Pursuits',
-                subtitle: '',
-                tagline: 'Tagline for m4-13',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-13:gold-1', text: '' },
-                    { id: 'm4-13:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-14',
-                name: 'Revenge is a Dish Best Eaten',
-                subtitle: '',
-                tagline: 'Tagline for m4-14',
-                description: 'FIX ',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-14:gold-1', text: '' },
-                    { id: 'm4-14:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm4-15',
-                name: 'Banking, the Old American Art',
-                subtitle: 'Dutch van der Linde',
-                tagline: 'Tagline for m4-15',
-                description: 'FIX The gang prepare to rob the bank in Saint Denis as one final score that would allow them to retire.',
-                region: 'Lemoyne',
-                gold: [
-                    { id: 'm4-15:gold-1', text: 'Crack the safe without making any mistakes' },
-                    { id: 'm4-15:gold-2', text: 'Complete using only sidearms' },
-                    { id: 'm4-15:gold-3', text: 'Get 25 headshots' },
-                    { id: 'm4-15:gold-4', text: 'Complete the mission without taking any health items' },
-                ]
-            }
+            { id: 'm4-1' },
+            { id: 'm4-2' },
+            { id: 'm4-3' },
+            { id: 'm4-4' },
+            { id: 'm4-5' },
+            { id: 'm4-6' },
+            { id: 'm4-7' },
+            { id: 'm4-8' },
+            { id: 'm4-9' },
+            { id: 'm4-10' },
+            { id: 'm4-11' },
+            { id: 'm4-12' },
+            { id: 'm4-13' },
+            { id: 'm4-14' }
         ],
     },
     {
@@ -781,114 +100,15 @@ export const missionChapters: TrackedGroup[] = [
         label: 'Chapter 05',
         color: 'var(--red)',
         items: [
-            {
-                id: 'm5-1',
-                name: 'Welcome to the New World',
-                subtitle: '',
-                tagline: 'Tagline for m5-1',
-                description: 'FIX ',
-                region: 'Guarma',
-                gold: [
-                    { id: 'm5-1:gold-1', text: '' },
-                    { id: 'm5-1:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm5-2',
-                name: 'Savagery Unleashed',
-                subtitle: '',
-                tagline: 'Tagline for m5-2',
-                description: 'FIX ',
-                region: 'Guarma',
-                gold: [
-                    { id: 'm5-2:gold-1', text: '' },
-                    { id: 'm5-2:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm5-3',
-                name: 'A Kind and Benevolent Despot',
-                subtitle: '',
-                tagline: 'Tagline for m5-3',
-                description: 'FIX ',
-                region: 'Guarma',
-                gold: [
-                    { id: 'm5-3:gold-1', text: '' },
-                    { id: 'm5-3:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm5-4',
-                name: 'Hell Hath No Fury',
-                subtitle: '',
-                tagline: 'Tagline for m5-4',
-                description: 'FIX ',
-                region: 'Guarma',
-                gold: [
-                    { id: 'm5-4:gold-1', text: '' },
-                    { id: 'm5-4:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm5-5',
-                name: 'Paradise Mercifully Departed',
-                subtitle: '',
-                tagline: 'Tagline for m5-5',
-                description: 'FIX ',
-                region: 'Guarma',
-                gold: [
-                    { id: 'm5-5:gold-1', text: '' },
-                    { id: 'm5-5:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm5-6',
-                name: 'Dear Uncle Tacitus',
-                subtitle: '',
-                tagline: 'Tagline for m5-6',
-                description: 'FIX ',
-                region: 'Guarma',
-                gold: [
-                    { id: 'm5-6:gold-1', text: '' },
-                    { id: 'm5-6:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm5-7',
-                name: 'Fleeting Joy',
-                subtitle: '',
-                tagline: 'Tagline for m5-7',
-                description: 'FIX ',
-                region: 'Guarma',
-                gold: [
-                    { id: 'm5-7:gold-1', text: '' },
-                    { id: 'm5-7:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm5-8',
-                name: 'A Fork in the Road',
-                subtitle: '',
-                tagline: 'Tagline for m5-8',
-                description: 'FIX ',
-                region: 'Guarma',
-                gold: [
-                    { id: 'm5-8:gold-1', text: '' },
-                    { id: 'm5-8:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm5-9',
-                name: 'That\'s Murfree Country',
-                subtitle: '',
-                tagline: 'Tagline for m5-9',
-                description: 'FIX ',
-                region: 'Guarma',
-                gold: [
-                    { id: 'm5-9:gold-1', text: '' },
-                    { id: 'm5-9:gold-2', text: '' },
-                ]
-            }
+            { id: 'm5-1' },
+            { id: 'm5-2' },
+            { id: 'm5-3' },
+            { id: 'm5-4' },
+            { id: 'm5-5' },
+            { id: 'm5-6' },
+            { id: 'm5-7' },
+            { id: 'm5-8' },
+            { id: 'm5-9' }
         ],
     },
     {
@@ -897,258 +117,27 @@ export const missionChapters: TrackedGroup[] = [
         label: 'Chapter 06',
         color: 'var(--gold)',
         items: [
-            {
-                id: 'm6-1',
-                name: 'Icarus and Friends',
-                subtitle: '',
-                tagline: 'Tagline for m6-1',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-1:gold-1', text: '' },
-                    { id: 'm6-1:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-2',
-                name: 'Of Men and Angels',
-                subtitle: '',
-                tagline: 'Tagline for m6-2',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-2:gold-1', text: '' },
-                    { id: 'm6-2:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-3',
-                name: 'Do Not Seek Absolution - I',
-                subtitle: '',
-                tagline: 'Tagline for m6-3',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-3:gold-1', text: '' },
-                    { id: 'm6-3:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-4',
-                name: 'Do Not Seek Absolution - II',
-                subtitle: '',
-                tagline: 'Tagline for m6-4',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-4:gold-1', text: '' },
-                    { id: 'm6-4:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-5',
-                name: 'Visiting Hours',
-                subtitle: '',
-                tagline: 'Tagline for m6-5',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-5:gold-1', text: '' },
-                    { id: 'm6-5:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-6',
-                name: 'The Course of True Love - IV & V',
-                subtitle: '',
-                tagline: 'Tagline for m6-6',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-6:gold-1', text: '' },
-                    { id: 'm6-6:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-7',
-                name: 'Just a Social Call',
-                subtitle: '',
-                tagline: 'Tagline for m6-7',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-7:gold-1', text: '' },
-                    { id: 'm6-7:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-8',
-                name: 'A Rage Unleashed',
-                subtitle: '',
-                tagline: 'Tagline for m6-8',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-8:gold-1', text: '' },
-                    { id: 'm6-8:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-9',
-                name: 'The Delights of Van Horn',
-                subtitle: '',
-                tagline: 'Tagline for m6-9',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-9:gold-1', text: '' },
-                    { id: 'm6-9:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-10',
-                name: 'The Bridge to Nowhere',
-                subtitle: '',
-                tagline: 'Tagline for m6-10',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-10:gold-1', text: '' },
-                    { id: 'm6-10:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-11',
-                name: 'Archeology for Beginners',
-                subtitle: '',
-                tagline: 'Tagline for m6-11',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-11:gold-1', text: '' },
-                    { id: 'm6-11:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-12',
-                name: 'Honor, Amongst Thieves',
-                subtitle: '',
-                tagline: 'Tagline for m6-12',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-12:gold-1', text: '' },
-                    { id: 'm6-12:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-13',
-                name: 'Money Lending and Other Sins - VI & VII',
-                subtitle: '',
-                tagline: 'Tagline for m6-13',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-13:gold-1', text: '' },
-                    { id: 'm6-13:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-14',
-                name: 'Goodbye, Dear Friend',
-                subtitle: '',
-                tagline: 'Tagline for m6-14',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-14:gold-1', text: '' },
-                    { id: 'm6-14:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-15',
-                name: 'The Fine Art of Conversation',
-                subtitle: '',
-                tagline: 'Tagline for m6-15',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-15:gold-1', text: '' },
-                    { id: 'm6-15:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-16',
-                name: 'Favored Sons',
-                subtitle: '',
-                tagline: 'Tagline for m6-16',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-16:gold-1', text: '' },
-                    { id: 'm6-16:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-17',
-                name: 'Mrs. Sadie Adler, Widow - I & II',
-                subtitle: '',
-                tagline: 'Tagline for m6-17',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-17:gold-1', text: '' },
-                    { id: 'm6-17:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-18',
-                name: 'The King\'s Son',
-                subtitle: '',
-                tagline: 'Tagline for m6-18',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-18:gold-1', text: '' },
-                    { id: 'm6-18:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-19',
-                name: 'My Last Boy',
-                subtitle: '',
-                tagline: 'Tagline for m6-19',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-19:gold-1', text: '' },
-                    { id: 'm6-19:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-20',
-                name: 'Our Best Selves',
-                subtitle: '',
-                tagline: 'Tagline for m6-20',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-20:gold-1', text: '' },
-                    { id: 'm6-20:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'm6-21',
-                name: 'Red Dead Redemption',
-                subtitle: '',
-                tagline: 'Tagline for m6-21',
-                description: 'FIX ',
-                region: 'New Hanover',
-                gold: [
-                    { id: 'm6-21:gold-1', text: '' },
-                    { id: 'm6-21:gold-2', text: '' },
-                ]
-            }
+            { id: 'm6-1' },
+            { id: 'm6-2' },
+            { id: 'm6-3' },
+            { id: 'm6-4' },
+            { id: 'm6-5' },
+            { id: 'm6-6' },
+            { id: 'm6-7' },
+            { id: 'm6-8' },
+            { id: 'm6-9' },
+            { id: 'm6-10' },
+            { id: 'm6-11' },
+            { id: 'm6-12' },
+            { id: 'm6-13' },
+            { id: 'm6-14' },
+            { id: 'm6-15' },
+            { id: 'm6-16' },
+            { id: 'm6-17' },
+            { id: 'm6-18' },
+            { id: 'm6-19' },
+            { id: 'm6-20' },
+            { id: 'm6-21' }
         ],
     },
     {
@@ -1157,126 +146,17 @@ export const missionChapters: TrackedGroup[] = [
         label: 'Epilogue Part 1',
         color: 'var(--sage)',
         items: [
-            {
-                id: 'ep1-1',
-                name: 'The Wheel',
-                subtitle: '',
-                tagline: 'Tagline for ep1-1',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-1:gold-1', text: '' },
-                    { id: 'ep1-1:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep1-2',
-                name: 'Simple Pleasures',
-                subtitle: '',
-                tagline: 'Tagline for ep1-2',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-2:gold-1', text: '' },
-                    { id: 'ep1-2:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep1-3',
-                name: 'Fatherhood, for Beginners',
-                subtitle: '',
-                tagline: 'Tagline for ep1-3',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-3:gold-1', text: '' },
-                    { id: 'ep1-3:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep1-4',
-                name: 'Farming, for Beginners',
-                subtitle: '',
-                tagline: 'Tagline for ep1-4',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-4:gold-1', text: '' },
-                    { id: 'ep1-4:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep1-5',
-                name: 'Old Habits',
-                subtitle: '',
-                tagline: 'Tagline for ep1-5',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-5:gold-1', text: '' },
-                    { id: 'ep1-5:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep1-6',
-                name: 'Jim Milton Rides, Again?',
-                subtitle: '',
-                tagline: 'Tagline for ep1-6',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-6:gold-1', text: '' },
-                    { id: 'ep1-6:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep1-7',
-                name: 'Fatherhood, for Idiots',
-                subtitle: '',
-                tagline: 'Tagline for ep1-7',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-7:gold-1', text: '' },
-                    { id: 'ep1-7:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep1-8',
-                name: 'Motherhood',
-                subtitle: '',
-                tagline: 'Tagline for ep1-8',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-8:gold-1', text: '' },
-                    { id: 'ep1-8:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep1-9',
-                name: 'Gainful Employment',
-                subtitle: '',
-                tagline: 'Tagline for ep1-9',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-9:gold-1', text: '' },
-                    { id: 'ep1-9:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep1-10',
-                name: 'Home of the Gentry?',
-                subtitle: '',
-                tagline: 'Tagline for ep1-10',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep1-10:gold-1', text: '' },
-                    { id: 'ep1-10:gold-2', text: '' },
-                ]
-            }
+            { id: 'ep1-1' },
+            { id: 'ep1-2' },
+            { id: 'ep1-3' },
+            { id: 'ep1-4' },
+            { id: 'ep1-5' },
+            { id: 'ep1-6' },
+            { id: 'ep1-7' },
+            { id: 'ep1-8' },
+            { id: 'ep1-9' },
+            { id: 'ep1-10' },
+            { id: 'ep1-11' }
         ],
     },
     {
@@ -1285,138 +165,299 @@ export const missionChapters: TrackedGroup[] = [
         label: 'Epilogue Part 2',
         color: 'var(--slate)',
         items: [
-            {
-                id: 'ep2-1',
-                name: 'Bare Knuckle Friendships',
-                subtitle: '',
-                tagline: 'Tagline for ep2-1',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-1:gold-1', text: '' },
-                    { id: 'ep2-1:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-2',
-                name: 'Home Improvement for Beginners',
-                subtitle: '',
-                tagline: 'Tagline for ep2-2',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-2:gold-1', text: '' },
-                    { id: 'ep2-2:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-3',
-                name: 'An Honest Day\'s Labors',
-                subtitle: '',
-                tagline: 'Tagline for ep2-3',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-3:gold-1', text: '' },
-                    { id: 'ep2-3:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-4',
-                name: 'The Tool Box',
-                subtitle: '',
-                tagline: 'Tagline for ep2-4',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-4:gold-1', text: '' },
-                    { id: 'ep2-4:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-5',
-                name: 'A New Jerusalem',
-                subtitle: '',
-                tagline: 'Tagline for ep2-5',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-5:gold-1', text: '' },
-                    { id: 'ep2-5:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-6',
-                name: 'A Quick Favor for an Old Friend',
-                subtitle: '',
-                tagline: 'Tagline for ep2-6',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-6:gold-1', text: '' },
-                    { id: 'ep2-6:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-7',
-                name: 'Uncle\'s Bad Day',
-                subtitle: '',
-                tagline: 'Tagline for ep2-7',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-7:gold-1', text: '' },
-                    { id: 'ep2-7:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-8',
-                name: 'Trying Again',
-                subtitle: '',
-                tagline: 'Tagline for ep2-8',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-8:gold-1', text: '' },
-                    { id: 'ep2-8:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-9',
-                name: 'A Really Big Bastard',
-                subtitle: '',
-                tagline: 'Tagline for ep2-9',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-9:gold-1', text: '' },
-                    { id: 'ep2-9:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-10',
-                name: 'A New Future Imagined',
-                subtitle: '',
-                tagline: 'Tagline for ep2-10',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-10:gold-1', text: '' },
-                    { id: 'ep2-10:gold-2', text: '' },
-                ]
-            },
-            {
-                id: 'ep2-11',
-                name: 'American Venom',
-                subtitle: '',
-                tagline: 'Tagline for ep2-11',
-                description: 'FIX ',
-                region: 'West Elizabeth',
-                gold: [
-                    { id: 'ep2-11:gold-1', text: '' },
-                    { id: 'ep2-11:gold-2', text: '' },
-                ]
-            }
+            { id: 'ep2-1' },
+            { id: 'ep2-2' },
+            { id: 'ep2-3' },
+            { id: 'ep2-4' },
+            { id: 'ep2-5' },
+            { id: 'ep2-6' },
+            { id: 'ep2-7' },
+            { id: 'ep2-8' },
+            { id: 'ep2-9' },
+            { id: 'ep2-10' },
+            { id: 'ep2-11' },
+            { id: 'ep2-12' }
         ],
     }
 ]
+
+type MissionDetails = readonly [
+    name: string,
+    giver: string,
+    description: string,
+    region: string,
+    gold?: readonly string[],
+]
+
+const missionDetails: Record<string, MissionDetails> = {
+    'm1-1': ['Outlaws from the West', 'Dutch van der Linde', 'After fleeing a failed robbery, the gang takes shelter from a blizzard and searches an abandoned settlement for supplies.', 'Ambarino', ['Take no damage during the shootout.', 'Loot 6 or more items from Adler Ranch.', 'Complete with at least 80% accuracy.']],
+    'm1-2': ['Enter, Pursued by a Memory', 'Abigail Roberts', 'Arthur and Javier ride into the snow to search for John, who has not returned from scouting.', 'Ambarino', ['Kill all the wolves without taking any damage.', 'Complete with at least 80% accuracy.']],
+    'm1-3': ['Old Friends', 'Bill Williamson', "Dutch leads an attack on an O'Driscoll camp to learn more about their planned train robbery.", 'Ambarino', ['Catch and hogtie Kieran within 45 seconds.', "Kill 3 O'Driscolls in the same Dead Eye use.", 'Complete within 15 minutes and 30 seconds.', 'Get 15 headshots.', 'Complete the mission without taking any health items.']],
+    'm1-4': ['The Aftermath of Genesis', 'Simon Pearson', 'With the gang short on food, Pearson sends Arthur and Charles out to hunt deer.', 'Ambarino', ['Kill each deer with one arrow.', 'Do not spook either deer.', 'Get a clean kill on the second deer.']],
+    'm1-5': ['Who the Hell is Leviticus Cornwall?', 'Dutch van der Linde', "The gang uses stolen plans and explosives to rob Leviticus Cornwall's private train.", 'Ambarino', ['Save Lenny when he is hanging from the train.', 'After stopping the train, take out the guards within 1 minute and 30 seconds.', 'Take no damage during the shootout.', 'Get 10 headshots.', 'Complete the mission without taking any health items.']],
+    'm1-6': ['Eastward Bound', 'Dutch van der Linde', 'As the weather clears, the gang leaves the mountains and travels to its new camp at Horseshoe Overlook.', 'New Hanover', ['Pick up Javier when entering Horseshoe Overlook.', 'Complete within 6 minutes.']],
+
+    'm2-1': ['Polite Society, Valentine Style', 'Uncle', 'Arthur and Uncle take Karen, Tilly and Mary-Beth into Valentine, where the women look for new opportunities.', 'New Hanover', ['Return the lost wagon horse to its owner.', 'Find Karen within 45 seconds.']],
+    'm2-2': ['Americans at Rest', 'Javier Escuella', "A visit to Valentine's saloon turns into a brawl involving Arthur, Javier, Charles and Bill.", 'New Hanover', ['Save Javier within 15 seconds.', 'Defeat Tommy within 1 minute and 30 seconds.']],
+    'm2-3': ['Money Lending and Other Sins I & II', 'Leopold Strauss', 'Strauss sends Arthur to collect debts from three people around the Heartlands.', 'New Hanover'],
+    'm2-4': ['Good, Honest, Snake Oil', 'Curtis Malloy', 'Acting on the sheriff’s tip, Arthur tracks down wanted outlaw Benedict Allbright and brings him to Valentine.', 'New Hanover', ['Stop Benedict Allbright falling off the cliff.', 'Hogtie Allbright within 1 minute and 15 seconds.', 'Return Allbright to the sheriff within 1 minute and 30 seconds.']],
+    'm2-5': ['Who is Not Without Sin', 'Reverend Swanson', 'Arthur finds the missing Reverend Swanson gambling and gets him out of trouble near Flatneck Station.', 'New Hanover', ['Win 2 hands of Poker.', 'Return the Reverend to camp within 2 minutes and 5 seconds.']],
+    'm2-6': ['Money Lending and Other Sins III', 'Leopold Strauss', 'Arthur visits Thomas Downes to collect Strauss’s debt, but finds the struggling farmer in poor health.', 'New Hanover', ['Complete within 2 minutes and 10 seconds.']],
+    'm2-7': ['Exit Pursued by a Bruised Ego', 'Hosea Matthews', 'Arthur and Hosea go hunting for a legendary bear and stop in Valentine to sell or keep a horse.', 'New Hanover', ['Track the bear within 1 minute and 30 seconds.', 'Shoot the bear at least 6 times.', 'Complete within 12 minutes.']],
+    'm2-8': ['Paying a Social Call', 'Dutch van der Linde', "Kieran guides Arthur, John and Bill to an O'Driscoll hideout at Six Point Cabin.", 'New Hanover', ["Silently kill 4 O'Driscolls.", 'Get 12 headshots.', 'Complete with at least 80% accuracy.', 'Complete the mission without taking any health items.']],
+    'm2-9': ['A Strange Kindness', 'Dutch van der Linde', 'Arthur and Charles scout a new camp and discover a family in danger along the way.', 'New Hanover', ['Return the captive to his family within 1 minute and 40 seconds.', 'Get 5 headshots.', 'Complete with at least 80% accuracy.', 'Complete the mission without taking any health items.']],
+    'm2-10': ['The First Shall Be Last', 'Josiah Trelawny', 'Arthur, Javier and Charles follow a lead on Sean and attempt to rescue him from bounty hunters.', 'West Elizabeth', ['Silently kill the bounty hunters by the river with Javier.', 'Shoot the rope to free Sean.', 'Get 10 headshots.', 'Complete the mission without taking any health items.']],
+    'm2-11': ['A Quiet Time', 'Dutch van der Linde', 'Arthur takes Lenny into Valentine for a drink, but their evening becomes increasingly chaotic.', 'New Hanover', ['Try to make amends with an old rival.', 'Catch Lenny in the act.', "Don't get arrested."]],
+    'm2-12': ['Blessed are the Meek?', 'Dutch van der Linde', 'Arthur travels to Strawberry to break Micah out of jail after a deadly robbery.', 'West Elizabeth', ['While escaping, kill all mounted lawmen within 55 seconds.', 'Get 15 headshots.', 'Complete with at least 70% accuracy.', 'Complete the mission without taking any health items.']],
+    'm2-13': ['A Fisher of Men', 'Abigail Roberts', 'Arthur takes Jack fishing and spends time with him away from camp.', 'New Hanover', ['After arriving at the river, catch a fish within 1 minute and 30 seconds.', 'Complete within 7 minutes and 20 seconds.']],
+    'm2-14': ['An American Pastoral Scene', 'Micah Bell', 'Arthur and Micah ambush a stagecoach carrying bank funds.', 'West Elizabeth', ['Headshot each of the mounted guards protecting the wagon.', 'Get 10 kills in Dead Eye.', 'Complete within 6 minutes.', 'Complete the mission without taking any health items.']],
+    'm2-15': ['The Sheep and the Goats', 'John Marston', 'Arthur helps John drive a flock of sheep to Valentine, where a confrontation with Cornwall erupts into a shootout.', 'New Hanover', ['Herd all the sheep into the pen in Valentine.', 'Get 25 headshots.', 'Complete with at least 70% accuracy.', 'Complete the mission without taking any health items.']],
+    'm2-16': ['Pouring Forth Oil I', 'John Marston', 'John and Arthur begin planning a train robbery and look for an oil wagon to block the tracks.', 'New Hanover'],
+    'm2-17': ['Pouring Forth Oil II', 'John Marston', 'Arthur steals an oil wagon that the gang plans to use in the train robbery.', 'New Hanover', ['Deliver the wagon to the drop off within 1 minute and 45 seconds.']],
+    'm2-18': ['Pouring Forth Oil III', 'John Marston', 'Arthur and John discuss the final arrangements for their planned train robbery.', 'New Hanover'],
+    'm2-19': ['Pouring Forth Oil IV', 'John Marston', 'Arthur, John, Charles and Sean stop a train and rob its passengers and baggage car.', 'New Hanover', ['Kill all the train guards before Sean fires a shot.', 'Clear the baggage car of loot.', 'Escape the law within 1 minute and 30 seconds.', 'Get 10 kills in Dead Eye.', 'Complete the mission without taking any health items.']],
+    'm2-20': ['We Loved Once and True I & II', 'Mary Linton', 'Mary asks Arthur to help her find Jamie and deal with a family matter.', 'New Hanover'],
+    'm2-21': ['We Loved Once and True III', 'Mary Linton', 'Arthur finds Jamie with the Chelonians and tries to persuade him to return to Mary.', 'New Hanover', ['Peacefully convince the Chelonians to let you take Jamie.', 'Return Jamie to Mary within 2 minutes.']],
+    'm2-22': ['The Spines of America', 'Hosea Matthews', 'Hosea and Arthur rob a stagecoach at Carmody Dell to prove themselves to the Emerald Ranch fence.', 'New Hanover', ['Loot everything from Carmody Dell.', "Don't get spotted.", 'Deliver the wagon to Emerald Ranch within 1 minute and 10 seconds.']],
+
+    'm3-1': ['Further Questions of Female Suffrage', 'Abigail Roberts', 'Arthur escorts Sadie into Rhodes to gather supplies, where they are attacked by Raiders.', 'Lemoyne', ['Fend off the Lemoyne Raiders in less than 1 minute.', 'Get 5 headshots.', 'Complete with at least 85% accuracy.', 'Complete the mission without taking any health items.']],
+    'm3-2': ['The New South', 'Dutch van der Linde', 'Arthur joins Dutch and Hosea on a fishing trip that is interrupted by a wanted man.', 'Lemoyne', ['Knock out Anders Anderson without taking a hit.', 'Catch and return Anders Anderson to jail within 5 minutes and 30 seconds.', 'Catch a fish with Dutch and Hosea.']],
+    'm3-3': ['The Course of True Love - I & II', 'Beau Gray', 'Beau asks Arthur to investigate the Gray estate and deliver a letter to Penelope Braithwaite.', 'Lemoyne', ['Reach Penelope without getting spotted.', 'Complete within 3 minutes.']],
+    'm3-4': ['The Course of True Love - III', 'Beau Gray', 'Arthur drives Penelope and fellow suffrage supporters through Rhodes during their rally.', 'Lemoyne', ['Complete within 4 minutes and 15 seconds.']],
+    'm3-5': ['American Distillation', 'Dutch van der Linde', 'Arthur, Dutch and Bill help the sheriff raid a moonshine operation and steal a wagon of liquor.', 'Lemoyne', ['Win the race back to camp.', 'Complete the mission without taking any damage.', 'Get 10 headshots.', 'Complete with at least 70% accuracy.']],
+    'm3-6': ['An Honest Mistake', 'Uncle', 'Uncle leads Arthur, Charles and Bill into a payroll robbery that turns into a fight.', 'Lemoyne', ['Save Uncle when he is overpowered.', 'Get 20 headshots.', 'Complete with at least 80% accuracy.', 'Complete the mission without taking any health items.']],
+    'm3-7': ['Preaching Forgiveness as He Went', 'Lenny Summers', 'Arthur and Lenny ride to Shady Belle to recover weapons from the Lemoyne Raiders.', 'Lemoyne', ['Kill 10 Lemoyne Raiders with a long scoped rifle.', 'Complete within 11 minutes and 30 seconds.', 'Complete with at least 70% accuracy.', 'Complete the mission without taking any health items.']],
+    'm3-8': ['Sodom? Back to Gomorrah', 'Bill Williamson', 'The gang robs the Valentine bank, with Karen creating a distraction while Arthur opens the safes.', 'New Hanover', ['Loot all the safes.', 'Headshot 5 mounted lawmen during the horseback escape.', 'Get to Downes Ranch within 1 minute and 55 seconds.', 'Complete with at least 70% accuracy.', 'Complete the mission without taking any health items.']],
+    'm3-9': ['Advertising, the New American Art', 'Abigail Roberts / Hosea Matthews', 'Hosea and Arthur distribute the Braithwaites’ stolen moonshine at a Rhodes saloon.', 'Lemoyne', ['Headshot 5 Lemoyne Raiders in the saloon.', 'Complete with at least 90% accuracy.', 'Complete the mission without taking any health items.']],
+    'm3-10': ['Magicians for Sport', 'Trelawny', 'Arthur and Charles search for Trelawny after he disappears from his caravan.', 'Lemoyne', ['Inspect all the clues in Trelawny’s caravan.', 'While tracking, stay within 30 feet of Trelawny’s trail.', 'Kill 2 bounty hunters in the cornfields within 1 minute.', 'Complete the mission without taking any health items.']],
+    'm3-11': ['Horse Flesh for Dinner', 'John Marston', 'Arthur, John and Javier attempt to steal prized horses from the Braithwaite estate.', 'Lemoyne', ['Kill the stable hand showing you the horses.', 'Catch the stallion within 10 seconds.', 'Get 5 headshots.']],
+    'm3-12': ['Friends in Very Low Places', 'Trelawny', 'Trelawny connects Arthur with a post office clerk who can help locate stagecoaches to rob.', 'Lemoyne', ['Complete the mission without being spotted.', 'Complete within 8 minutes and 10 seconds.']],
+    'm3-13': ['The Fine Joys of Tobacco', 'Hosea Matthews', 'Arthur and Sean work with the Braithwaites to set fire to the Grays’ tobacco fields.', 'Lemoyne', ['Silently kill the Gray Sean distracts in the wagon store.', 'Douse the fields within 2 minutes and 20 seconds.', 'Kill 5 Grays during the escape.', 'Complete the mission without taking any health items.']],
+    'm3-14': ['Blessed are the Peacemakers', 'Micah Bell', 'Arthur watches a meeting between Dutch and Colm, but is captured and left in the O’Driscolls’ camp.', 'Lemoyne', ['Free yourself and perform self-surgery within 1 minute.', 'Recover your weapons from the O’Driscolls’ camp.', 'Kill the O’Driscoll gang members that beat and shot you.', 'Escape the O’Driscolls’ camp without being spotted.']],
+    'm3-15': ['A Short Walk in a Pretty Town', 'Dutch van der Linde', 'Arthur, Micah, Bill and Sean meet the Gray family in Rhodes, where a trap quickly unfolds.', 'Lemoyne', ['Kill 3 lawmen in Dead Eye while saving Bill.', 'Complete using only sidearms.', 'Complete within 4 minutes and 30 seconds.', 'Get 20 headshots.', 'Complete the mission without taking any health items.']],
+    'm3-16': ['Blood Feuds, Ancient and Modern', 'Dutch van der Linde', 'The gang attacks Braithwaite Manor after Jack is taken, hoping to bring him home.', 'Lemoyne', ['Headshot Gareth and Gerald Braithwaite.', 'Get 20 headshots.', 'Complete with at least 85% accuracy.', 'Complete the mission without taking any health items.']],
+    'm3-17': ['The Battle of Shady Belle', 'John Marston', 'Arthur and John clear the Raiders from Shady Belle so the gang can move into the manor.', 'Lemoyne', ['Kill all the Lemoyne Raiders in Shady Belle.', 'Clear two bodies from Shady Belle within 1 minute and 40 seconds.', 'Complete within 11 minutes.']],
+
+    'm4-1': ['The Joys of Civilization', 'Dutch van der Linde', 'Dutch and Arthur seek information about Angelo Bronte in a Saint Denis saloon.', 'Lemoyne', ['Catch the street urchin before he reaches the market.', 'Complete within 5 minutes and 30 seconds.']],
+    'm4-2': ['Help a Brother Out', 'Brother Dorkins', 'Brother Dorkins asks Arthur to investigate a Saint Denis shop suspected of holding captives.', 'Lemoyne', ['Find the captives without threatening the store owner.', 'Complete within 2 minutes and 45 seconds.']],
+    'm4-3': ['Brothers and Sisters, One and All', 'Sister Calderon', 'Arthur chases a street thief who has stolen Sister Calderon’s crucifix.', 'Lemoyne', ['Find the kid within 19 seconds.']],
+    'm4-4': ['Angelo Bronte, a Man of Honor', 'Dutch van der Linde', 'Arthur, John and Dutch retrieve Jack from Bronte, who asks them to clear out the local cemetery.', 'Lemoyne', ['Encounter the dog and the drunk.', "Don't get spotted by the law.", 'Complete within 10 minutes and 40 seconds.', 'Get 4 headshots.']],
+    'm4-5': ['No, No, and Thrice, No', 'Susan Grimshaw', 'Arthur and Susan travel to the Foreman hideout to rescue Tilly.', 'Lemoyne', ['Kill both of the Foreman boys yourself during the chase.', 'Complete with at least 90% accuracy.']],
+    'm4-6': ['Fatherhood and Other Dreams - I & II', 'Mary Linton', 'Mary asks Arthur to help recover a family heirloom her father sold to settle gambling debts.', 'Lemoyne', ['Catch the wagon and take it to the secluded spot within 1 minute and 45 seconds.', 'Take Mary to the theater.']],
+    'm4-7': ['The Gilded Cage', 'Hosea Matthews / Dutch van der Linde', 'The gang attends a Saint Denis party hosted by the mayor and looks for work with Bronte.', 'Lemoyne', ['While at the party, pour some drinks, compliment a guest’s attire, accept a gift and save a life.', 'Follow the servant without being detected.']],
+    'm4-8': ['A Fine Night of Debauchery', 'Josiah Trelawny / Leopold Strauss', 'Arthur enters a riverboat poker tournament to help the gang secure money for its next score.', 'Lemoyne', ['Win the game of Poker without Strauss’s help.', 'After your cover is blown, escape the boat in under 35 seconds.', 'Get 5 headshots.', 'Complete the mission without taking any health items.']],
+    'm4-9': ['American Fathers - I & II', 'Dutch van der Linde', 'Arthur and Eagle Flies break into Cornwall Kerosene & Tar to obtain a report on the reservation’s oil.', 'Lemoyne', ['Infiltrate the factory by hiding in the wagon.', 'Reach Danbury’s office without being detected.', 'Kill all the horseback pursuers during the escape.', 'Complete with at least 80% accuracy.']],
+    'm4-10': ['Horsemen, Apocalypses', 'Dutch van der Linde', 'As the gang plans a trolley robbery, O’Driscolls attack the camp and leave a grim message.', 'Lemoyne', ['Shoot the O’Driscolls in the boat before they disembark.', 'Complete using only sidearms.', 'Complete with at least 70% accuracy.', 'Get 15 headshots.', 'Complete the mission without taking any health items.']],
+    'm4-11': ['Urban Pleasures', 'Dutch van der Linde', 'Dutch, Arthur and Lenny rob a Saint Denis trolley station after receiving a tip from Bronte.', 'Lemoyne', ['Rob all the customers in the trolley station.', 'Kill 10 lawmen while on the trolley.', 'Prevent any lawmen jumping on the back of the wagon.', 'Shoot the dynamite Lenny throws.', 'Complete the mission without taking any health items.']],
+    'm4-12': ['Country Pursuits', 'Dutch van der Linde', 'The gang seeks a boat from fisherman Thomas to reach Bronte’s mansion by water.', 'Lemoyne', ['Return Jules to the skiff within 1 minute and 40 seconds.', 'Shoot the Bullgator 5 times.']],
+    'm4-13': ['Revenge is a Dish Best Eaten', 'Dutch van der Linde', 'The gang attacks Bronte’s mansion by river to end his threat and take revenge.', 'Lemoyne', ["Search every room in Bronte's mansion.", 'Carry Bronte to the skiff within 1 minute and 30 seconds.', 'Get 20 headshots.', 'Complete the mission without taking any health items.']],
+    'm4-14': ['Banking, the Old American Art', 'Dutch van der Linde', 'The gang attempts a major Saint Denis bank robbery, hoping one final score will let them leave.', 'Lemoyne', ['Crack the safe without making any mistakes.', 'Complete using only sidearms.', 'Get 25 headshots.', 'Complete the mission without taking any health items.']],
+
+    'm5-1': ['Welcome to the New World', '', 'After a shipwreck, Arthur washes ashore on Guarma and searches for the rest of the gang.', 'Guarma', ['Do not fall behind while walking with the chain gang.', 'Get 10 headshots.']],
+    'm5-2': ['Savagery Unleashed', 'Hercule Fontaine', 'Arthur joins Hercule and Leon to free workers being held on the island.', 'Guarma', ['Release all the workers within 4 seconds.', 'Complete within 5 minutes and 40 seconds.', 'Get 8 headshots.']],
+    'm5-3': ['A Kind and Benevolent Despot', 'Dutch van der Linde', 'Dutch and Arthur enlist Gloria’s help to infiltrate Fussar’s compound and rescue Javier.', 'Guarma', ['Get Javier to safety in under 2 minutes.', 'Get 10 headshots.']],
+    'm5-4': ['Hell Hath No Fury', 'Hercule Fontaine', 'The gang helps Hercule defend the island fortress so they can escape Guarma by boat.', 'Guarma', ['Prevent 4 boats from reaching the shore.', 'Destroy the naval ship without missing a shot.', 'Complete with at least 70% accuracy.']],
+    'm5-5': ['Paradise Mercifully Departed', 'Hercule Fontaine', 'Arthur and the gang destroy coastal gun batteries and rescue the ship’s captain to escape the island.', 'Guarma', ['Kill the first 2 sentries without being spotted.', 'Escort the captain to the boat within 1 minute and 45 seconds.', 'Complete within 6 minutes and 45 seconds.', 'Get 25 headshots.']],
+    'm5-6': ['Dear Uncle Tacitus', 'Dutch van der Linde', 'Arthur returns to Shady Belle to look for the gang after escaping Guarma.', 'Lemoyne', ['Leave Shady Belle without being detected by the Pinkertons.', 'Complete within 8 minutes.']],
+    'm5-7': ['Fleeting Joy', 'Dutch van der Linde', 'Arthur reunites with the gang at Lakay just as Milton and the Pinkertons launch an attack.', 'Lemoyne', ['Kill 2 Pinkertons during the Dead Eye ambush.', 'Get 5 headshots with the Gatling gun.', 'Get at least 70% accuracy with the Gatling gun.', 'Complete the mission without taking any health items.']],
+    'm5-8': ['A Fork in the Road', 'Doctor Joseph R. Barnes', 'Arthur collapses in Saint Denis and receives a life-changing diagnosis from a doctor.', 'Lemoyne', ['Complete within 3 minutes and 5 seconds.']],
+    'm5-9': ["That's Murfree Country", 'Dutch van der Linde', 'Arthur and Charles search Beaver Hollow for a new place to camp and encounter the Murfree Brood.', 'New Hanover', ['Deliver Meredith to her mother within 2 minutes.', 'Get 15 headshots.', 'Complete with at least 85% accuracy.', 'Complete the mission without taking any health items.']],
+
+    'm6-1': ['Icarus and Friends', 'Sadie Adler', 'Sadie arranges a hot-air balloon flight for Arthur to scout Sisika Penitentiary.', 'Lemoyne', ['Keep the balloon at the correct altitude for the entire journey.', 'Get 5 headshots from the balloon.', 'Complete with at least 70% accuracy.', 'Complete the mission without taking any health items.']],
+    'm6-2': ['Of Men and Angels', 'Sister Calderon', 'Arthur visits Sister Calderon in Saint Denis and offers help to the poor.', 'Lemoyne'],
+    'm6-3': ['Do Not Seek Absolution - I', 'Edith Downes', 'Edith tells Arthur that her son Archie is being mistreated at the Annesburg mine.', 'New Hanover', ['Complete within 1 minute and 20 seconds.']],
+    'm6-4': ['Do Not Seek Absolution - II', 'Edith Downes', 'Arthur returns to Annesburg to help Edith and Archie leave their difficult situation.', 'New Hanover', ['Find Edith Downes within 1 minute and 10 seconds.']],
+    'm6-5': ['Visiting Hours', 'Sadie Adler', 'Arthur and Sadie row to Sisika Penitentiary in an attempt to break John out.', 'Lemoyne', ['Get headshots on both prison guards when sniping from the tower.', 'Escape to the boat within 2 minutes and 45 seconds.', 'Complete within 9 minutes.', 'Complete with at least 80% accuracy.', 'Complete the mission without taking any health items.']],
+    'm6-6': ['The Course of True Love - IV & V', 'Beau Gray / Penelope Braithwaite', 'Arthur helps Beau and Penelope escape their families by getting them onto a train.', 'Lemoyne', ['Headshot 5 of the Braithwaites as they pursue the train.', 'Complete within 7 minutes and 30 seconds.']],
+    'm6-7': ['Just a Social Call', 'Dutch van der Linde', 'Arthur joins Dutch and Micah in Annesburg to confront Cornwall.', 'New Hanover', ['Headshot 3 mounted enemies.', 'After killing Cornwall, reach the horses within 2 minutes and 45 seconds.', 'Complete the mission without taking any health items.']],
+    'm6-8': ['A Rage Unleashed', 'Eagle Flies', 'Eagle Flies and the gang raid an army boat to recover horses taken from the Wapiti reservation.', 'New Hanover', ['Knock out 2 soldiers on the boat.', 'Round up the horses and reach shore within 1 minute and 30 seconds.']],
+    'm6-9': ['The Delights of Van Horn', 'Bill Williamson', 'Arthur and Bill ambush an army convoy carrying dynamite through Van Horn.', 'New Hanover', ['Headshot 5 soldiers with a long scoped rifle.', 'Complete with at least 85% accuracy.']],
+    'm6-10': ['The Bridge to Nowhere', 'John Marston', 'Arthur and John plant explosives on Bacchus Bridge to disrupt the army’s transport route.', 'New Hanover', ['Plant the dynamite within 1 minute and 35 seconds.', 'Escape the oncoming train within 19 seconds.']],
+    'm6-11': ['Archeology for Beginners', 'Rains Fall', 'Arthur visits Rains Fall and helps recover sacred items from a site in the Grizzlies.', 'Ambarino', ['Recover the relics without being detected.', 'Recover the relics within 1 minute and 30 seconds.']],
+    'm6-12': ['Honor, Amongst Thieves', 'Captain Lyndon Monroe', 'Captain Monroe asks Arthur to recover vaccines diverted from the Wapiti reservation.', 'New Hanover', ['Recover the vaccine without being detected.', 'Complete within 5 minutes.']],
+    'm6-13': ['Money Lending and Other Sins - VI & VII', 'Leopold Strauss', 'Strauss sends Arthur to collect two final debts from J. John Weathers and Arthur Londonderry.', 'New Hanover'],
+    'm6-14': ['Goodbye, Dear Friend', 'Sadie Adler / Dutch van der Linde', "Sadie, Arthur and Dutch travel to Saint Denis to see Colm O'Driscoll's execution.", 'Lemoyne', ["Find Colm's backup within 45 seconds.", 'Get 8 headshots with a long scoped rifle.', 'Complete within 6 minutes and 30 seconds.']],
+    'm6-15': ['The Fine Art of Conversation', 'Rains Fall', 'Arthur attends a meeting between Rains Fall and Colonel Favours to seek peace.', 'Ambarino', ["Kill a pursuer's horse during the escape.", 'Complete within 9 minutes and 30 seconds.', 'Complete with at least 75% accuracy.', 'Complete the mission without taking any health items.']],
+    'm6-16': ['Favored Sons', 'Eagle Flies', 'Dutch persuades Eagle Flies to ambush an army patrol and divert attention from the gang.', 'New Hanover', ['Kill the soldier on the cannon within 45 seconds.', 'Get 35 headshots.', 'Complete the mission without taking any health items.']],
+    'm6-17': ['Mrs. Sadie Adler, Widow - I & II', 'Sadie Adler', 'Sadie and Arthur track down the O’Driscolls responsible for the attack on Sadie’s home.', 'New Hanover'],
+    'm6-18': ["The King's Son", 'Charles Smith', 'Arthur and Charles infiltrate Fort Wallace to rescue Eagle Flies from the army.', 'New Hanover', ['While infiltrating Fort Wallace, headshot every soldier blocking your way to Eagle Flies.', 'Kill 15 enemies while escaping in the canoe.', 'Complete with at least 80% accuracy.']],
+    'm6-19': ['My Last Boy', 'Dutch van der Linde / Eagle Flies', 'Eagle Flies leads a raid on Cornwall Kerosene & Tar despite Rains Fall’s opposition.', 'New Hanover', ['Save Paytah.', 'Get 30 headshots.', 'Complete with at least 80% accuracy.', 'Complete the mission without taking any health items.']],
+    'm6-20': ['Our Best Selves', 'Dutch van der Linde', 'The gang attempts its final train robbery, targeting an army payroll and supplies.', 'New Hanover', ['Get a headshot in Dead Eye after jumping from Dutch’s horse.', 'Complete within 11 minutes.', 'Fight through the train with at least 80% accuracy.', 'Complete the mission without taking any health items.']],
+    'm6-21': ['Red Dead Redemption', 'Abigail Roberts', 'After Abigail is captured, Arthur and Sadie ride to Van Horn to rescue her.', 'New Hanover', ['Get 7 headshots while covering Sadie from the lighthouse.', 'After Sadie is captured, reach Abigail and Sadie within 1 minute.', 'Complete with at least 70% accuracy.', 'Complete the mission without taking any health items.']],
+
+    'ep1-1': ['The Wheel', 'Abigail Roberts', 'Years after the gang’s downfall, John, Abigail and Jack reach Strawberry and look for work.', 'West Elizabeth', ['Reach Pronghorn Ranch without dropping any supplies.', 'Reclaim the wagon within 1 minute.']],
+    'ep1-2': ['Simple Pleasures', 'Tom Dickens', 'Using the name Jim Milton, John starts work as a ranch hand at Pronghorn Ranch.', 'West Elizabeth', ['When milking, fill a bucket within 10 seconds.', 'Complete within 5 minutes and 15 seconds.']],
+    'ep1-3': ['Fatherhood, for Beginners', 'Tom Dickens', 'John takes on ranch duties while the other workers are busy and Mr. Geddes is away.', 'West Elizabeth', ['Tire out Jeremiah within 45 seconds.', 'Feed Jeremiah a treat.', 'Teach Jack to ride without his horse bucking him off.', 'Win the race back to Pronghorn Ranch.']],
+    'ep1-4': ['Farming, for Beginners', 'Abe', 'John works on the ranch fence and helps manage the livestock.', 'West Elizabeth', ['Fix the first section of fence in 1 minute and 30 seconds.', 'Avoid being hit by the bull.']],
+    'ep1-5': ['Old Habits', 'Tom Dickens', 'A confrontation with the Laramie gang breaks out at Pronghorn Ranch.', 'West Elizabeth', ['Defeat the Laramie without taking a hit.', 'Defeat the Laramie within 25 seconds.']],
+    'ep1-6': ['Jim Milton Rides, Again?', 'Mr. Geddes', 'A night raid at the ranch forces John to defend his new home from the Laramies.', 'West Elizabeth', ['Get 10 kills while dual wielding sidearms.', 'Get 15 headshots.', 'Complete the mission without taking any health items.']],
+    'ep1-7': ['Fatherhood, for Idiots', 'Abigail Roberts', 'John takes Jack to Strawberry on an errand for Geddes and Abigail.', 'West Elizabeth', ['Kill all 3 enemies in Dead Eye.', 'After the confrontation, return to Pronghorn Ranch within 1 minute and 30 seconds.']],
+    'ep1-8': ['Motherhood', 'Abigail Roberts', 'A telegram from Sadie prompts John to leave Pronghorn Ranch.', 'West Elizabeth', ['Complete within 1 minute and 30 seconds.']],
+    'ep1-9': ['Gainful Employment', 'Sadie Adler', 'John meets Sadie in Valentine and helps her hunt down a wanted man.', 'New Hanover', ['After arriving in Strawberry, locate the bounty within 30 seconds.', 'After mounting your horse, catch and hogtie the bounty within 1 minute and 15 seconds.']],
+    'ep1-10': ['Home of the Gentry?', 'John Marston', 'Before buying Beecher’s Hope, John inspects the property and removes its illegal occupants.', 'West Elizabeth', ['Complete within 2 minutes and 30 seconds.']],
+    'ep1-11': ['The Landowning Classes', 'John Marston', 'John uses a credit reference from Geddes to arrange the purchase of Beecher’s Hope.', 'West Elizabeth'],
+
+    'ep2-1': ['Bare Knuckle Friendships', 'Uncle', 'Uncle tells John that Charles is in Saint Denis, and the two ride there to find him.', 'Lemoyne', ['After arriving in Saint Denis, find Charles within 1 minute and 50 seconds.', 'Kill all of Guido Martelli’s men within 10 seconds.']],
+    'ep2-2': ['Home Improvement for Beginners', 'Uncle', 'John, Uncle and Charles tear down the old shack at Beecher’s Hope.', 'West Elizabeth', ['Complete within 18 seconds.']],
+    'ep2-3': ["An Honest Day's Labors", 'Sadie Adler', 'John helps Sadie recover a captured bounty from a rival hunter near Blackwater.', 'West Elizabeth', ["Kill all of Langton's men during the horseback escape.", 'After choosing your approach, escape with Shane Finley within 5 minutes.', 'Complete with at least 70% accuracy.', 'Complete the mission without taking any health items.']],
+    'ep2-4': ['The Tool Box', 'Charles Smith', 'John and Charles escort lumber to Beecher’s Hope while protecting it from the Skinner Brothers.', 'West Elizabeth', ['Headshot all Skinner Brothers hiding up trees.', 'Find Mr. Wayne within 2 minutes and 15 seconds.', 'Complete using only sidearms.', 'Complete the mission without taking any health items.']],
+    'ep2-5': ['A New Jerusalem', 'Charles Smith', 'Charles helps John build the new ranch house at Beecher’s Hope.', 'West Elizabeth', ['Hammer the nails in with 80% accuracy.', 'Complete within 3 minutes and 35 seconds.']],
+    'ep2-6': ['A Quick Favor for an Old Friend', 'Sadie Adler', 'Sadie asks John to help capture wanted outlaw Ramon Cortez.', 'Lemoyne', ['Force Cortez’s men to flee from Rhodes within 30 seconds.', 'Get 5 headshots while covering Sadie with a long scoped rifle.', 'Get 4 hip fire kills.', 'Complete the mission without taking any health items.']],
+    'ep2-7': ["Uncle's Bad Day", 'Charles Smith', 'John and Charles search for Uncle after the Skinner Brothers kidnap him.', 'West Elizabeth', ['Get 5 headshots using the bow.', 'After freeing Uncle, return to Beecher’s Hope within 3 minutes and 10 seconds.', 'Complete with at least 80% accuracy.', 'Complete the mission without taking any health items.']],
+    'ep2-8': ['Trying Again', 'Abigail Marston', 'John takes Jack fishing, but a nearby bear interrupts their trip.', 'West Elizabeth', ['Catch a fish.', 'Complete within 5 minutes and 20 seconds.']],
+    'ep2-9': ['A Really Big Bastard', 'Sadie Adler', 'Sadie visits John and takes him along to track bounty Marshall Thurwell in Tall Trees.', 'West Elizabeth', ['Shoot the bear 4 times as it charges.', 'Headshot both the rival bounty hunters in Dead Eye.', 'Complete within 7 minutes and 15 seconds.']],
+    'ep2-10': ['A New Future Imagined', 'Abigail Marston', 'John takes Abigail into Blackwater and prepares to ask her an important question.', 'West Elizabeth', ['Complete within 7 minutes and 30 seconds.']],
+    'ep2-11': ['American Venom', 'Sadie Adler', 'After learning Micah is alive, John, Sadie and Charles travel to Mount Hagen to find him.', 'West Elizabeth', ['Help Sadie catch Cleet within 35 seconds.', 'Headshot the sniper who shoots Charles.', 'Complete with at least 85% accuracy.', 'Complete the mission without taking any health items.']],
+    'ep2-12': ['The Best of Women', 'Abigail Marston', 'John visits Abigail at Beecher’s Hope after she returns home.', 'West Elizabeth'],
+}
+
+const requirements: Record<string, Pick<TrackedItem, 'requires' | 'requiresAny'>> = {
+    'm1-1': {requires: []},
+    'm1-2': { requires: ['m1-1']},
+    'm1-3': { requires: ['m1-2']},
+    'm1-4': { requires: ['m1-2']},
+    'm1-5': { requires: ['m1-3', 'm1-4']},
+    'm1-6': { requires: ['m1-5']},
+
+    'm2-1': { requires: ['m1-6']},
+    'm2-2': { requires: ['m1-6']},
+    'm2-3': { requires: ['m2-2']},
+    'm2-4': { requires: ['m2-1']},
+    'm2-5': { requires: ['m1-6']},
+    'm2-6': { requires: ['m2-3']},
+    'm2-7': { requiresAny: ['m2-5', 'm2-1', 'm2-2']},
+    'm2-8': { requires: ['m2-2']},
+    'm2-9': { requires: ['m2-5', 'm2-15', 'm2-12']},
+    'm2-10': { requires: ['m2-2']},
+    'm2-11': { requires: ['m2-3']},
+    'm2-12': { requires: ['m2-11']},
+    'm2-13': { requires: ['m2-11', 'm2-18']},
+    'm2-14': { requires: ['m2-12']},            // Not sure if correct
+    'm2-15': { requires: ['m2-13', 'm2-19', 'm2-22']},
+    'm2-16': { requires: ['m2-10', 'm2-1', 'm2-20']},
+    'm2-17': { requires: ['m2-16']},
+    'm2-18': { requires: ['m2-17']},
+    'm2-19': { requires: ['m2-18']},
+    'm2-20': { requires: ['m2-3', 'm2-8']},
+    'm2-21': { requires: ['m2-20']},
+    'm2-22': { requires: ['m2-7']},
+
+    'm3-1': { requires: ['m2-9']},
+    'm3-2': { requires: ['m2-9']},
+    'm3-3': { requires: ['m3-2']},
+    'm3-4': { requires: ['m3-3']},
+    'm3-5': { requires: ['m3-2']},
+    'm3-6': { requires: ['m3-2']},
+    'm3-7': { requires: ['m3-6']},
+    'm3-8': { requires: ['m3-7']},
+    'm3-9': { requires: ['m3-4', 'm3-5', 'm2-14']},
+    'm3-10': { requires: ['m3-9']},
+    'm3-11': { requires: ['m3-9']},
+    'm3-12': { requires: ['m3-10', 'm3-1']},
+    'm3-13': { requires: ['m3-9']},
+    'm3-14': { requires: ['m3-10', 'm3-8']},
+    'm3-15': { requires: ['m3-12', 'm3-13', 'm3-11']},
+    'm3-16': { requires: ['m3-15']},
+    'm3-17': { requires: ['m3-16']},
+
+    'm4-1': { requires: ['m3-17']},
+    'm4-2': { requires: ['m4-1']},
+    'm4-3': { requires: ['m4-2']},
+    'm4-4': { requires: ['m4-1']},
+    'm4-5': { requires: ['m4-1']},
+    'm4-6': { requires: ['m4-4']},
+    'm4-7': { requires: ['m4-4']},
+    'm4-8': { requires: ['m4-7']},
+    'm4-9': { requires: ['m4-7']},
+    'm4-10': { requires: ['m4-7', 'm4-5']},
+    'm4-11': { requires: ['m4-10']},
+    'm4-12': { requires: ['m4-11']},
+    'm4-13': { requires: ['m4-12']},
+    'm4-14': { requires: ['m4-13', 'm4-8', 'm4-9']},
+
+    'm5-1': { requires: ['m4-14']},
+    'm5-2': { requires: ['m5-1']},
+    'm5-3': { requires: ['m5-1']},
+    'm5-4': { requires: ['m5-3', 'm5-2']},
+    'm5-5': { requires: ['m5-4']},
+    'm5-6': { requires: ['m5-5']},
+    'm5-7': { requires: ['m5-6']},
+    'm5-8': { requires: ['m5-7']},
+    'm5-9': { requires: ['m5-7']},
+
+    'm6-1': { requires: ['m5-8']},
+    'm6-2': { requires: ['m5-8']},
+    'm6-3': { requires: ['m5-8']},
+    'm6-4': { requires: ['m6-3']},
+    'm6-5': { requires: ['m5-9', 'm6-1']},
+    'm6-6': { requiresAny: ['m6-1', 'm6-2', 'm6-3']},
+    'm6-7': { requires: ['m6-5']},
+    'm6-8': { requires: ['m6-7']},
+    'm6-9': { requires: ['m6-7']},
+    'm6-10': { requires: ['m6-9']},
+    'm6-11': { requires: ['m6-8']},
+    'm6-12': { requires: ['m6-11']},
+    'm6-13': { requires: ['m5-8', 'm5-9']},
+    'm6-14': { requires: ['m6-8']},
+    'm6-15': { requires: ['m6-12']},
+    'm6-16': { requires: ['m6-14']},
+    'm6-17': { requires: ['m6-14']},
+    'm6-18': { requires: ['m6-16', 'm6-15']},
+    'm6-19': { requires: ['m6-18', 'm6-10', 'm6-17']},
+    'm6-20': { requires: ['m6-19']},
+    'm6-21': { requires: ['m6-20']},
+
+    'ep1-1': { requires: ['m6-21']},
+    'ep1-2': { requires: ['ep1-1']},
+    'ep1-3': { requires: ['ep1-2']},
+    'ep1-4': { requires: ['ep1-2']},
+    'ep1-5': { requires: ['ep1-3', 'ep1-4']},
+    'ep1-6': { requires: ['ep1-5']},
+    'ep1-7': { requires: ['ep1-5']},
+    'ep1-8': { requires: ['ep1-6', 'ep1-7']},
+    'ep1-9': { requires: ['ep1-8']},
+    'ep1-10': { requires: ['ep1-11']},
+    'ep1-11': { requires: ['ep1-8']},
+
+    'ep2-1': { requires: ['ep1-9', 'ep1-10']},
+    'ep2-2': { requires: ['ep2-1']},
+    'ep2-3': { requires: ['ep2-1']},
+    'ep2-4': { requires: ['ep2-2', 'ep2-3']},
+    'ep2-5': { requires: ['ep2-4']},
+    'ep2-6': { requires: ['ep2-5']},
+    'ep2-7': { requires: ['ep2-12']},
+    'ep2-8': { requires: ['ep2-7']},
+    'ep2-9': { requires: ['ep2-7']},
+    'ep2-10': { requires: ['ep2-8', 'ep2-9']},
+    'ep2-11': { requires: ['ep2-10']},
+    'ep2-12': { requires: ['ep2-6']},
+}
+
+const makeMissionItem = (id: string) => {
+    const details = missionDetails[id]
+    if (!details) {
+        throw new Error(`Missing mission details for ${id}`)
+    }
+
+    const [name, subtitle, description, region, goldTexts] = details
+    return {
+        id,
+        name,
+        subtitle,
+        description,
+        region,
+        ...(requirements[id] ?? {}),
+        ...(goldTexts && goldTexts.length > 0
+            ? { gold: goldTexts.map((text, index) => ({ id: `${id}:gold-${index + 1}`, text })) }
+            : {}),
+    }
+}
+
+export const missionChapters: TrackedGroup[] = missionChapterLayouts.map((chapter) => {
+    let itemIds = chapter.items.map(({ id }) => id)
+
+    return {
+        ...chapter,
+        items: itemIds.map(makeMissionItem),
+    }
+})

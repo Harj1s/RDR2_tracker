@@ -56,10 +56,14 @@
 }
 
 .page-head {
+    
     margin-bottom: 24px;
 }
 
 .page-title {
+    font: var(--font-heading);
+    text-transform: uppercase;
+    font-weight: 1000;
     margin-top: 8px;
     font-size: 40px;
     line-height: 110%;

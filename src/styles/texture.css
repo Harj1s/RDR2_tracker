@@ -1,0 +1,38 @@
+/* =====================================================================
+   texture.css: the weathered, printed look. Import this LAST so it can
+   sit on top of everything else:   import './styles/texture.css'
+   Everything here is decoration only (pointer-events: none).
+   ===================================================================== */
+ 
+/* ---------- Layer 1: film grain over the whole page ---------- */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: .4;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Layer 2: scratches, dust and stains ----------
+   Needs a transparent PNG at public/textures/scratches.png
+ */
+.app {
+    position: relative;
+    isolation: isolate; /* keep blending inside the app */
+}
+ 
+.app::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    background: url('/textures/scratches.png') center top / 100% auto repeat-y;
+    mix-blend-mode: overlay;
+    opacity: 0.5;
+}
+ 
+ 

@@ -1,13 +1,14 @@
-import StatCard from '../components/StatCard.tsx'
-import type { Tone } from '../components/StatCard.tsx'
-import NextOnTrail from '../components/NextOnTrail.tsx'
-import RecentEntries from '../components/RecentEntries.tsx'
-import BeyondCard from '../components/BeyondCard.tsx'
-import BiggerPicture from '../components/BiggerPicture.tsx'
-import { progress } from '../data/progress.ts'
-import { useProgress } from '../hooks/useProgress.ts'
-import { missionChapters } from '../data/missions.ts'
-import { countDone, currentGroupName, nextMilestone } from '../lib/completion.ts'
+import PageHead from '../components/PageHead'
+import StatCard from '../components/StatCard'
+import type { Tone } from '../components/StatCard'
+import NextOnTrail from '../components/NextOnTrail'
+import RecentEntries from '../components/RecentEntries'
+import BeyondCard from '../components/BeyondCard'
+import BiggerPicture from '../components/BiggerPicture'
+import { progress } from '../data/progress'
+import { useProgress } from '../hooks/useProgress'
+import { missionChapters } from '../data/missions'
+import { countDone, currentGroupName, nextMilestone } from '../lib/completion'
 
 type Stat = {
     label: string
@@ -18,6 +19,7 @@ type Stat = {
 
 export default function Home() {
     const { totalCompletion, done } = useProgress()
+
     const milestone = nextMilestone(totalCompletion)
     const pointsToMilestone = (milestone - totalCompletion).toFixed(1)
 
@@ -50,13 +52,12 @@ export default function Home() {
 
     return (
         <>
-            <section className="page-head">
-                <p className="eyebrow eyebrow--red">The completion journal</p>
-                <h2 className="page-title">Your trail to 100%</h2>
-                <p className="page-subtitle">
-                    Every discovery brings you closer. Pick up where you left off in Lemoyne.
-                </p>
-            </section>
+            <PageHead
+                eyebrow="The completion journal"
+                title="Your trail to 100%"
+                subtitle="Every discovery brings you closer. Pick up where you left off in Lemoyne."
+                
+            />
 
             <section className="stats" aria-label="Progress summary">
                 {stats.map((stat) => (

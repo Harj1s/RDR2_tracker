@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import ChecklistPage from '../components/ChecklistPage'
+import StatCard from '../components/StatCard'
 import { missionChapters } from '../data/missions'
 import { useProgress } from '../hooks/useProgress'
 import { chapterStatus, currentGroupIndex, goldEarned, statusOf } from '../lib/checklist'
 import type { ChapterStatus, ItemStatus } from '../lib/checklist'
-import StatCard from '../components/StatCard'
+import { countDone } from '../lib/completion'
+
+// ---------- Labels ----------
 
 const itemStatusNames: Record<ItemStatus, string> = {
     locked: 'Locked',
@@ -20,9 +23,12 @@ const chapterStatusNames: Record<ChapterStatus, string> = {
     todo: 'Not started',
 }
 
+// ---------- Page ----------
+
 export default function Missions() {
     const { done, toggleItem } = useProgress()
 
+    // The chapter the player is currently in. Used as the default tile.
     const current = missionChapters[currentGroupIndex(missionChapters, done)]
 
     return (
@@ -37,6 +43,11 @@ export default function Missions() {
             modeLabels={{ all: 'All missions', todo: 'Incomplete', done: 'Completed' }}
             listTitle={(group) => `${group.label} / ${group.name}`}
             statusLabel={(status) => itemStatusNames[status]}
+            listFooter={() => 
+                'Mission order may vary. This view includes representative missions.'
+            }
+
+            // One chapter tile in the selector row
             renderTile={(group, index) => {
                 const status = chapterStatus(missionChapters, index, done)
                 return (
@@ -49,8 +60,16 @@ export default function Missions() {
                     </>
                 )
             }}
+
+            // Summary strip above the tiles (3 cards to match .stats--three)
             renderStats={() => (
                 <section className="stats stats-three" aria-label="Story summary">
+                    <StatCard
+                        label="Missions completed"
+                        value={`${countDone(missionChapters, done)} done`}
+                        detail="Across all chapters"
+                        tone="red"
+                    />
                     <StatCard
                         label="Story progress"
                         value={`${goldEarned(missionChapters, done)} earned`}
@@ -65,6 +84,8 @@ export default function Missions() {
                     />
                 </section>
             )}
+
+            // Right-hand panel for the selected mission
             renderDetail={(item, group, toggleMission) => {
                 if (!item) {
                     return <p>Select a mission to see its details.</p>
@@ -72,6 +93,7 @@ export default function Missions() {
 
                 const isDone = done.has(item.id)
                 const isLocked = !isDone && statusOf(item, group, done) === 'locked'
+                const hasGold = item.gold && item.gold.length > 0
 
                 return (
                     <>
@@ -83,11 +105,11 @@ export default function Missions() {
                             <p className="detail__text">{item.description}</p>
                         )}
 
-                        {item.gold && item.gold.length > 0 && (
+                        {hasGold && (
                             <section className="detail__section">
                                 <p className="eyebrow eyebrow--gold">Gold medal objectives</p>
                                 <ul className="objectives">
-                                    {item.gold.map((objective) => (
+                                    {item.gold!.map((objective) => (
                                         <li key={objective.id}>
                                             <label>
                                                 <input
@@ -122,9 +144,6 @@ export default function Missions() {
                     </>
                 )
             }}
-            listFooter={() => 
-                'Mission order may vary. This view includes representative missions.'
-            }
         />
     )
 }

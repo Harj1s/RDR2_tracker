@@ -2,6 +2,7 @@ import type { TrackedGroup, TrackedItem } from '../data/types'
 
 export type ItemStatus = 'locked' | 'done' | 'next' | 'todo'
 export type ChapterStatus = 'locked' | 'complete' | 'inProgress' | 'todo'
+export type CollectableGroupStatus = 'locked' | 'allFound' | 'inProgress'
 export type FilterMode = 'all' | 'todo' | 'done'
 
 /** The real total: totalInGame if set, otherwise the number of items. */
@@ -46,6 +47,24 @@ export function chapterStatus(
     if (!isComplete(groups[index - 1])) return 'locked'
 
     return 'todo'
+}
+
+export function collectableGroupStatus(
+    groups: TrackedGroup[],
+    index: number,
+    done: ReadonlySet<string>,
+): CollectableGroupStatus {
+    const group = groups[index]
+    const isDone = (item: TrackedItem) => done.has(item.id)
+    const isComplete = (g: TrackedGroup) =>
+        g.items.length > 0 && g.items.every(isDone)
+    const required = true
+
+    if (isComplete(group)) return 'allFound'
+    if (!required) return 'locked'
+
+    return 'inProgress'
+
 }
 
 export function filterItems(

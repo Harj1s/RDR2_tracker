@@ -35,7 +35,7 @@ export default function RingChart({
         return () => cancelAnimationFrame(frame)
     }, [])
 
-    const description = rings.map((r) => `${r.label} ${r.percent}%`).join(',')
+    const description = rings.map((r) => `${r.label} ${r.percent}%`).join(', ')
     
     return (
         <svg

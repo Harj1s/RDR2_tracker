@@ -2,7 +2,7 @@ import type { ReactElement } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout.tsx'
 import Home from './pages/Home.tsx'
-import Collectibles from './pages/Collectibles.tsx'
+import Collectables from './pages/Collectables.tsx'
 import Missions from './pages/Missions.tsx'
 import ComingSoon from './pages/ComingSoon.tsx'
 import { navItems } from './data/nav.ts'
@@ -10,7 +10,7 @@ import { navItems } from './data/nav.ts'
 // Pages that are built. Anything not listed here shows "not built yet".
 
 const builtPages: Record<string, ReactElement> = {
-  '/collectibles': <Collectibles />,
+  '/collectables': <Collectables />,
   '/missions': <Missions />
 }
 

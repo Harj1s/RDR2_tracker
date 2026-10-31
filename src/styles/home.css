@@ -1,36 +1,7 @@
-/* ---------- Stat row ---------- */
-.stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-}
-
-.stat-card {
-    padding: 14px 16px;
-}
-
-.stat-card__label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-.stat-card__value {
-    margin: 8px 0 6px;
-    font-family: var(--font-heading);
-    font-size: 28px;
-    line-height: 1.1;
-}
-
-.stat-card__value--red { color: var(--red); }
-.stat-card__value--slate { color: var(--slate); }
-.stat-card__value--gold { color: var(--gold); }
-.stat-card__value--sage { color: var(--sage); }
-
-.stat-card__detail {
-    font-size: 12px;
-}
+/* =====================================================================
+   home.css: the Home page only.
+   Shared pieces (card, button, stats) are in app.css.
+   ===================================================================== */
 
 /* ---------- Home grid (2 columns, 2 rows) ---------- */
 .home-grid {
@@ -40,41 +11,92 @@
     margin-top: 16px;
 }
 
-/* ---------- Card header (shared) ---------- */
-.card__head {
+/* ---------- The bigger picture ---------- */
+.picture {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 16px;    
-}
-
-.card__title {
-    font-size: 20px;
-}
-
-.card__tag {
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-/* ---------- Button (shared) ---------- */
-.button {
-    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 9px 16px;
-    background: var(--red);
-    color: #fff;
-    border: 0;
-    font-size: 12px;
-    font-weight: 500;
-    transition: filter 0.15s;
+    gap: 40px;
 }
 
-.button:hover {
-    filter: brightness(1.1);
+.picture__chart {
+    flex: 0 0 420px;
+}
+
+.picture__side {
+    flex: 1;
+    min-width: 0;
+}
+
+.picture__note {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+}
+
+.ring-chart {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.ring-chart__track {
+    fill: none;
+    stroke: var(--border);
+    opacity: 0.7;
+}
+
+.ring-chart__arc {
+    fill: none;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ring-chart__value {
+    fill: var(--text-h);
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.ring-chart__label {
+    fill: var(--text-h);
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+}
+
+.ring-chart__note {
+    fill: var(--text);
+    font-size: 6px;
+}
+
+.legend {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.legend__row {
+    display: grid;
+    grid-template-columns: 8px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 0;
+    font-size: 12px;
+}
+
+.legend__swatch {
+    width: 8px;
+    height: 8px;
+}
+
+.legend__label {
+    color: var(--text-h);
+}
+
+.legend__value {
+    font-weight: 500;
 }
 
 /* ---------- Next on the trail ---------- */
@@ -167,10 +189,7 @@
     font-size: 13px;
 }
 
-.entries__note {
-    font-size: 11px;
-}
-
+.entries__note,
 .entries__status {
     font-size: 11px;
 }
@@ -201,111 +220,22 @@
 
 .beyond__count--red { color: var(--red); }
 .beyond__count--gold { color: var(--gold); }
+.beyond__count--sage { color: var(--sage); }
+.beyond__count--slate { color: var(--slate); }
 
 .beyond__footnote {
     margin-top: 6px;
     font-size: 11px;
 }
 
-/* ---------- The bigger picture ---------- */
-.picture {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
-
-.picture__chart {
-    flex: 0 0 420px;
-}
-
-.picture__side {
-    flex: 1;
-    min-width: 0;
-}
-
-.ring-chart {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.ring-chart__track {
-    fill: none;
-    stroke: var(--border);
-    opacity: 0.7;
-}
-
-.ring-chart__arc {
-    fill: none;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.ring-chart__value {
-    fill: var(--text-h);
-    font-family: var(--font-heading);
-    font-size: 28px;
-    font-weight: 500;
-}
-
-.ring-chart__label {
-    fill: var(--text-h);
-    font-size: 7px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-}
-
-.ring-chart__note {
-    fill: var(--text);
-    font-size: 6px;
-}
-
-.legend {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.legend__row {
-    display: grid;
-    grid-template-columns: 8px 1fr auto;
-    align-items: center;
-    gap: 12px;
-    padding: 7px 0;
-    font-size: 12px;
-}
-
-.legend__swatch {
-    width: 8px;
-    height: 8px;
-}
-
-.legend__label {
-    color: var(--text-h);
-}
-
-.legend__value {
-    font-weight: 500;
-}
-
-.picture__note {
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid var(--border);
-    font-size: 11px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .ring-chart__arc {
-        transition: none;
-    }
-}
-
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
-    .stats { grid-template-columns: repeat(2, 1fr); }
+    /* The ring chart and the trail card no longer fit side by side. */
+    .home-grid { grid-template-columns: 1fr; }
+    .picture { flex-direction: column; }
+    .picture__chart { flex-basis: auto; width: 100%; max-width: 420px; }
 }
-
-@media (max-width: 600px) {
-    .stats { grid-template-columns: 1fr; }
+ 
+@media (prefers-reduced-motion: reduce) {
+    .ring-chart__arc { transition: none; }
 }

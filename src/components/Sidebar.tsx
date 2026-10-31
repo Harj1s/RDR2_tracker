@@ -1,10 +1,15 @@
 import { NavLink } from 'react-router-dom'
 import { RotateCcw, SlidersHorizontal } from 'lucide-react'
-import { navItems } from '../data/nav.ts'
-import { useProgress } from '../hooks/useProgress.ts'
+import { navItems } from '../data/nav'
+import { useProgress } from '../hooks/useProgress'
+import Meter from './Meter'
+import { currentGroupName } from '../lib/completion'
+import { missionChapters } from '../data/missions'
+import { currentGroupIndex } from '../lib/checklist'
 
 export default function Sidebar() {
     const { totalCompletion, resetProgress } = useProgress()
+    const { done, toggleItem } = useProgress()
 
     function handleReset() {
         if (window.confirm('Reset all progress to the demo save?')) {
@@ -24,38 +29,26 @@ export default function Sidebar() {
             <nav className="nav" aria-label="Main">
                 {navItems.map(({ label, path, icon: Icon }) => (
                     <NavLink
-                    key={path}
-                    to={path}
-                    end={path === '/'}
-                    className={({ isActive }) =>
-                        isActive ? 'nav__link nav__link--active' : 'nav__link'
-                    }
-                >
-                    <Icon size={16} strokeWidth={1.5} aria-hidden="true" />
-                    <span>{label}</span>
-                    <span className="nav__dot" aria-hidden="true" />
-                </NavLink>
-                ))}
-
-                <div className="total-box">
-                    <p className="total-box__label">Total completion</p>
-                    <p className="total-box__value">{totalCompletion}%</p>
-                    <div
-                        className="progress"
-                        role="progressbar"
-                        aria-valuenow={totalCompletion}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                        aria-label="Total completion"
+                        key={path}
+                        to={path}
+                        end={path === '/'}
+                        className={({ isActive }) =>
+                            isActive ? 'nav__link nav__link--active' : 'nav__link'
+                        }
                     >
-                        <div
-                            className="progress__fill"
-                            style={{ width: `${totalCompletion}%`}}
-                        />
-                    </div>
-                    <p className="total-box__meta">Arthur Morgan · Chapter 4</p>
-                </div>
+                        <Icon size={16} strokeWidth={1.5} aria-hidden="true" />
+                        <span>{label}</span>
+                        <span className="nav__dot" aria-hidden="true" />
+                    </NavLink>
+                ))}
             </nav>
+
+            <div className="total-box">
+                <p className="total-box__label">Total completion</p>
+                <p className="total-box__value">{totalCompletion.toFixed(1)}%</p>
+                <Meter value={totalCompletion} max={100} label="Total completion" />
+                <p className="total-box__meta">Arthur Morgan · {currentGroupName(missionChapters, done)}</p>
+            </div>
 
             <div className="sidebar__footer">
                 <div className="demo-note">

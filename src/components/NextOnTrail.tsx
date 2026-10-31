@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, MapPin } from 'lucide-react'
-import { progress } from '../data/progress.ts'
+import { progress } from '../data/progress'
 
 export default function NextOnTrail() {
     const o = progress.nextObjective

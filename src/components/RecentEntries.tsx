@@ -3,7 +3,7 @@ import { recentEntries, type EntryKind } from '../data/progress'
 
 const icons: Record<EntryKind, LucideIcon> = {
     mission: Check,
-    collectible: Bone,
+    collectable: Bone,
     hunt: PawPrint,
 }
 

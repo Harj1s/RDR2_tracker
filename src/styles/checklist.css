@@ -1,3 +1,9 @@
+/* =====================================================================
+   checklist.css: every page built on <ChecklistPage>
+   (Missions, Strangers, Collectables, ...).
+   Shared pieces (card, button, stats) are in app.css.
+   ===================================================================== */
+
 /* ---------- Selector tiles (chapters / categories) -------- */
 .tiles {
     display: grid;
@@ -51,21 +57,17 @@
     color: var(--text);
 }
 
-.tile__status--inProgress {
-    color: var(--gold);
-}
+.tile__status--inProgress { color: var(--gold); }
+.tile__status--complete { color: var(--sage); }
+.tile__status--locked { opacity: 0.7; }
 
-.tile__status--locked {
-    opacity: 0.7;
-}
+/* On the dark active tile the default colours are too dim. */
+.tile--active .tile__status { color: var(--text-muted-on-dark); }
+.tile--active .tile__status--inProgress { color: var(--gold); }
+.tile--active .tile__status--complete { color: var(--sage); }
 
-/* ---------- Optional stat strip (Missions) ---------- */
-.stats--three {
-    grid-template-columns: repeat(3, 1fr);
-    margin-bottom: 16px;
-}
 
-/* ---------- Search bar ---------- */
+/* ---------- Search bar + mode buttons ---------- */
 .searchbar {
     display: flex;
     gap: 8px;
@@ -123,7 +125,7 @@
     color: var(--text-on-dark);
 }
 
-/* ---------- Two-column split ---------- */
+/* ---------- Two-column split: list | detail ---------- */
 .split {
     display: grid;
     grid-template-columns: 1.7fr 1fr;
@@ -147,6 +149,19 @@
     border-top: 1px solid var(--border);
 }
 
+.list__foot {
+    padding: 14px 24px;
+    font-size: 11px;
+}
+
+.list__empty {
+    margin: 0;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+}
+
+/* Row: [checkbox] [select button: title/sub + status] */
 .row {
     display: grid;
     grid-template-columns: 18px 1fr;
@@ -170,23 +185,46 @@
     cursor: pointer;
 }
 
+.row__title,
+.row__sub {
+    display: block;
+}
+
+.row__title {
+    font-size: 13px;
+    color: var(--text-h);
+}
+
+.row__sub,
+.row__status {
+    font-size: 11px;
+    color: var(--text);
+}
+
+/* Row states. Each state that sets a background is listed together with :hover
+    so the plain .row:hover rule below cannot override it. */
+
 .row:hover {
     background: color-mix(in srgb, var(--surface-dark) 4%, var(--surface));
 }
 
-/* Tinted background for the "next up" row. Listed together with :hover
-    so the hover rule above does not override it. */
 .row--next,
 .row--next:hover {
     background: color-mix(in srgb, var(--red) 12%, var(--surface));
+}
+
+.row--next .row--status {
+    color: var(--red);
 }
 
 .row--selected {
     box-shadow: inset 3px 0 0 var(--red);
 }
 
-.row--locked {
+.row--locked,
+.row--locked:hover {
     background: color-mix(in srgb, var(--surface-dark) 15%, var(--surface));
+    border-color: var(--surface);
     opacity: 0.6;
     cursor: default;
 }
@@ -212,40 +250,6 @@
         opacity: 0;
         border-bottom-width: 0;
     }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .row--exiting {
-        animation-duration: 1ms;
-    }
-}
-
-.row__check:disabled {
-    opacity: 0.5;
-}
-
-.row__title,
-.row__sub {
-    display: block;
-}
-
-.row__title {
-    font-size: 13px;
-    color: var(--text-h);
-}
-
-.row__sub {
-    font-size: 11px;
-    color: var(--text);
-}
-
-.row__status {
-    font-size: 11px;
-    color: var(--text);
-}
-
-.row--next .row--status {
-    color: var(--red);
 }
 
 /* Custom checkbox: empty square, sage with a tick, red square when next */
@@ -280,16 +284,8 @@
     border-color: var(--red);
 }
 
-.list__foot {
-    padding: 14px 24px;
-    font-size: 11px;
-}
-
-.list__empty {
-    margin: 0;
-    padding: 24px;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
+.row__check:disabled {
+    opacity: 0.5;
 }
 
 /* ---------- Detail panel content ---------- */
@@ -334,6 +330,14 @@
     font-size: 11px;
 }
 
+.detail__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 20px;
+}
+
 .objectives {
     display: grid;
     gap: 10px;
@@ -358,25 +362,6 @@
     accent-color: var(--gold);
 }
 
-.detail__actions {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 16px;
-    margin-top: 20px;
-}
-
-.button--ghost {
-    background: transparent;
-    color: var(--text-h);
-    border: 1px solid var(--border);
-}
-
-.button--ghost:hover {
-    filter: none;
-    background: var(--surface);
-}
-
 /* -------- Banner under the lists ---------- */
 .banner {
     margin-top: 16px;
@@ -384,10 +369,6 @@
     background: color-mix(in srgb, var(--red) 12% var(--surface));
     border: 1px solid color-mix(in srgb, var(--red) 25%, var(--border));
     font-size: 12px;
-    color: var(--text-h);
-}
-
-.stat-card__value-dark {
     color: var(--text-h);
 }
 
@@ -399,14 +380,17 @@
 }
 
 @media (max-width: 700px) {
-    .stats--three {
-        grid-template-columns: 1fr;
-    }
     .searchbar {
         flex-direction: column;
     }
     .searchbar__modes .mode {
         flex: 1;
         padding: 10px 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .row--exiting {
+        animation-duration: 1ms;
     }
 }

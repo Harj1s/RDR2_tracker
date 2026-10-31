@@ -1,4 +1,4 @@
-import { collectibleCategories } from "../data/collectibles";
+import { collectableCategories } from "../data/collectables";
 import { missionChapters } from '../data/missions'
 import { completionRings, type CompletionRing } from '../data/progress.ts'
 import type { TrackedGroup } from '../data/types.ts'
@@ -43,10 +43,10 @@ export function currentGroupName(
  */
 const liveRings: Record<string, TrackedGroup[]> = {
     missions: missionChapters,
-    collectibles: collectibleCategories,
+    collectables: collectableCategories,
 }
 
-/* The ring list, with the Collectibles ring calculated from real ticks. */
+/* The ring list, with the Collectables ring calculated from real ticks. */
 export function buildRings(done: ReadonlySet<string>): CompletionRing[] {
     return completionRings.map((ring) => {
         const groups = liveRings[ring.id]

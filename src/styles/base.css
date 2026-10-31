@@ -1,0 +1,83 @@
+/* =====================================================================
+   base.css: fonts, design tokens, reset, default typography.
+   Keep your other @font-face blocks (Lora, Island Moments, Bpmf Iansui)
+   next to these.
+   ===================================================================== */
+
+/* ---------- Font ---------- */
+@font-face {
+    font-family: 'Alegreya Sans';
+    src: url(/fonts/AlegreyaSans-Regular.ttf) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Chunk Five';
+    src: url(/fonts/Chunk.ttf) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Surfaces */
+  --bg: #ece4d6;
+  --surface: #f5f0e4;
+  --surface-dark: #22241f;
+  --frame: #1b1c18;
+  --border: #d9cfbc;
+  --border-dark: #3a3c34;
+
+  /* Text */
+  --text: #6b6558;
+  --text-h: #1f1d18;
+  --text-on-dark: #ede6d6;
+  --text-muted-on-dark: #a39c8c;
+
+  /* Accents */
+  --red: #b03a2e;
+  --gold: #c49a4a;
+  --sage: #7a8a6e;
+  --slate: #6b7f8c;
+  --brick: #b0705a;
+
+  --shadow:
+    rgba(0, 0, 0, 0.06) 0 2px 6px, rgba(0, 0, 0, 0.04) 0 8px 20px;
+  
+  /* Fonts */
+  --font-sans: 'Alegreya Sans', sans-serif;
+  --font-heading: 'Chunk Five', Georgia, serif;
+  --font-serif: 'Lora', Georgia, serif;
+  --font-cursive: 'Island Moments', cursive;
+  --font-mono: 'Bpmf Iansui', monospace;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* ---------- Defaults ----------
+    Type defaults live on body (not :root) so they cannot be overridden
+    by the 'font:' shorthand on :root. */
+
+body {
+    margin: 0;
+    background: var(--frame);
+    color: var(--text);
+    font: 14px / 1.5 var(--font-sans);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: var(--text-h);
+}

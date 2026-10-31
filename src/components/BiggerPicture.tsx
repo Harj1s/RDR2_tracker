@@ -1,5 +1,5 @@
-import RingChart from './RingChart.tsx'
-import { useProgress } from '../hooks/useProgress.ts'
+import RingChart from './RingChart'
+import { useProgress } from '../hooks/useProgress'
 
 export default function BiggerPicture() {
     const { rings, totalCompletion } = useProgress()

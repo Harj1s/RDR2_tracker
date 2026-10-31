@@ -1,3 +1,9 @@
+/*  =================================================================
+    app.css: page frame, sidebar, topbar, and the pieces shared by 
+    every page (cards, buttons, stat cards, page header).
+    Page-specific styles live in home.css and checklist.css
+    ================================================================= */
+
 /* ------------ App Frame ------------ */
 .app {
     display: grid;
@@ -36,51 +42,6 @@
 .footer span:last-child {
     text-transform: none;
     letter-spacing: 0;
-}
-
-/* ------------ Shared bits ------------ */
-.eyebrow {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
-}
-.eyebrow--red { color: var(--red); }
-.eyebrow--gold { color: var(--gold); }
-
-.card {
-    padding: 20px 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-}
-
-.page-head {
-    
-    margin-bottom: 24px;
-}
-
-.page-title {
-    font: var(--font-heading);
-    text-transform: uppercase;
-    font-weight: 1000;
-    margin-top: 8px;
-    font-size: 40px;
-    line-height: 110%;
-}
-
-.page-subtitle {
-    margin-top: 6px;
-}
-
-.progress {
-    height: 3px;
-    background: var(--border-dark);
-}
-
-.progress__fill {
-    height: 100%;
-    background: var(--red);
 }
 
 /*------------- Sidebar ------------ */
@@ -166,7 +127,6 @@
 }
 
 .total-box {
-    margin-top: 18px;
     padding: 14px;
     border: 1px solid var(--border-dark);
 }
@@ -256,6 +216,7 @@
 .icon-button {
     display: flex;
     place-items: center;
+    justify-content: center;
     padding: 4px;
     background: none;
     border: 0;
@@ -273,54 +234,217 @@
     font-weight: 500;
 }
 
-/*------------- Smaller screens ------------ */
+/* =====================================================================
+   Shared components (used on more than one page)
+   ===================================================================== */
+
+/* ---------- Page header ---------- */
+.page-head {   
+    margin-bottom: 24px;
+}
+
+.page-title {
+    margin-top: 8px;
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.page-subtitle {
+    margin-top: 6px;
+}
+
+/* ------------ Eyebrow label ------------ */
+.eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+.eyebrow--red { color: var(--red); }
+.eyebrow--gold { color: var(--gold); }
+
+/* ---------- Card ---------- */
+.card {
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.card__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.card__title {
+    font-size: 20px;
+}
+
+.card__tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+/* ---------- Button ---------- */
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    background: var(--red);
+    color: #fff;
+    border: 0;
+    font-size: 12px;
+    font-weight: 500;
+    transition: filter 0.15s;
+}
+
+.button:hover {
+    filter: brightness(1.1);
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: none;
+}
+
+.button--ghost {
+    background: transparent;
+    color: var(--text-h);
+    border: 1px solid var(--border);
+}
+
+.button--ghost:hover {
+    filter: none;
+    background: var(--surface);
+}
+
+/* ---------- Meter ---------- */
+.meter {
+    height: 3px;
+    background: var(--border-dark);
+}
+
+.meter__fill {
+    height: 100%;
+    background: var(--accent, var(--red));
+}
+
+/* ---------- Stat cards ---------- */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stats--three {
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    padding: 14px 16px;
+}
+
+.stat-card__label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.stat-card__value {
+    margin: 8px 0 6px;
+    font-family: var(--font-heading);
+    font-size: 28px;
+    line-height: 1.1;
+}
+
+.stat-card__value--red { color: var(--red); }
+.stat-card__value--slate { color: var(--slate); }
+.stat-card__value--gold { color: var(--gold); }
+.stat-card__value--sage { color: var(--sage); }
+.stat-card__value--dark { color: var(--text-h); }
+
+.stat-card__detail {
+    font-size: 12px;
+}
+
+
+/* =====================================================================
+   Smaller screens (all media queries for this file together)
+   ===================================================================== */
+@media (max-width: 1100px) {
+    /* .stats--three is listed after .stats, so it wins at equal
+       specificity and stays at 3 columns until 700px. */
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stats--three { grid-template-columns: repeat(3, 1fr); }
+}
+ 
 @media (max-width: 900px) {
     .app {
         grid-template-columns: 1fr;
         padding: 0;
         gap: 0;
     }
-
+ 
     .sidebar {
         gap: 12px;
         padding: 16px 12px 8px;
     }
-
+ 
     .sidebar__rule,
+    .total-box,
     .sidebar__footer,
     .sidebar__tagline {
         display: none;
     }
-
+ 
     .nav {
         flex-direction: row;
         overflow-x: auto;
     }
-
+ 
     .nav__link {
         flex-shrink: 0;
         padding: 10px 12px;
     }
-
+ 
     .nav__dot {
         display: none;
     }
-
+ 
     .topbar,
     .content {
         padding-inline: 16px;
     }
-
+ 
     .topbar__updated {
         display: none;
     }
-    
+ 
     .footer {
         flex-direction: column;
         margin-inline: 16px;
     }
-
+ 
     .page-title {
         font-size: 32px;
     }
 }
+ 
+@media (max-width: 700px) {
+    .stats--three { grid-template-columns: 1fr; }
+}
+ 
+@media (max-width: 600px) {
+    .stats { grid-template-columns: 1fr; }
+}
+ 

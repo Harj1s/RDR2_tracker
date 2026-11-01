@@ -18,7 +18,7 @@ export type NavItem = {
 
 export const navItems: NavItem[] = [
     {label: 'Home', path: '/', icon: LayoutGrid },
-    {label: 'Collectables', path: '/collectables', icon: Gem },
+    {label: 'Collectibles', path: '/collectibles', icon: Gem },
     {label: 'Missions', path: '/missions', icon: Flag },
     {label: 'Strangers', path: '/strangers', icon: Users },
     {label: 'Hunting', path: '/hunting', icon: PawPrint },

@@ -2,10 +2,10 @@ import type { TrackedGroup, TrackedItem } from './types.ts'
 
 // Curated demo sample, not a full game database
 
-export type Collectable = TrackedItem
-export type CollectableCategory = TrackedGroup
+export type Collectible = TrackedItem
+export type CollectibleCategory = TrackedGroup
 
-export const collectableCategories: CollectableCategory[] = [
+export const collectibleCategories: CollectibleCategory[] = [
     {
         id: 'bones',
         name: 'Dinosaur bones',

@@ -26,7 +26,7 @@ function readIds(key: string, field: string): string[] | null {
 function loadDone(): string[] {
     return (
         readIds(STORAGE_KEY, 'done') ??
-        // Migration: v1 stored collectables only, under "found".
+        // Migration: v1 stored collectibles only, under "found".
         readIds(OLD_STORAGE_KEY_V1, 'found') ??
         initialDone
     )

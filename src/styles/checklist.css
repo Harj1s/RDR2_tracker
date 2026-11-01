@@ -1,21 +1,50 @@
 /* =====================================================================
    checklist.css: every page built on <ChecklistPage>
-   (Missions, Strangers, Collectables, ...).
+   (Missions, Strangers, Collectibles, ...).
    Shared pieces (card, button, stats) are in app.css.
    ===================================================================== */
+
+/* ---------- Page progress and selector tiles ---------- */
+.checklist-overview {
+    --ring-size: 240px;
+
+    display: grid;
+    grid-template-columns: calc(var(--ring-size) + 34px) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.smaller-picture-card {
+    padding: 16px;
+}
+
+.smaller-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.smaller-picture__chart {
+    width: 100%;
+    max-width: var(--ring-size);
+}
 
 /* ---------- Selector tiles (chapters / categories) -------- */
 .tiles {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    grid-template-columns: repeat(var(--tile-columns, 4), minmax(88px, 1fr));
+    grid-template-rows: repeat(2, 1fr);
     gap: 8px;
-    margin-bottom: 16px;
+    min-width: 0;
+    overflow-x: auto;
 }
 
 .tile {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     gap: 4px;
     padding: 12px 14px;
     text-align: left;
@@ -37,7 +66,7 @@
 }
 
 .tile__label {
-    font-size: 9px;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -49,11 +78,11 @@
 }
 
 .tile__name {
-    font-size: 13px;
+    font-size: 20px;
 }
 
 .tile__status {
-    font-size: 11px;
+    font-size: 18px;
     color: var(--text);
 }
 
@@ -213,7 +242,7 @@
     background: color-mix(in srgb, var(--red) 12%, var(--surface));
 }
 
-.row--next .row--status {
+.row--next .row__status {
     color: var(--red);
 }
 
@@ -366,7 +395,7 @@
 .banner {
     margin-top: 16px;
     padding: 12px 16px;
-    background: color-mix(in srgb, var(--red) 12% var(--surface));
+    background: color-mix(in srgb, var(--red) 12%, var(--surface));
     border: 1px solid color-mix(in srgb, var(--red) 25%, var(--border));
     font-size: 12px;
     color: var(--text-h);
@@ -377,9 +406,29 @@
     .split {
         grid-template-columns: 1fr;
     }
+
+    .checklist-overview {
+        grid-template-columns: minmax(160px, 200px) minmax(0, 1fr);
+    }
+
+    .tiles {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 700px) {
+    .checklist-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .smaller-picture__chart {
+        max-width: 180px;
+    }
+
+    .tiles {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
     .searchbar {
         flex-direction: column;
     }

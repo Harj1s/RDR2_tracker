@@ -10,8 +10,8 @@ export type Ring = {
 type RingChartProps = {
     rings: Ring[]
     centerValue: string
-    centerLabel: string
-    centerNote: string
+    centerLabel?: string
+    centerNote?: string
 }
 
 // All sizes are in SVG units. The SVG scales to fit its container
@@ -36,13 +36,20 @@ export default function RingChart({
     }, [])
 
     const description = rings.map((r) => `${r.label} ${r.percent}%`).join(', ')
+    const hasCenterDetails = Boolean(centerLabel || centerNote)
+    const ariaLabel = [
+        centerLabel,
+        centerValue,
+        centerNote,
+        description,
+    ].filter(Boolean).join('. ')
     
     return (
         <svg
             className="ring-chart"
             viewBox={`0 0 ${VIEWBOX} ${VIEWBOX}`}
             role="img"
-            aria-label={`${centerLabel} ${centerValue}. ${description}.`}
+            aria-label={`${ariaLabel}.`}
         >
             {rings.map((ring, i) => {
                 const radius = OUTER_RADIUS - i * RING_GAP
@@ -78,15 +85,24 @@ export default function RingChart({
                 )
             })}
 
-            <text className="ring-chart__value" x={CENTER} y={CENTER + 4} textAnchor="middle">
+            <text
+                className="ring-chart__value"
+                x={CENTER}
+                y={CENTER + (hasCenterDetails ? 4 : 10)}
+                textAnchor="middle"
+            >
                 {centerValue}
             </text>
-            <text className="ring-chart__label" x={CENTER} y={CENTER + 20} textAnchor="middle">
-                {centerLabel}
-            </text>
-            <text className="ring-chart__note" x={CENTER} y={CENTER + 33} textAnchor="middle">
-                {centerNote}
-            </text>
+            {centerLabel && (
+                <text className="ring-chart__label" x={CENTER} y={CENTER + 20} textAnchor="middle">
+                    {centerLabel}
+                </text>
+            )}
+            {centerNote && (
+                <text className="ring-chart__note" x={CENTER} y={CENTER + 33} textAnchor="middle">
+                    {centerNote}
+                </text>
+            )}
         </svg>
     )
 }

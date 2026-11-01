@@ -38,6 +38,7 @@ export default function Missions() {
             subtitle="Mark each story mission as you finish it, chapter by chapter."
             groups={missionChapters}
             defaultGroupId={current.id}
+            pageProgressRingId="missions"
             sortUnlockedFirst
             searchPlaceholder="Search this chapter..."
             modeLabels={{ all: 'All missions', todo: 'Incomplete', done: 'Completed' }}

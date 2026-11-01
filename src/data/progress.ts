@@ -1,6 +1,6 @@
 // Demo save. Later this becomes the starting value for your localStorage hook.
 
-export type EntryKind = 'mission' | 'collectable' | 'hunt'
+export type EntryKind = 'mission' | 'collectible' | 'hunt'
 
 export type JournalEntry = {
     id: string
@@ -24,7 +24,7 @@ export const progress = {
     achievements: { done: 24, total: 51 },
 
     nextObjective: {
-        category: 'Collectables',
+        category: 'Collectibles',
         title: 'A history written in stone.',
         description: 'Find the Heartlands cliff dinosaur bone, just south of the oil derrick.',
         location: 'The Heartlands · New Hanover',
@@ -43,9 +43,9 @@ export const recentEntries: JournalEntry[] = [
     },
     {
         id: 'e2',
-        kind: 'collectable',
+        kind: 'collectible',
         title: 'Heartlands oil field bone',
-        note: 'Collectable recorded · 13:48',
+        note: 'Collectible recorded · 13:48',
         time: 'Recorded'
     },
     {
@@ -71,13 +71,13 @@ export type CompletionRing = {
 
 export const completionRings: CompletionRing[] = [
     { id: 'missions', label: 'Missions & events', percent: 72, color: 'var(--red)' },
-    { id: 'collectables', label: 'Collectables', percent: 48, color: 'var(--gold)' },
+    { id: 'collectibles', label: 'Collectibles', percent: 48, color: 'var(--gold)' },
     { id: 'compendium', label: 'Compendium', percent: 66, color: 'var(--sage)' },
     { id: 'player', label: 'Player', percent: 58, color: 'var(--slate)' },
     { id: 'misc', label: 'Miscellaneous', percent: 70, color: 'var(--brick)' },
 ]
 
-/** Ids ticked off in the demo save (missions, collectables, ...). */
+/** Ids ticked off in the demo save (missions, collectibles, ...). */
 export const initialDone: string[] = [
     'm1-1', 'm1-2', 'm1-3',
     'm2-1', 'm2-2', 'm2-3',

@@ -1,5 +1,5 @@
 // The one shape every checklist in the app uses
-// (collectables, missions, and later strangers, hunting, crafting).
+// (collectibles, missions, and later strangers, hunting, crafting).
 
 export type GoldObjective = {
     id: string,
@@ -24,8 +24,8 @@ export type TrackedGroup = {
     id: string,             // Unique identifier
     name: string,           // Title of the group
     label?: string,         // 'Chapter 1' for example, only for missions
-    color?: string,         // For collectables, missions get default
-    unit?: string,          // 'Sets' and 'requests' for collectables, no need for missions 
+    color?: string,         // For collectibles, missions get default
+    unit?: string,          // 'Sets' and 'requests' for collectibles, no need for missions
     totalInGame?: number,   // Total amount of items in the group
     items: TrackedItem[]    
 }

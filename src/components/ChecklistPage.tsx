@@ -8,6 +8,7 @@ import { useProgress } from '../hooks/useProgress'
 import { useFlipReorder } from '../hooks/useFlipReorder'
 import PageHead from './PageHead'
 import ItemRow from './ItemRow'
+import SmallerPicture from './SmallerPicture'
 
 type ChecklistPageProps = {
     eyebrow: string
@@ -16,6 +17,7 @@ type ChecklistPageProps = {
     groups: TrackedGroup[]
     defaultGroupId?: string
     sortUnlockedFirst?: boolean
+    pageProgressRingId?: string
 
     searchPlaceholder: string
     modeLabels: { all: string; todo: string; done: string }
@@ -76,7 +78,7 @@ function sortByStatus(
 
 
 export default function ChecklistPage({
-    eyebrow, title, subtitle, groups, defaultGroupId,
+    eyebrow, title, subtitle, groups, defaultGroupId, pageProgressRingId,
     sortUnlockedFirst, searchPlaceholder, modeLabels,
     listTitle, renderTile, renderDetail, statusLabel,
     renderStats, listFooter, banner,
@@ -170,18 +172,26 @@ export default function ChecklistPage({
         <>
            <PageHead eyebrow={eyebrow} title={title} subtitle={subtitle} />
 
-            <div className="tiles">
-                {groups.map((g, index) => (
-                    <button
-                        key={g.id}
-                        type="button"
-                        className={g.id === group.id ? 'tile tile--active' : 'tile'}
-                        aria-pressed={g.id === group.id}
-                        onClick={() => selectGroup(g.id)}
-                    >
-                        {renderTile(g, index)}
-                    </button>
-                ))}
+            <div className="checklist-overview">
+                <SmallerPicture
+                    groups={groups}
+                    pageLabel={title}
+                    pageProgressRingId={pageProgressRingId}
+                />
+
+                <div className="tiles">
+                    {groups.map((g, index) => (
+                        <button
+                            key={g.id}
+                            type="button"
+                            className={g.id === group.id ? 'tile tile--active' : 'tile'}
+                            aria-pressed={g.id === group.id}
+                            onClick={() => selectGroup(g.id)}
+                        >
+                            {renderTile(g, index)}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             {renderStats?.()}

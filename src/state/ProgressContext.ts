@@ -2,7 +2,7 @@ import { createContext } from 'react'
 import type { CompletionRing } from '../data/progress.ts'
 
 export type ProgressContextValue = {
-    /* Ids of every item (mission, collectable, ...) that has been ticked off. */
+    /* Ids of every item (mission, collectible, ...) that has been ticked off. */
     done: ReadonlySet<string>
     toggleItem: (id: string) => void
 

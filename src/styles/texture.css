@@ -30,9 +30,9 @@ body::after {
     inset: 0;
     z-index: 5;
     pointer-events: none;
-    background: url('/textures/scratches.png') center top / 100% auto repeat-y;
+    background: url('/textures/iron_scratches.png') center top / 100% auto repeat-y;
     mix-blend-mode: overlay;
-    opacity: 0.5;
+    opacity: 0.2;
 }
  
  

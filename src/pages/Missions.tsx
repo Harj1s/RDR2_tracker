@@ -66,7 +66,7 @@ export default function Missions() {
                 <section className="stats stats-three" aria-label="Story summary">
                     <StatCard
                         label="Missions completed"
-                        value={`${countDone(missionChapters, done)} done`}
+                        value={`${countDone(missionChapters, done)} / ${missionChapters.reduce((sum, chapter) => sum + chapter.items.length, 0)}`}
                         detail="Across all chapters"
                         tone="red"
                     />

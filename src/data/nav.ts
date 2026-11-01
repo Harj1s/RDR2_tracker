@@ -2,11 +2,11 @@ import {
     LayoutGrid,
     Gem,
     Flag,
-    Crosshair,
     Users,
     PawPrint,
     Hammer,
     Map,
+    Omega,
     type LucideIcon,
 } from 'lucide-react'
 
@@ -20,9 +20,9 @@ export const navItems: NavItem[] = [
     {label: 'Home', path: '/', icon: LayoutGrid },
     {label: 'Collectables', path: '/collectables', icon: Gem },
     {label: 'Missions', path: '/missions', icon: Flag },
-    {label: 'Side missions', path: '/side-missions', icon: Crosshair },
     {label: 'Strangers', path: '/strangers', icon: Users },
     {label: 'Hunting', path: '/hunting', icon: PawPrint },
+    {label: 'Horses', path: '/horses', icon: Omega },
     {label: 'Crafting', path: '/crafting', icon: Hammer },
     {label: 'Map', path: '/map', icon: Map },
 ]

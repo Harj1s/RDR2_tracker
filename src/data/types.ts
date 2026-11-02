@@ -1,10 +1,12 @@
 // The one shape every checklist in the app uses
 // (collectibles, missions, and later strangers, hunting, crafting).
 
-export type GoldObjective = {
+export type TrackedObjective = {
     id: string,
     text: string
 }
+
+export type GoldObjective = TrackedObjective
 
 export type TrackedItem = {
     /** Must be unique across the whole app and must never change once released. */
@@ -18,6 +20,7 @@ export type TrackedItem = {
     requires?: string[],    // Required missions to unlock this mission
     requiresAny?: string[], // Requires any of these missions to unlock
     gold?: GoldObjective[]  // Missions only
+    objectives?: TrackedObjective[] // Individually tracked items within a collection
 }
 
 export type TrackedGroup = {

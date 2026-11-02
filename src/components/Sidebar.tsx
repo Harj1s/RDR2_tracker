@@ -5,7 +5,6 @@ import { useProgress } from '../hooks/useProgress'
 import Meter from './Meter'
 import { currentGroupName } from '../lib/completion'
 import { missionChapters } from '../data/missions'
-import { currentGroupIndex } from '../lib/checklist'
 
 export default function Sidebar() {
     const { totalCompletion, resetProgress } = useProgress()
@@ -38,7 +37,6 @@ export default function Sidebar() {
                     >
                         <Icon size={16} strokeWidth={1.5} aria-hidden="true" />
                         <span>{label}</span>
-                        <span className="nav__dot" aria-hidden="true" />
                     </NavLink>
                 ))}
             </nav>

@@ -10,8 +10,20 @@ export function totalOf(group: TrackedGroup): number {
     if (group.totalInGame !== undefined) {
         return group.totalInGame
     } else {
-        return group.items.length
+        return group.items.reduce(
+            (total, item) => total + (item.objectives?.length ?? 1),
+            0,
+        )
     }
+}
+
+export function isItemDone(
+    item: TrackedItem,
+    done: ReadonlySet<string>,
+): boolean {
+    return item.objectives
+        ? item.objectives.length > 0 && item.objectives.every((objective) => done.has(objective.id))
+        : done.has(item.id)
 }
 
 export function statusOf(
@@ -19,11 +31,11 @@ export function statusOf(
     group: TrackedGroup,
     done: ReadonlySet<string>,
 ): ItemStatus {
-    if (done.has(item.id)) return 'done'
+    if (isItemDone(item, done)) return 'done'
     if (isLocked(item, done)) return 'locked'
 
     const firstOpen = group.items.find(
-        (other) => !done.has(other.id) && !isLocked(other, done),
+        (other) => !isItemDone(other, done) && !isLocked(other, done),
     )
     if (firstOpen?.id === item.id) return 'next'
 
@@ -37,7 +49,7 @@ export function chapterStatus(
     done: ReadonlySet<string>,
 ): ChapterStatus {
     const group = groups[index]
-    const isDone = (item: TrackedItem) => done.has(item.id)
+    const isDone = (item: TrackedItem) => isItemDone(item, done)
     const isComplete = (g: TrackedGroup) =>
         g.items.length > 0 && g.items.every(isDone)
 
@@ -55,7 +67,7 @@ export function collectibleGroupStatus(
     done: ReadonlySet<string>,
 ): CollectibleGroupStatus {
     const group = groups[index]
-    const isDone = (item: TrackedItem) => done.has(item.id)
+    const isDone = (item: TrackedItem) => isItemDone(item, done)
     const isComplete = (g: TrackedGroup) =>
         g.items.length > 0 && g.items.every(isDone)
     const required = true
@@ -78,10 +90,15 @@ export function filterItems(
     return items.filter((item) => {
         const matchesSearch =
             query === '' ||
-            [item.name, item.subtitle, item.region ?? '']
+            [
+                item.name,
+                item.subtitle,
+                item.region ?? '',
+                ...(item.objectives?.map((objective) => objective.text) ?? []),
+            ]
                 .some((value) => value.toLowerCase().includes(query))
         
-        const isDone = done.has(item.id)
+        const isDone = isItemDone(item, done)
         const matchesMode =
             mode === 'all' ||
             (mode === 'done' ? isDone : !isDone)

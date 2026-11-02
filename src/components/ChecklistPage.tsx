@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { Search } from 'lucide-react'
 import type { TrackedGroup, TrackedItem } from '../data/types'
 import type { FilterMode, ItemStatus } from '../lib/checklist'
-import { filterItems, statusOf} from '../lib/checklist'
+import { filterItems, isItemDone, statusOf} from '../lib/checklist'
 import { useProgress } from '../hooks/useProgress'
 import { useFlipReorder } from '../hooks/useFlipReorder'
 import PageHead from './PageHead'
@@ -109,7 +109,7 @@ export default function ChecklistPage({
             ? group.items.filter(
                 (item) =>
                     exitingItems.has(item.id) &&
-                    done.has(item.id) &&
+                    isItemDone(item, done) &&
                     filterItems([item], search, 'all', done).length > 0,
             )
             : []
@@ -155,7 +155,7 @@ export default function ChecklistPage({
 
     function toggleChecklistItem(id: string) {
         const item = group.items.find((candidate) => candidate.id === id)
-        const completing = mode === 'todo' && !done.has(id)
+        const completing = mode === 'todo' && item !== undefined && !isItemDone(item, done)
 
         if (item && completing) {
             setExitingItems((previous) =>
@@ -165,12 +165,21 @@ export default function ChecklistPage({
             stopExiting(id)
         }
 
-        toggleItem(id)
+        if (item?.objectives) {
+            const markDone = !isItemDone(item, done)
+            for (const objective of item.objectives) {
+                if (done.has(objective.id) !== markDone) toggleItem(objective.id)
+            }
+        } else {
+            toggleItem(id)
+        }
     }
 
     return (
         <>
            <PageHead eyebrow={eyebrow} title={title} subtitle={subtitle} />
+
+            {renderStats?.()}
 
             <div className="checklist-overview">
                 <SmallerPicture
@@ -193,8 +202,6 @@ export default function ChecklistPage({
                     ))}
                 </div>
             </div>
-
-            {renderStats?.()}
 
             <div className="searchbar">
                 <label className="searchbar__field">
@@ -246,9 +253,9 @@ export default function ChecklistPage({
                                         item={item}
                                         status={status}
                                         statusText={statusLabel(status)}
-                                        checked={done.has(item.id)}
+                                        checked={isItemDone(item, done)}
                                         selected={item.id === selected?.id}
-                                        exiting={exitingItems.has(item.id) && done.has(item.id)}
+                                        exiting={exitingItems.has(item.id) && isItemDone(item, done)}
                                         rowRef={registerRow(item.id)}
                                         onToggle={() => toggleChecklistItem(item.id)}
                                         onSelect={() => setItemId(item.id)}

@@ -40,6 +40,16 @@ describe('totalOf', () => {
         const g = group('g', [item('a')], { totalInGame: 0 })
         expect(totalOf(g)).toBe(0)
     })
+
+    test('counts collection objectives instead of collection entries', () => {
+        const collection = item('set-1', {
+            objectives: [
+                { id: 'card-1', text: 'Card 1' },
+                { id: 'card-2', text: 'Card 2' },
+            ],
+        })
+        expect(totalOf(group('cards', [collection]))).toBe(2)
+    })
 })
 
 // ---------- statusOf ----------
@@ -55,6 +65,18 @@ describe('statusOf', () => {
 
     test('an item in the done set is "done"', () => {
         expect(statusOf(a, g, new Set(['a']))).toBe('done')
+    })
+
+    test('a collection is done only when all of its objectives are done', () => {
+        const collection = item('set-1', {
+            objectives: [
+                { id: 'card-1', text: 'Card 1' },
+                { id: 'card-2', text: 'Card 2' },
+            ],
+        })
+        const collections = group('cards', [collection])
+        expect(statusOf(collection, collections, new Set(['card-1']))).toBe('next')
+        expect(statusOf(collection, collections, new Set(['card-1', 'card-2']))).toBe('done')
     })
 
     test('an item with lockedUntil is "locked"', () => {

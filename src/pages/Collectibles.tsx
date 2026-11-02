@@ -1,9 +1,16 @@
 import ChecklistPage from "../components/ChecklistPage"
 import StatCard from "../components/StatCard"
-import { collectibleCategories } from '../data/collectibles'
+import { cigaretteCardCategory, collectibleCategories } from '../data/collectibles'
 import { useProgress } from '../hooks/useProgress'
-import { collectibleGroupStatus, totalOf, statusOf,
-    type ItemStatus, type CollectibleGroupStatus } from '../lib/checklist'
+import {
+    collectibleGroupStatus,
+    isItemDone,
+    statusOf,
+    totalOf,
+    type CollectibleGroupStatus,
+    type ItemStatus,
+} from '../lib/checklist'
+import { countDone } from '../lib/completion'
 
 const itemStatusNames: Record<ItemStatus, string> = {
     locked: 'Locked',
@@ -19,7 +26,7 @@ const collectibleStatusNames: Record<CollectibleGroupStatus, string> = {
 }
 
 export default function Collectibles() {
-    const { done, toggleItem } = useProgress()
+    const { done } = useProgress()
 
     return (
         <ChecklistPage
@@ -31,7 +38,11 @@ export default function Collectibles() {
             sortUnlockedFirst
             searchPlaceholder="Search collectibles..."
             modeLabels={{ all: 'All collectibles', todo: 'Not found', done: 'Found' }}
-            listTitle={(group) => `${group.label} / ${group.name}`}
+            listTitle={(group) =>
+                group.id === 'cigarette-cards'
+                    ? 'Cigarette card collections'
+                    : `${group.label} / ${group.name}`
+            }
             statusLabel={(status) => itemStatusNames[status]}
             renderTile={(group, index) => {
                 const status = collectibleGroupStatus(collectibleCategories, index, done)
@@ -54,9 +65,9 @@ export default function Collectibles() {
                         tone="sage"
                     />
                     <StatCard
-                        label="Collectibles 2 progress"
-                        value={`${totalOf(collectibleCategories[1])} ${collectibleCategories[1].name} found`}
-                        detail="This is a test 2"
+                        label="Cigarette cards"
+                        value={`${countDone([cigaretteCardCategory], done)} / ${totalOf(cigaretteCardCategory)} found`}
+                        detail="Across all 12 collections"
                         tone="slate"
                     />
                 </section>
@@ -66,7 +77,7 @@ export default function Collectibles() {
                     return <p>Select a collectible to see its details.</p>
                 }
 
-                const isDone = done.has(item.id)
+                const isDone = isItemDone(item, done)
                 const isLocked = !isDone && statusOf(item, group, done) === 'locked'
 
                 return (
@@ -77,6 +88,26 @@ export default function Collectibles() {
                         {item.tagline && <p className="detail__lead">{item.tagline}</p>}
                         {item.description && (
                             <p className="detail__text">{item.description}</p>
+                        )}
+
+                        {item.objectives && (
+                            <section className="detail__section">
+                                <p className="eyebrow eyebrow--gold">Cards in this collection</p>
+                                <ul className="objectives">
+                                    {item.objectives.map((objective) => (
+                                        <li key={objective.id}>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={done.has(objective.id)}
+                                                    onChange={() => toggleMission(objective.id)}
+                                                />
+                                                {objective.text}
+                                            </label>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
                         )}
 
                         <div className="detail__actions">

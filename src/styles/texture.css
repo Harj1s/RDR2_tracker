@@ -2,37 +2,100 @@
    texture.css: the weathered, printed look. Import this LAST so it can
    sit on top of everything else:   import './styles/texture.css'
    Everything here is decoration only (pointer-events: none).
+
+   Each texture layer is attached to the thing it should move with:
+     .main    -> scrolls together with the page content
+     .sidebar -> is sticky, so its layers stay put on screen
+   Nothing is attached to the viewport (position: fixed), so no layer
+   slides over something that moves differently.
    ===================================================================== */
- 
-/* ---------- Layer 1: film grain over the whole page ---------- */
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: .4;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+.app {
+    --scratch-size: 1200px; /* tile width: bigger = larger, sparser scratches */
+    isolation: isolate;     /* keep blending inside the app */
 }
 
-/* ---------- Layer 2: scratches, dust and stains ----------
-   Needs a transparent PNG at public/textures/scratches.png
- */
-.app {
-    position: relative;
-    isolation: isolate; /* keep blending inside the app */
+.main {
+    position: relative; /* anchors .main::before / ::after. .sidebar is sticky, which anchors it too. */
 }
- 
-.app::before {
+
+/* ---------- Layer 1: scratches, dust and stains ----------
+   Needs a PNG at public/textures/scratches.png */
+.main::before,
+.sidebar::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 5;
     pointer-events: none;
-    background: url('/textures/iron_scratches.png') center top / 100% auto repeat-y;
+    background: url('/textures/iron_scratches.png') left top / var(--scratch-size) auto repeat;
     mix-blend-mode: overlay;
-    opacity: 0.2;
+    opacity: 0.5;
 }
- 
- 
+
+/* ---------- Layer 2: film grain ---------- */
+.main::after,
+.sidebar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Layer 3: weathered text and rules ----------
+   Only headings and big numbers. Do not put this on body text:
+   it hurts legibility and filters are slow on large areas. */
+.page-title,
+.sidebar__title,
+.card__title,
+.detail__title,
+.trail__heading,
+.stat-card__value,
+.total-box__value,
+.ring-chart__value,
+.worn {
+    filter: url(#wear-text);
+}
+
+/* Smaller / running text: lighter, finer wear. */
+.detail__lead,
+.detail__text,
+.trail__title,
+.trail__text,
+.worn-fine {
+    filter: url(#wear-text-fine);
+}
+
+.sidebar__rule,
+.trail__divider {
+    filter: url(#wear-rule);
+}
+
+/* People who ask for more contrast get a clean page. */
+@media (prefers-contrast: more) {
+    .main::before,
+    .main::after,
+    .sidebar::before,
+    .sidebar::after { display: none; }
+
+    .page-title,
+    .sidebar__title,
+    .card__title,
+    .detail__title,
+    .trail__heading,
+    .detail__lead,
+    .detail__text,
+    .trail__title,
+    .trail__text,
+    .worn,
+    .worn-fine,
+    .stat-card__value,
+    .total-box__value,
+    .ring-chart__value,
+    .sidebar__rule,
+    .trail__divider { filter: none; }
+}

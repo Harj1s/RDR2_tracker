@@ -2,7 +2,7 @@ import { collectibleCategories } from "../data/collectibles";
 import { missionChapters } from '../data/missions'
 import { completionRings, type CompletionRing } from '../data/progress.ts'
 import type { TrackedGroup } from '../data/types.ts'
-import { totalOf } from './checklist'
+import { isItemDone, totalOf } from './checklist'
 
 export function countTotal(groups: TrackedGroup[]): number {
     return groups.reduce((sum, group) => sum + totalOf(group), 0)
@@ -13,7 +13,12 @@ export function countDone(
     done: ReadonlySet<string>,
 ): number {
     return groups.reduce(
-        (sum, group) => sum + group.items.filter((item) => done.has(item.id)).length, 0,
+        (sum, group) => sum + group.items.reduce((itemTotal, item) => {
+            if (item.objectives) {
+                return itemTotal + item.objectives.filter((objective) => done.has(objective.id)).length
+            }
+            return itemTotal + Number(isItemDone(item, done))
+        }, 0), 0,
     )
 }
 
@@ -33,7 +38,11 @@ export function currentGroupName(
     done: ReadonlySet<string>,
 ): string {
     const started = groups.filter((group) =>
-        group.items.some((item) => done.has(item.id)),
+        group.items.some((item) =>
+            item.objectives
+                ? item.objectives.some((objective) => done.has(objective.id))
+                : done.has(item.id),
+        ),
     )
     return started.length > 0 ? started[started.length - 1].name : 'Not started'
 }

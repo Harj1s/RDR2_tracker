@@ -42,6 +42,21 @@ describe('countTotal / countDone', () => {
         expect(countDone(groups, new Set(['a', 'zzz']))).toBe(1)
     })
 
+    test('nested collection objectives count toward completion', () => {
+        const collection = {
+            id: 'set-1',
+            name: 'Collection 1',
+            subtitle: '',
+            objectives: [
+                { id: 'card-1', text: 'Card 1' },
+                { id: 'card-2', text: 'Card 2' },
+            ],
+        }
+        const cardGroups = [{ id: 'cards', name: 'Cards', items: [collection] }]
+        expect(countTotal(cardGroups)).toBe(2)
+        expect(countDone(cardGroups, new Set(['card-1']))).toBe(1)
+    })
+
     test('counts for an empty list of groups are 0', () => {
         expect(countTotal([])).toBe(0)
         expect(countDone([], new Set(['a']))).toBe(0)

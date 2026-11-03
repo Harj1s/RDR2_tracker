@@ -271,6 +271,13 @@
     box-shadow: var(--shadow);
 }
 
+.card__detail {
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
 .card__head {
     display: flex;
     align-items: baseline;

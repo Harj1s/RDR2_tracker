@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Search } from 'lucide-react'
 import type { TrackedGroup, TrackedItem } from '../data/types'
@@ -124,6 +124,8 @@ export default function ChecklistPage({
         ? sortByStatus(listItems, group, done, exitingItems)
         : listItems
 
+    const visibleKey = visible.map((item) => item.id).join('|')
+
     // The chosen item, or the "next up" one, or the first visible one.
     // If a filter hides the chosen item, this falls back instead of showing
     // a panel for something that is not in the list.
@@ -134,6 +136,26 @@ export default function ChecklistPage({
         null
 
     const registerRow = useFlipReorder(visible.map((item) => item.id))
+    const splitRef = useRef<HTMLDivElement>(null)
+
+    useLayoutEffect(() => {   
+        const split = splitRef.current
+        if (!split) return
+
+        const row = split.querySelector<HTMLElement>('.row--selected')
+        const panel = split.querySelector<HTMLElement>('.card__detail')
+        if (!row || !panel) return
+
+        const splitRect = split.getBoundingClientRect()
+        const rowRect = row.getBoundingClientRect()
+
+        const rowMiddle = rowRect.top - splitRect.top + rowRect.height / 2
+        const panelHeight = panel.offsetHeight
+        const maxOffset = Math.max(0, split.clientHeight - panelHeight)
+        const offset = Math.min(maxOffset, Math.max(0, rowMiddle - panelHeight / 2))
+
+        split.style.setProperty('--detail-offset', `${offset}px`)
+    }, [group.id, selected?.id, visibleKey])
 
     // -------- Actions
     function stopExiting(id: string) {
@@ -235,7 +257,7 @@ export default function ChecklistPage({
                 </div>
             </div>
             
-            <div className="split">
+            <div className="split" ref={splitRef}>
                 <section className="card list">
                     <header className="list__head">
                         <h3 className="card__title">{listTitle(group)}</h3>
@@ -271,7 +293,7 @@ export default function ChecklistPage({
                     )}
                 </section>
 
-                <aside className="card">
+                <aside className="card__detail">
                     {renderDetail(selected, group, toggleChecklistItem)}
                 </aside>
             </div>

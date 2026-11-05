@@ -358,6 +358,11 @@
     padding: 14px 16px;
 }
 
+.stat-card__title {
+    margin: 0 0 12px;
+    font-size: 16px;
+}
+
 .stat-card__label {
     font-size: 10px;
     font-weight: 600;
@@ -370,6 +375,12 @@
     font-family: var(--font-heading);
     font-size: 28px;
     line-height: 1.1;
+}
+
+.stat-card__items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
 }
 
 .stat-card__value--red { color: var(--red); }

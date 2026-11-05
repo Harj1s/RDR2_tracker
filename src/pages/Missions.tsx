@@ -65,22 +65,44 @@ export default function Missions() {
             renderStats={() => (
                 <section className="stats stats-three" aria-label="Story summary">
                     <StatCard
-                        label="Missions completed"
-                        value={`${countDone(missionChapters, done)} / ${missionChapters.reduce((sum, chapter) => sum + chapter.items.length, 0)}`}
-                        detail="Across all chapters"
-                        tone="red"
+                        title="Mission progress"
+                        items={[
+                            { 
+                                label: 'Missions completed',
+                                value: `${countDone(missionChapters, done)} / ${missionChapters.reduce((sum, chapter) => sum + chapter.items.length, 0)}`,
+                                detail: 'Across all chapters',
+                                tone: 'red'
+                            },
+                            {
+                                label: 'Gold medals achieved',
+                                value: ``,
+                                detail: '',
+                                tone: 'gold'
+                            }
+                        ]}
+
                     />
                     <StatCard
-                        label="Story progress"
-                        value={`${goldEarned(missionChapters, done)} earned`}
-                        detail="Gold rush achievement · goal 70"
-                        tone="gold"
+                        title="Mission progress"
+                        items={[
+                            { 
+                                label: 'Story progress',
+                                value: `${goldEarned(missionChapters, done)} earned`,
+                                detail: 'Gold rush achievement · goal 70',
+                                tone: 'gold'
+                            },
+                        ]}
                     />
                     <StatCard
-                        label="Current chapter"
-                        value={current.name}
-                        detail={`${current.label} · Arthur Morgan`}
-                        tone="dark"
+                        title="Mission progress"
+                        items={[
+                            { 
+                                label: 'Current chapter',
+                                value: current.name,
+                                detail: `${current.label} · Arthur Morgan`,
+                                tone: 'dark'
+                            },
+                        ]}
                     />
                 </section>
             )}

@@ -1,6 +1,6 @@
 import type { TrackedGroup, TrackedItem } from '../data/types'
 
-export type ItemStatus = 'locked' | 'done' | 'next' | 'todo'
+export type ItemStatus = 'locked' | 'done' | 'todo'
 export type ChapterStatus = 'locked' | 'complete' | 'inProgress' | 'todo'
 export type CollectibleGroupStatus = 'locked' | 'allFound' | 'inProgress'
 export type FilterMode = 'all' | 'todo' | 'done'
@@ -28,19 +28,12 @@ export function isItemDone(
 
 export function statusOf(
     item: TrackedItem,
-    group: TrackedGroup,
     done: ReadonlySet<string>,
 ): ItemStatus {
     if (isItemDone(item, done)) return 'done'
     if (isLocked(item, done)) return 'locked'
 
-    const firstOpen = group.items.find(
-        (other) => !isItemDone(other, done) && !isLocked(other, done),
-    )
-    if (firstOpen?.id === item.id) return 'next'
-
     return 'todo'
-
 }
 
 export function chapterStatus(

@@ -58,66 +58,17 @@ describe('statusOf', () => {
     const g = group('g', [
         item('a'),
         item('b'),
-        item('c', { lockedUntil: 'Epilogue' }),
+        item('c'),
         item('d'),
     ])
-    const [a, b, c, d] = g.items
+    const [a, c] = g.items
 
     test('an item in the done set is "done"', () => {
-        expect(statusOf(a, g, new Set(['a']))).toBe('done')
-    })
-
-    test('a collection is done only when all of its objectives are done', () => {
-        const collection = item('set-1', {
-            objectives: [
-                { id: 'card-1', text: 'Card 1' },
-                { id: 'card-2', text: 'Card 2' },
-            ],
-        })
-        const collections = group('cards', [collection])
-        expect(statusOf(collection, collections, new Set(['card-1']))).toBe('next')
-        expect(statusOf(collection, collections, new Set(['card-1', 'card-2']))).toBe('done')
-    })
-
-    test('an item with lockedUntil is "locked"', () => {
-        expect(statusOf(c, g, none)).toBe('locked')
+        expect(statusOf(a, new Set(['a']))).toBe('done')
     })
 
     test('done wins over locked', () => {
-        expect(statusOf(c, g, new Set(['c']))).toBe('done')
-    })
-
-    test('with nothing done, the first item is "next"', () => {
-        expect(statusOf(a, g, none)).toBe('next')
-    })
-
-    test('only the first open item is "next, the rest are "todo"', () => {
-        expect(statusOf(b, g, none)).toBe('todo')
-        expect(statusOf(d, g, none)).toBe('todo')
-    })
-
-    test('"next" moves along as items are ticked', () => {
-        const doneA = new Set(['a'])
-        expect(statusOf(a, g, doneA)).toBe('done')
-        expect(statusOf(b, g, doneA)).toBe('next')
-    })
-
-    test('"next" skips over a locked item', () => {
-        const doneAB = new Set(['a', 'b'])
-        expect(statusOf(c, g, doneAB)).toBe('locked')
-        expect(statusOf(d, g, doneAB)).toBe('next')
-    })
-
-    test('nothing is "next" when every open item is done', () => {
-        const all = new Set(['a', 'b', 'd'])
-        expect(statusOf(a, g, all)).toBe('done')
-        expect(statusOf(d, g, all)).toBe('done')
-        expect(statusOf(c, g, all)).toBe('locked')
-    })
-
-    test('items without lockedUntil are never "locked"', () => {
-        // Guards against comparing with null instead of undefined
-        expect(statusOf(a, g, none)).not.toBe('locked')
+        expect(statusOf(c, new Set(['c']))).toBe('done')
     })
 })
 

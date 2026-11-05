@@ -56,7 +56,7 @@ export default function ItemRow({
                     <span className="row__sub">{item.subtitle}</span>
                 </span>
                 <span className="row__status">
-                    {medalSrc && (
+                    {medalSrc && checked && (
                         <img className="row__medal" src={medalSrc} alt="Mission medal" />
                     )}
                     {statusText}

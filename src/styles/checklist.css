@@ -242,9 +242,9 @@
 }
 
 .row__medal {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
+    width: 48px;
+    height: 48px;
+    
 }
 
 /* Row states. Each state that sets a background is listed together with :hover

@@ -15,7 +15,6 @@ import { countDone } from '../lib/completion'
 const itemStatusNames: Record<ItemStatus, string> = {
     locked: 'Locked',
     done: 'Found',
-    next: 'Not found',
     todo: 'Not found',
 }
 
@@ -72,13 +71,13 @@ export default function Collectibles() {
                     />
                 </section>
             )}
-            renderDetail={(item, group, toggleMission) => {
+            renderDetail={(item, _group, toggleMission) => {
                 if (!item) {
                     return <p>Select a collectible to see its details.</p>
                 }
 
                 const isDone = isItemDone(item, done)
-                const isLocked = !isDone && statusOf(item, group, done) === 'locked'
+                const isLocked = !isDone && statusOf(item, done) === 'locked'
 
                 return (
                     <>

@@ -12,7 +12,6 @@ import { countDone } from '../lib/completion'
 const itemStatusNames: Record<ItemStatus, string> = {
     locked: 'Locked',
     done: 'Completed',
-    next: 'Next up',
     todo: 'Not started',
 }
 
@@ -37,7 +36,6 @@ export default function Missions() {
             title="The story so far."
             subtitle="Mark each story mission as you finish it, chapter by chapter."
             groups={missionChapters}
-            isMission
             defaultGroupId={current.id}
             pageProgressRingId="missions"
             sortUnlockedFirst
@@ -88,13 +86,13 @@ export default function Missions() {
             )}
 
             // Right-hand panel for the selected mission
-            renderDetail={(item, group, toggleMission) => {
+            renderDetail={(item, _group, toggleMission) => {
                 if (!item) {
                     return <p>Select a mission to see its details.</p>
                 }
 
                 const isDone = done.has(item.id)
-                const isLocked = !isDone && statusOf(item, group, done) === 'locked'
+                const isLocked = !isDone && statusOf(item, done) === 'locked'
                 const hasGold = item.gold && item.gold.length > 0
 
                 return (

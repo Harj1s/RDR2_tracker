@@ -45,9 +45,8 @@ const MODES: FilterMode[] = ['all', 'todo', 'done']
 // Sort order when 'sortUnlockedFirst' is on.
 const STATUS_RANK: Record<ItemStatus, number> = {
     done: 0,
-    next: 1,
-    todo: 2,
-    locked: 3,
+    todo: 1,
+    locked: 2,
 }
 
 /**
@@ -57,13 +56,12 @@ const STATUS_RANK: Record<ItemStatus, number> = {
  */
 function sortByStatus(
     items: TrackedItem[],
-    group: TrackedGroup,
     done: ReadonlySet<string>,
     exiting: Map<string, ItemStatus>,
 ) {
     const completionOrder = new Map([...done].map((id, index) => [id, index]))
     const statusFor = (item: TrackedItem) =>
-        exiting.get(item.id) ?? statusOf(item, group, done)
+        exiting.get(item.id) ?? statusOf(item, done)
 
     return [...items].sort((a, b) => {
         const aStatus = statusFor(a)
@@ -82,7 +80,7 @@ function sortByStatus(
 
 
 export default function ChecklistPage({
-    eyebrow, title, subtitle, groups, isMission = false,
+    eyebrow, title, subtitle, groups,
     defaultGroupId, pageProgressRingId,
     sortUnlockedFirst, searchPlaceholder, modeLabels,
     listTitle, renderTile, renderDetail, statusLabel,
@@ -126,7 +124,7 @@ export default function ChecklistPage({
     ]
 
     const visible = sortUnlockedFirst
-        ? sortByStatus(listItems, group, done, exitingItems)
+        ? sortByStatus(listItems, done, exitingItems)
         : listItems
 
     const visibleKey = visible.map((item) => item.id).join('|')
@@ -136,7 +134,6 @@ export default function ChecklistPage({
     // a panel for something that is not in the list.
     const selected =
         visible.find((item) => item.id === itemId) ??
-        visible.find((item) => statusOf(item, group, done) === 'next') ??
         visible[0] ??
         null
 
@@ -186,7 +183,7 @@ export default function ChecklistPage({
 
         if (item && completing) {
             setExitingItems((previous) =>
-                new Map(previous).set(id, statusOf(item, group, done)),
+                new Map(previous).set(id, statusOf(item, done)),
             )
         } else {
             stopExiting(id)
@@ -273,14 +270,14 @@ export default function ChecklistPage({
                     ) : (
                         <ul className="list__rows">
                             {visible.map((item) => {
-                                const status = statusOf(item, group, done)
+                                const status = statusOf(item, done)
                                 const goldObjectives = item.gold ?? []
                                 const completedGold = goldObjectives.filter((objective) => 
                                     done.has(objective.id),
                                 ).length
 
                                 const medalSrc =
-                                    !isMission || goldObjectives.length === 0
+                                    goldObjectives.length === 0
                                         ? undefined
                                         : completedGold === 0
                                             ? copperMedal

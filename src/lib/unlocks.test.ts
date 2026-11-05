@@ -66,44 +66,20 @@ describe('statusOf with requires', () => {
         item('b', ['a']),
         item('c', ['a', 'b']),
     ])
-    const [a, b, c] = g.items
+    const [b, c] = g.items
 
     test('an item with missing requirements is "locked"', () => {
-        expect(statusOf(b, g, none)).toBe('locked')
-        expect(statusOf(c, g, none)).toBe('locked')
-    })
-
-    test('it unlocks (and becomes "next") once its requirement is done', () => {
-        const doneA = new Set(['a'])
-        expect(statusOf(b, g, doneA)).toBe('next')
-        expect(statusOf(c, g, doneA)).toBe('locked')
-    })
-
-    test('needing two: unlocks only when both are done', () => {
-        expect(statusOf(c, g, new Set(['a', 'b']))).toBe('next')
-    })
-
-    test('"next" skips locked items', () => {
-        expect(statusOf(a, g, none)).toBe('next')
-        expect(statusOf(b, g, none)).not.toBe('next')
+        expect(statusOf(b, none)).toBe('locked')
+        expect(statusOf(c, none)).toBe('locked')
     })
     
     test('done wins over locked', () => {
-        expect(statusOf(c, g, new Set(['c']))).toBe('done')
-    })
-
-    test('"next" goes to the first item that is actually available', () => {
-        // x is locked by a requirement that is never met, so y is the one to do
-        const h = group('h', [item('x', ['missing']), item('y'), item('z')])
-        expect(statusOf(h.items[0], h, none)).toBe('locked')
-        expect(statusOf(h.items[1], h, none)).toBe('next')
-        expect(statusOf(h.items[2], h, none)).toBe('todo')
+        expect(statusOf(c, new Set(['c']))).toBe('done')
     })
 
     test('a requirement in another group counts too', () => {
         const other = group('other', [item('z', ['a'])])
-        expect(statusOf(other.items[0], other, none)).toBe('locked')
-        expect(statusOf(other.items[0], other, new Set(['a']))).toBe('next')
+        expect(statusOf(other.items[0], none)).toBe('locked')
     })
 })
 

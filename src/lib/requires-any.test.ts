@@ -79,13 +79,8 @@ describe('statusOf with requiresAny', () => {
     ])
 
     test('locked until either choice is done', () => {
-        expect(statusOf(g.items[2], g, none)).toBe('locked')
-        expect(statusOf(g.items[2], g, new Set(['b']))).toBe('todo')
-    })
-
-    test('an unlocked item can be "next" when it is the first open one', () => {
-        const h = group('h', [item('x'), item('y', { requiresAny: ['x', 'z'] })])
-        expect(statusOf(h.items[1], h, new Set(['x']))).toBe('next')
+        expect(statusOf(g.items[2], none)).toBe('locked')
+        expect(statusOf(g.items[2], new Set(['b']))).toBe('todo')
     })
 })
 

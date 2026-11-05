@@ -8,7 +8,7 @@ import { missionChapters } from '../data/missions'
 
 export default function Sidebar() {
     const { totalCompletion, resetProgress } = useProgress()
-    const { done, toggleItem } = useProgress()
+    const { done } = useProgress()
 
     function handleReset() {
         if (window.confirm('Reset all progress to the demo save?')) {

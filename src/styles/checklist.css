@@ -230,6 +230,18 @@
     color: var(--text);
 }
 
+.row__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.row__medal {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
 /* Row states. Each state that sets a background is listed together with :hover
     so the plain .row:hover rule below cannot override it. */
 

@@ -5,6 +5,7 @@ type ItemRowProps = {
     item: TrackedItem
     status: ItemStatus
     statusText: string
+    medalSrc?: string
     checked: boolean
     selected: boolean
     exiting: boolean
@@ -17,7 +18,7 @@ type ItemRowProps = {
 // One row in a ChecklistPage list: a checkbox plus a button that selects
 // the item for the detail panel.
 export default function ItemRow({
-    item, status, statusText, checked, selected, exiting,
+    item, status, statusText, medalSrc, checked, selected, exiting,
     rowRef, onToggle, onSelect, onExitEnd,
 }: ItemRowProps) {
     const className = [
@@ -54,7 +55,12 @@ export default function ItemRow({
                     <span className="row__title">{item.name}</span>
                     <span className="row__sub">{item.subtitle}</span>
                 </span>
-                <span className="row__status">{statusText}</span>
+                <span className="row__status">
+                    {medalSrc && (
+                        <img className="row__medal" src={medalSrc} alt="Mission medal" />
+                    )}
+                    {statusText}
+                </span>
             </button>
         </li>
     )

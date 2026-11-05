@@ -37,6 +37,7 @@ export default function Missions() {
             title="The story so far."
             subtitle="Mark each story mission as you finish it, chapter by chapter."
             groups={missionChapters}
+            isMission
             defaultGroupId={current.id}
             pageProgressRingId="missions"
             sortUnlockedFirst

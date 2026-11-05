@@ -56,9 +56,6 @@ describe('isLocked', () => {
         expect(isLocked(c, new Set(['a', 'b']))).toBe(false)
     })
 
-    test('lockedUntil still locks, whatever is done', () => {
-        expect(isLocked(item('x', undefined, { lockedUntil: 'Epiloque' }), new Set(['a']))).toBe(true)
-    })
 })
 
 // ---------- statusOf with requires ----------

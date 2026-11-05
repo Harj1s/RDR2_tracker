@@ -159,13 +159,12 @@ export function missingRequirements(
     return (item.requires ?? []).filter((id) => (!done.has(id)))
 }
 
-//** True if lockedUntil is set, or any requirement is missing. */
+//** True if any requirement is missing. */
 export function isLocked(
     item: TrackedItem,
     done: ReadonlySet<string>
 ): boolean {
     return (
-        item.lockedUntil !== undefined ||
         missingRequirements(item, done).length > 0 ||
         needsAnyOf(item, done).length > 0
     )

@@ -16,7 +16,6 @@ export type TrackedItem = {
     description?: string,   // Detail panel text
     tagline?: string,       // Serif line in the detail panel
     region?: string,        // Region of the item
-    lockedUntil?: string,   // Reason why item is locked
     requires?: string[],    // Required missions to unlock this mission
     requiresAny?: string[], // Requires any of these missions to unlock
     gold?: GoldObjective[]  // Missions only

@@ -10,6 +10,10 @@ import PageHead from './PageHead'
 import ItemRow from './ItemRow'
 import SmallerPicture from './SmallerPicture'
 
+import copperMedal from '../assets/icons/Copper medal.png'
+import silverMedal from '../assets/icons/Silver medal.png'
+import goldMedal from '../assets/icons/Gold medal.png'
+
 type ChecklistPageProps = {
     eyebrow: string
     title: string
@@ -78,7 +82,8 @@ function sortByStatus(
 
 
 export default function ChecklistPage({
-    eyebrow, title, subtitle, groups, defaultGroupId, pageProgressRingId,
+    eyebrow, title, subtitle, groups, isMission = false,
+    defaultGroupId, pageProgressRingId,
     sortUnlockedFirst, searchPlaceholder, modeLabels,
     listTitle, renderTile, renderDetail, statusLabel,
     renderStats, listFooter, banner,
@@ -247,12 +252,27 @@ export default function ChecklistPage({
                         <ul className="list__rows">
                             {visible.map((item) => {
                                 const status = statusOf(item, group, done)
+                                const goldObjectives = item.gold ?? []
+                                const completedGold = goldObjectives.filter((objective) => 
+                                    done.has(objective.id),
+                                ).length
+
+                                const medalSrc =
+                                    !isMission || goldObjectives.length === 0
+                                        ? undefined
+                                        : completedGold === 0
+                                            ? copperMedal
+                                            :completedGold === goldObjectives.length
+                                                ? goldMedal
+                                                : silverMedal
+
                                 return (
                                     <ItemRow
                                         key={item.id}
                                         item={item}
                                         status={status}
                                         statusText={statusLabel(status)}
+                                        medalSrc={medalSrc}
                                         checked={isItemDone(item, done)}
                                         selected={item.id === selected?.id}
                                         exiting={exitingItems.has(item.id) && isItemDone(item, done)}

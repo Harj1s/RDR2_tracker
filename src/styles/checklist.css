@@ -91,12 +91,27 @@
     color: var(--text-on-dark);
 }
 
+.tile--locked,
+.tile--locked:hover {
+    background: color-mix(in srgb, var(--red) 40%, var(--slate));
+    color: var(--text-muted-on-dark);
+}
+
+.tile--locked.tile--active {
+    color: var(--text-h);
+}
+
 .tile__label {
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--text);
+}
+
+.tile--locked .tile__label,
+.tile--locked .tile__status {
+    color: var(--text-h)
 }
 
 .tile--active .tile__label {

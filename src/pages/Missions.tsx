@@ -53,6 +53,11 @@ export default function Missions() {
             }
 
             // One chapter tile in the selector row
+            tileClassName={(_group, index) =>
+                chapterStatus(missionChapters, index, done) === 'locked'
+                    ? 'tile--locked'
+                    : undefined
+            }
             renderTile={(group, index) => {
                 const status = chapterStatus(missionChapters, index, done)
                 const medalMissions = group.items.filter((item) => item.gold?.length)

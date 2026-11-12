@@ -43,6 +43,7 @@ type ChecklistPageProps = {
         item: TrackedItem,
         done: ReadonlySet<string>,
     ) => MedalType | undefined
+    tileClassName?: (group: TrackedGroup, index: number) => string | undefined
 }
 
 const MODES: FilterMode[] = ['all', 'todo', 'done']
@@ -89,7 +90,7 @@ export default function ChecklistPage({
     defaultGroupId, pageProgressRingId,
     sortUnlockedFirst, searchPlaceholder, modeLabels,
     listTitle, renderTile, renderDetail, statusLabel,
-    renderStats, listFooter, banner, getMedalType,
+    renderStats, listFooter, banner, getMedalType, tileClassName
 }: ChecklistPageProps) {
     const { done, toggleItem } = useProgress()
 
@@ -222,7 +223,11 @@ export default function ChecklistPage({
                         <button
                             key={g.id}
                             type="button"
-                            className={g.id === group.id ? 'tile tile--active' : 'tile'}
+                            className={[
+                                'tile',
+                                g.id === group.id && 'tile--active',
+                                tileClassName?.(g, index), 
+                            ].filter(Boolean).join(' ')}
                             aria-pressed={g.id === group.id}
                             onClick={() => selectGroup(g.id)}
                         >

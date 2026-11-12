@@ -61,14 +61,14 @@ describe('statusOf', () => {
         item('c'),
         item('d'),
     ])
-    const [a, c] = g.items
+    const [firstItem, , thirdItem] = g.items
 
     test('an item in the done set is "done"', () => {
-        expect(statusOf(a, new Set(['a']))).toBe('done')
+        expect(statusOf(firstItem, new Set([firstItem.id]))).toBe('done')
     })
 
     test('done wins over locked', () => {
-        expect(statusOf(c, new Set(['c']))).toBe('done')
+        expect(statusOf(thirdItem, new Set([thirdItem.id]))).toBe('done')
     })
 })
 

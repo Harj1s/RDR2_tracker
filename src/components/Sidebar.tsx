@@ -7,8 +7,7 @@ import { currentGroupName } from '../lib/completion'
 import { missionChapters } from '../data/missions'
 
 export default function Sidebar() {
-    const { totalCompletion, resetProgress } = useProgress()
-    const { done } = useProgress()
+    const { done, resetProgress, totalCompletion } = useProgress()
 
     function handleReset() {
         if (window.confirm('Reset all progress to the demo save?')) {

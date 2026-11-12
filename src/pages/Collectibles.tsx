@@ -1,5 +1,5 @@
-import ChecklistPage from "../components/ChecklistPage"
-import StatCard from "../components/StatCard"
+import ChecklistPage from '../components/ChecklistPage'
+import StatCard from '../components/StatCard'
 import { cigaretteCardCategory, collectibleCategories } from '../data/collectibles'
 import { useProgress } from '../hooks/useProgress'
 import {
@@ -10,7 +10,6 @@ import {
     type CollectibleGroupStatus,
     type ItemStatus,
 } from '../lib/checklist'
-import { getMedalType } from '../lib/medals'
 import { countDone } from '../lib/completion'
 
 const itemStatusNames: Record<ItemStatus, string> = {

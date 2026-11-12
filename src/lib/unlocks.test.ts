@@ -66,15 +66,15 @@ describe('statusOf with requires', () => {
         item('b', ['a']),
         item('c', ['a', 'b']),
     ])
-    const [b, c] = g.items
+    const [, secondItem, dependentItem] = g.items
 
     test('an item with missing requirements is "locked"', () => {
-        expect(statusOf(b, none)).toBe('locked')
-        expect(statusOf(c, none)).toBe('locked')
+        expect(statusOf(secondItem, none)).toBe('locked')
+        expect(statusOf(dependentItem, none)).toBe('locked')
     })
     
     test('done wins over locked', () => {
-        expect(statusOf(c, new Set(['c']))).toBe('done')
+        expect(statusOf(dependentItem, new Set([dependentItem.id]))).toBe('done')
     })
 
     test('a requirement in another group counts too', () => {

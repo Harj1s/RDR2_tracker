@@ -93,7 +93,7 @@
 
 .tile--locked,
 .tile--locked:hover {
-    background: color-mix(in srgb, var(--red) 40%, var(--slate));
+    background: color-mix(in srgb, var(--red) 50%, var(--slate));
     color: var(--text-muted-on-dark);
 }
 

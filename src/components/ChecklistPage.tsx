@@ -4,15 +4,16 @@ import { Search } from 'lucide-react'
 import type { TrackedGroup, TrackedItem } from '../data/types'
 import type { FilterMode, ItemStatus } from '../lib/checklist'
 import { filterItems, isItemDone, statusOf} from '../lib/checklist'
+import type { MedalType } from '../lib/medals'
 import { useProgress } from '../hooks/useProgress'
 import { useFlipReorder } from '../hooks/useFlipReorder'
 import PageHead from './PageHead'
 import ItemRow from './ItemRow'
 import SmallerPicture from './SmallerPicture'
 
-import copperMedal from '../assets/icons/Copper medal.png'
-import silverMedal from '../assets/icons/Silver medal.png'
-import goldMedal from '../assets/icons/Gold medal.png'
+import bronzeMedal from '../assets/icons/Bronze Medal.png'
+import silverMedal from '../assets/icons/Silver Medal.png'
+import goldMedal from '../assets/icons/Gold Medal.png'
 
 type ChecklistPageProps = {
     eyebrow: string
@@ -38,6 +39,10 @@ type ChecklistPageProps = {
     renderStats?: () => ReactNode
     listFooter?: (group: TrackedGroup) => ReactNode
     banner?: ReactNode
+    getMedalType?: (
+        item: TrackedItem,
+        done: ReadonlySet<string>,
+    ) => MedalType | undefined
 }
 
 const MODES: FilterMode[] = ['all', 'todo', 'done']
@@ -84,7 +89,7 @@ export default function ChecklistPage({
     defaultGroupId, pageProgressRingId,
     sortUnlockedFirst, searchPlaceholder, modeLabels,
     listTitle, renderTile, renderDetail, statusLabel,
-    renderStats, listFooter, banner,
+    renderStats, listFooter, banner, getMedalType,
 }: ChecklistPageProps) {
     const { done, toggleItem } = useProgress()
 
@@ -271,19 +276,12 @@ export default function ChecklistPage({
                         <ul className="list__rows">
                             {visible.map((item) => {
                                 const status = statusOf(item, done)
-                                const goldObjectives = item.gold ?? []
-                                const completedGold = goldObjectives.filter((objective) => 
-                                    done.has(objective.id),
-                                ).length
-
+                                const medalType = getMedalType?.(item, done)
                                 const medalSrc =
-                                    goldObjectives.length === 0
-                                        ? undefined
-                                        : completedGold === 0
-                                            ? copperMedal
-                                            :completedGold === goldObjectives.length
-                                                ? goldMedal
-                                                : silverMedal
+                                    medalType === 'gold' ? goldMedal
+                                    : medalType === 'silver' ? silverMedal
+                                    : medalType === 'bronze' ? bronzeMedal
+                                    : undefined
 
                                 return (
                                     <ItemRow

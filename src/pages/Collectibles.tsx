@@ -58,16 +58,26 @@ export default function Collectibles() {
             renderStats={() => (
                 <section className="stats stats-three" aria-label="Collectibles summary">
                     <StatCard
-                        label="Collectibles progress"
-                        value={`${totalOf(collectibleCategories[0])} ${collectibleCategories[0].name} found`}
-                        detail="This is a test"
-                        tone="sage"
+                        title={'Collectibles progress'}
+                        items={[
+                            {
+                                label: '',
+                                value: `${totalOf(collectibleCategories[0])} ${collectibleCategories[0].name} found`,
+                                detail: 'This is a test',
+                                tone: 'sage',
+                            }
+                        ]}
                     />
                     <StatCard
-                        label="Cigarette cards"
-                        value={`${countDone([cigaretteCardCategory], done)} / ${totalOf(cigaretteCardCategory)} found`}
-                        detail="Across all 12 collections"
-                        tone="slate"
+                        title={'Cigarette cards'}
+                        items={[
+                            {
+                                label: '',
+                                value: `${countDone([cigaretteCardCategory], done)} / ${totalOf(cigaretteCardCategory)} found`,
+                                detail: 'Across all 12 collections',
+                                tone: 'slate',
+                            }
+                        ]}
                     />
                 </section>
             )}

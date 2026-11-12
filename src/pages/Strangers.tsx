@@ -63,26 +63,41 @@ export default function StrangerMissions() {
 
             // Summary strip above the tiles (3 cards to match .stats--three)
             renderStats={() => (
-                <section className="stats stats-three" aria-label="Story summary">
+                <section className="stats stats--three" aria-label="Story summary">
                     <StatCard
-                        label="Stranger missions completed"
-                        value={`${countDone(strangerMissions, done)} / ${strangerMissions.reduce((sum, chapter) => sum + chapter.items.length, 0)}`}
-                        detail="Across all stranger strands"
-                        tone="red"
+                        title={'Stranger missions completed'}
+                        items={[
+                            {
+                                label: '',
+                                value: `${countDone(strangerMissions, done)} / ${strangerMissions.reduce((sum, chapter) => sum + chapter.items.length, 0)}`,
+                                detail: 'Across all stranger strands',
+                                tone: 'red',
+                            }
+                        ]}
                     />
                     <StatCard
-                        label="Stranger strands completed"
-                        value={`${strangerStrands.filter((strand) =>
-                            strand.items.every((item) => done.has(item.id)),
-                        ).length} / ${strangerStrands.length}`}
-                        detail="Out of all stranger strands"
-                        tone="red"
+                        title={'Stranger strands completed'}
+                        items={[
+                            {
+                                label: '',
+                                value: `${strangerStrands.filter((strand) =>
+                                    strand.items.every((item) => done.has(item.id)),
+                                ).length} / ${strangerStrands.length}`,
+                                detail: 'Out of all stranger strands',
+                                tone: 'red',
+                            }
+                        ]}
                     />
                     <StatCard
-                        label="Current chapter"
-                        value={current.name}
-                        detail={`${current.label} · Arthur Morgan`}
-                        tone="dark"
+                        title={'Current chapter'}
+                        items={[
+                            {
+                                label: '',
+                                value: current.name,
+                                detail: `${current.label} · Arthur Morgan`,
+                                tone: 'dark',
+                            }
+                        ]}
                     />
                 </section>
             )}

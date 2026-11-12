@@ -6,6 +6,11 @@ import { useProgress } from '../hooks/useProgress'
 import { chapterStatus, currentGroupIndex, goldEarned, statusOf } from '../lib/checklist'
 import type { ChapterStatus, ItemStatus } from '../lib/checklist'
 import { countDone } from '../lib/completion'
+import { getMedalType, countMedals } from  '../lib/medals'
+
+import bronzeMedal from '../assets/icons/Bronze Medal.png'
+import silverMedal from '../assets/icons/Silver Medal.png'
+import goldMedal from '../assets/icons/Gold Medal.png'
 
 // ---------- Labels ----------
 
@@ -61,35 +66,52 @@ export default function Missions() {
                 )
             }}
 
+            getMedalType={getMedalType}
+
             // Summary strip above the tiles (3 cards to match .stats--three)
             renderStats={() => (
-                <section className="stats stats-three" aria-label="Story summary">
+                <section className="stats--three" aria-label="Story summary">
                     <StatCard
                         title="Mission progress"
                         items={[
-                            { 
-                                label: 'Missions completed',
-                                value: `${countDone(missionChapters, done)} / ${missionChapters.reduce((sum, chapter) => sum + chapter.items.length, 0)}`,
-                                detail: 'Across all chapters',
+                            {
+                                label: 'Chapter missions completed',
+                                value: `${countDone([current], done)} / ${current.items.length}`,
+                                detail: `In ${current.name} (${current.label})`,
                                 tone: 'red'
                             },
-                            {
-                                label: 'Gold medals achieved',
-                                value: ``,
-                                detail: '',
-                                tone: 'gold'
+                            { 
+                                label: 'Total missions completed',
+                                value: `${countDone(missionChapters, done)} / ${missionChapters.reduce((sum, chapter) => sum + chapter.items.length, 0)}`,
+                                detail: 'Across all chapters',
+                                tone: 'sage'
                             }
                         ]}
 
                     />
                     <StatCard
-                        title="Mission progress"
+                        title="Medal progress"
                         items={[
                             { 
-                                label: 'Story progress',
-                                value: `${goldEarned(missionChapters, done)} earned`,
-                                detail: 'Gold rush achievement · goal 70',
-                                tone: 'gold'
+                                label: 'Gold Medals',
+                                value: `${countMedals(missionChapters, done, 'gold')}`,
+                                detail: '',
+                                tone: 'gold',
+                                medalSrc: goldMedal,
+                            },
+                            { 
+                                label: 'Silver Medals',
+                                value: `${countMedals(missionChapters, done, 'silver')}`,
+                                detail: '',
+                                tone: 'silver',
+                                medalSrc: silverMedal,
+                            },
+                            { 
+                                label: 'Bronze Medals',
+                                value: `${countMedals(missionChapters, done, 'bronze')}`,
+                                detail: '',
+                                tone: 'bronze',
+                                medalSrc: bronzeMedal,
                             },
                         ]}
                     />

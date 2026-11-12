@@ -10,6 +10,7 @@ import {
     type CollectibleGroupStatus,
     type ItemStatus,
 } from '../lib/checklist'
+import { getMedalType } from '../lib/medals'
 import { countDone } from '../lib/completion'
 
 const itemStatusNames: Record<ItemStatus, string> = {
@@ -45,13 +46,17 @@ export default function Collectibles() {
             statusLabel={(status) => itemStatusNames[status]}
             renderTile={(group, index) => {
                 const status = collectibleGroupStatus(collectibleCategories, index, done)
+
                 return (
                     <>
-                        <span className="tile__label">{group.label}</span>
-                        <span className="tile__name">{group.name}</span>
-                        <span className={`tile__status tile__status--${status}`}>
-                            {collectibleStatusNames[status]}
-                        </span>
+                        <div className="tile__text">
+                            <span className="tile__label">{group.label}</span>
+                            <span className="tile__name">{group.name}</span>
+                            <span className={`tile__status tile__status--${status}`}>
+                                {collectibleStatusNames[status]}
+                            </span>
+                        </div>
+
                     </>
                 )
             }}

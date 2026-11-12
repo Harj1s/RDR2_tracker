@@ -3,7 +3,7 @@ import ChecklistPage from '../components/ChecklistPage'
 import StatCard from '../components/StatCard'
 import { missionChapters } from '../data/missions'
 import { useProgress } from '../hooks/useProgress'
-import { chapterStatus, currentGroupIndex, goldEarned, statusOf } from '../lib/checklist'
+import { chapterStatus, currentGroupIndex, statusOf, totalOf } from '../lib/checklist'
 import type { ChapterStatus, ItemStatus } from '../lib/checklist'
 import { countDone } from '../lib/completion'
 import { getMedalType, countMedals } from  '../lib/medals'
@@ -55,13 +55,37 @@ export default function Missions() {
             // One chapter tile in the selector row
             renderTile={(group, index) => {
                 const status = chapterStatus(missionChapters, index, done)
+                const medalMissions = group.items.filter((item) => item.gold?.length)
                 return (
                     <>
-                        <span className="tile__label">{group.label}</span>
-                        <span className="tile__name">{group.name}</span>
-                        <span className={`tile__status tile__status--${status}`}>
-                            {chapterStatusNames[status]}
-                        </span>
+                        <div className="tile__text">
+                            <span className="tile__label">{group.label}</span>
+                            <span className="tile__name">{group.name}</span>
+                            <span className={`tile__status tile__status--${status}`}>
+                                {chapterStatusNames[status]}
+                            </span>
+                        </div>
+
+                        {status !== 'locked' && (
+                            <div className="tile__medals">
+                                {[
+                                    { type: 'gold', image: goldMedal },
+                                    { type: 'silver', image: silverMedal },
+                                    { type: 'bronze', image: bronzeMedal },
+                                ].map(({ type, image }) => {
+                                    const count = medalMissions.filter(
+                                        (item) => getMedalType(item, done) === type,
+                                    ).length
+
+                                    return (
+                                        <div className="tile__medal-row" key={type}>
+                                            <img src={image} alt="" />
+                                            <span>{count}</span>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )}
                     </>
                 )
             }}

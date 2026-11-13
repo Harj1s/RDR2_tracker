@@ -1,6 +1,8 @@
 import { collectibleCategories } from "../data/collectibles";
+import { compendiumCategories } from "../data/compendium.ts";
 import { missionChapters } from '../data/missions'
 import { completionRings, type CompletionRing } from '../data/progress.ts'
+import { strangerMissions } from "../data/strangers.ts";
 import type { TrackedGroup } from '../data/types.ts'
 import { isItemDone, totalOf } from './checklist'
 
@@ -53,6 +55,8 @@ export function currentGroupName(
 const liveRings: Record<string, TrackedGroup[]> = {
     missions: missionChapters,
     collectibles: collectibleCategories,
+    strangers: strangerMissions,
+    compendium: compendiumCategories
 }
 
 /* The ring list, with the Collectibles ring calculated from real ticks. */

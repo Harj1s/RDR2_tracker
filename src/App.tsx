@@ -7,6 +7,7 @@ import Missions from './pages/Missions.tsx'
 import ComingSoon from './pages/ComingSoon.tsx'
 import { navItems } from './data/nav.ts'
 import StrangerMissions from './pages/Strangers.tsx'
+import Compendium from './pages/Compendium.tsx'
 
 // Pages that are built. Anything not listed here shows "not built yet".
 
@@ -14,6 +15,7 @@ const builtPages: Record<string, ReactElement> = {
   '/collectibles': <Collectibles />,
   '/missions': <Missions />,
   '/strangers': <StrangerMissions />,
+  '/compendium': <Compendium />,
 }
 
 export default function App() {

@@ -70,10 +70,10 @@ export type CompletionRing = {
 }
 
 export const completionRings: CompletionRing[] = [
-    { id: 'missions', label: 'Missions & events', percent: 72, color: 'var(--red)' },
+    { id: 'missions', label: 'Missions', percent: 72, color: 'var(--red)' },
+    { id: 'strangers', label: 'Strangers', percent: 55, color: 'var(--slate)' },
     { id: 'collectibles', label: 'Collectibles', percent: 48, color: 'var(--gold)' },
     { id: 'compendium', label: 'Compendium', percent: 66, color: 'var(--sage)' },
-    { id: 'player', label: 'Player', percent: 58, color: 'var(--slate)' },
     { id: 'misc', label: 'Miscellaneous', percent: 70, color: 'var(--brick)' },
 ]
 

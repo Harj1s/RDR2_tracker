@@ -157,9 +157,10 @@ export function useChecklistPage({
             stopExiting(itemId)
         }
 
-        if (item?.objectives) {
+        const objectives = item?.details?.objectives
+        if (objectives) {
             const shouldMarkDone = !isItemDone(item, done)
-            for (const objective of item.objectives) {
+            for (const objective of objectives) {
                 if (done.has(objective.id) !== shouldMarkDone) {
                     toggleItem(objective.id)
                 }

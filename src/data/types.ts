@@ -1,33 +1,43 @@
-// The one shape every checklist in the app uses
-// (collectibles, missions, and later strangers, hunting, crafting).
-
 export type TrackedObjective = {
-    id: string,
+    id: string
     text: string
 }
 
 export type GoldObjective = TrackedObjective
 
-export type TrackedItem = {
-    /** Must be unique across the whole app and must never change once released. */
-    id: string,             // Unique identifier
-    name: string,           // Title of the item
-    subtitle: string,       // Gray line under the title
-    description?: string,   // Detail panel text
-    tagline?: string,       // Serif line in the detail panel
-    region?: string,        // Region of the item
-    requires?: string[],    // Required missions to unlock this mission
-    requiresAny?: string[], // Requires any of these missions to unlock
-    gold?: GoldObjective[]  // Missions only
-    objectives?: TrackedObjective[] // Individually tracked items within a collection
+/** Optional checklist behavior and presentation shared by tracked item types. */
+export type TrackedItemDetails = {
+    tagline?: string
+    region?: string
+    requires?: string[]
+    requiresAny?: string[]
+    gold?: GoldObjective[]
+    objectives?: TrackedObjective[]
 }
 
-export type TrackedGroup = {
-    id: string,             // Unique identifier
-    name: string,           // Title of the group
-    label?: string,         // 'Chapter 1' for example, only for missions
-    color?: string,         // For collectibles, missions get default
-    unit?: string,          // 'Sets' and 'requests' for collectibles, no need for missions
-    totalInGame?: number,   // Total amount of items in the group
-    items: TrackedItem[]    
+/** Optional metadata used by particular group types. */
+export type TrackedGroupDetails = {
+    label?: string
+    color?: string
+    unit?: string
+    totalInGame?: number
+}
+
+export type TrackedItem<TDetails extends object = TrackedItemDetails> = {
+    /** Must be unique across the whole app and must never change once released. */
+    id: string
+    name: string
+    subtitle: string
+    description?: string
+    details?: TDetails
+}
+
+export type TrackedGroup<
+    TItemDetails extends object = TrackedItemDetails,
+    TDetails extends object = TrackedGroupDetails,
+> = {
+    id: string
+    name: string
+    items: TrackedItem<TItemDetails>[]
+    details?: TDetails
 }

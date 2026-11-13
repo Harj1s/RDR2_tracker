@@ -1,4 +1,7 @@
-import type { TrackedGroup, TrackedItem } from '../data/types'
+import type {
+    TrackedGroup,
+    TrackedItem,
+} from '../data/types'
 
 export type ItemStatus = 'locked' | 'done' | 'todo'
 export type ChapterStatus = 'locked' | 'complete' | 'inProgress' | 'todo'
@@ -7,22 +10,21 @@ export type FilterMode = 'all' | 'todo' | 'done'
 
 /** The real total: totalInGame if set, otherwise the number of items. */
 export function totalOf(group: TrackedGroup): number {
-    if (group.totalInGame !== undefined) {
-        return group.totalInGame
-    } else {
-        return group.items.reduce(
-            (total, item) => total + (item.objectives?.length ?? 1),
-            0,
-        )
-    }
+    if (group.details?.totalInGame !== undefined) return group.details.totalInGame
+
+    return group.items.reduce(
+        (total, item) => total + (item.details?.objectives?.length ?? 1),
+        0,
+    )
 }
 
 export function isItemDone(
     item: TrackedItem,
     done: ReadonlySet<string>,
 ): boolean {
-    return item.objectives
-        ? item.objectives.length > 0 && item.objectives.every((objective) => done.has(objective.id))
+    const objectives = item.details?.objectives
+    return objectives
+        ? objectives.length > 0 && objectives.every((objective) => done.has(objective.id))
         : done.has(item.id)
 }
 
@@ -86,8 +88,8 @@ export function filterItems(
             [
                 item.name,
                 item.subtitle,
-                item.region ?? '',
-                ...(item.objectives?.map((objective) => objective.text) ?? []),
+                item.details?.region ?? '',
+                ...(item.details?.objectives?.map((objective) => objective.text) ?? []),
             ]
                 .some((value) => value.toLowerCase().includes(query))
         
@@ -110,7 +112,7 @@ export function goldEarned(
     let count = 0
 
     for (const item of items) {
-       for (const objective of item.gold ?? []) {
+       for (const objective of item.details?.gold ?? []) {
         if (done.has(objective.id)) count++
        }
     }
@@ -135,7 +137,7 @@ export function needsAnyOf(
     item: TrackedItem,
     done: ReadonlySet<string>
 ): string[] {
-    const choices = item.requiresAny ?? []
+    const choices = item.details?.requiresAny ?? []
 
     // If any choice is done, this requirement is satisfied.
     if (choices.some((id) => done.has(id))) return []
@@ -149,7 +151,7 @@ export function missingRequirements(
     item: TrackedItem,
     done: ReadonlySet<string>
 ): string[] {
-    return (item.requires ?? []).filter((id) => (!done.has(id)))
+    return (item.details?.requires ?? []).filter((id) => (!done.has(id)))
 }
 
 //** True if any requirement is missing. */
@@ -173,8 +175,8 @@ export function buildUnlocksMap(
     for (const group of groups) {
         for (const item of group.items) {
             const requirements = new Set([
-                ...(item.requires ?? []),
-                ...(item.requiresAny ?? []),
+                ...(item.details?.requires ?? []),
+                ...(item.details?.requiresAny ?? []),
             ])
 
             for (const id of requirements) {
@@ -208,8 +210,8 @@ export function findRequirementProblems(
             }
 
             for (const id of [
-                ...(item.requires ?? []),
-                ...(item.requiresAny ?? []),
+                ...(item.details?.requires ?? []),
+                ...(item.details?.requiresAny ?? []),
             ]) {
                 itemDependencies.add(id)
             }

@@ -14,8 +14,8 @@ export function countDone(
 ): number {
     return groups.reduce(
         (sum, group) => sum + group.items.reduce((itemTotal, item) => {
-            if (item.objectives) {
-                return itemTotal + item.objectives.filter((objective) => done.has(objective.id)).length
+            if (item.details?.objectives) {
+                return itemTotal + item.details.objectives.filter((objective) => done.has(objective.id)).length
             }
             return itemTotal + Number(isItemDone(item, done))
         }, 0), 0,
@@ -39,8 +39,8 @@ export function currentGroupName(
 ): string {
     const started = groups.filter((group) =>
         group.items.some((item) =>
-            item.objectives
-                ? item.objectives.some((objective) => done.has(objective.id))
+            item.details?.objectives
+                ? item.details.objectives.some((objective) => done.has(objective.id))
                 : done.has(item.id),
         ),
     )

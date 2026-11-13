@@ -46,7 +46,7 @@ export default function Missions() {
             sortUnlockedFirst
             searchPlaceholder="Search this chapter..."
             modeLabels={{ all: 'All missions', todo: 'Incomplete', done: 'Completed' }}
-            listTitle={(group) => `${group.label} / ${group.name}`}
+            listTitle={(group) => `${group.details?.label} / ${group.name}`}
             statusLabel={(status) => itemStatusNames[status]}
             listFooter={() => 
                 'Mission order may vary. This view includes representative missions.'
@@ -60,11 +60,11 @@ export default function Missions() {
             }
             renderTile={(group, index) => {
                 const status = chapterStatus(missionChapters, index, done)
-                const medalMissions = group.items.filter((item) => item.gold?.length)
+                const medalMissions = group.items.filter((item) => item.details?.gold?.length)
                 return (
                     <>
                         <div className="tile__text">
-                            <span className="tile__label">{group.label}</span>
+                            <span className="tile__label">{group.details?.label}</span>
                             <span className="tile__name">{group.name}</span>
                             <span className={`tile__status tile__status--${status}`}>
                                 {chapterStatusNames[status]}
@@ -106,7 +106,7 @@ export default function Missions() {
                             {
                                 label: 'Chapter missions completed',
                                 value: `${countDone([current], done)} / ${current.items.length}`,
-                                detail: `In ${current.name} (${current.label})`,
+                                detail: `In ${current.name} (${current.details?.label})`,
                                 tone: 'red'
                             },
                             { 
@@ -150,7 +150,7 @@ export default function Missions() {
                             { 
                                 label: 'Current chapter',
                                 value: current.name,
-                                detail: `${current.label} · Arthur Morgan`,
+                                detail: `${current.details?.label} · Arthur Morgan`,
                                 tone: 'dark'
                             },
                         ]}
@@ -166,14 +166,15 @@ export default function Missions() {
 
                 const isDone = done.has(item.id)
                 const isLocked = !isDone && statusOf(item, done) === 'locked'
-                const hasGold = item.gold && item.gold.length > 0
+                const goldObjectives = item.details?.gold
+                const hasGold = Boolean(goldObjectives?.length)
 
                 return (
                     <>
                         <h3 className="detail__title">{item.name}</h3>
                         <span className="detail__badge">Story mission</span>
 
-                        {item.tagline && <p className="detail__lead">{item.tagline}</p>}
+                        {item.details?.tagline && <p className="detail__lead">{item.details.tagline}</p>}
                         {item.description && (
                             <p className="detail__text">{item.description}</p>
                         )}
@@ -182,7 +183,7 @@ export default function Missions() {
                             <section className="detail__section">
                                 <p className="eyebrow eyebrow--gold">Gold medal objectives</p>
                                 <ul className="objectives">
-                                    {item.gold!.map((objective) => (
+                                    {goldObjectives!.map((objective) => (
                                         <li key={objective.id}>
                                             <label>
                                                 <input

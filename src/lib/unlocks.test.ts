@@ -9,7 +9,17 @@ import {
 import type { TrackedGroup, TrackedItem } from '../data/types'
 
 function item(id: string, requires?: string[], extra: Partial<TrackedItem> ={}): TrackedItem {
-    return { id, name: id.toUpperCase(), subtitle: '', ...(requires ? { requires } : []), ...extra }
+    const { details, ...itemFields } = extra
+    return {
+        id,
+        name: id.toUpperCase(),
+        subtitle: '',
+        ...itemFields,
+        details: {
+            ...details,
+            ...(requires ? { requires } : {}),
+        },
+    }
 }
 
 function group(id: string, items: TrackedItem[]): TrackedGroup {

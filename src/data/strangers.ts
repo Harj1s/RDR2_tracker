@@ -130,7 +130,7 @@ const makeStrangerItem = ([id, details]: [string, StrangerMissionDetails]): Trac
         name,
         subtitle: [giver, part ? `Part ${part}` : undefined, available].filter(Boolean).join(' · '),
         description,
-        ...(region ? { region } : {}),
+        ...(region ? { details: { region } } : {}),
     }
 }
 

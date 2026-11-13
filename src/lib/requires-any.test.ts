@@ -6,13 +6,17 @@ import {
     needsAnyOf,
     statusOf,
 } from './checklist'
-import type { TrackedGroup, TrackedItem } from '../data/types'
+import type {
+    TrackedGroup,
+    TrackedItem,
+    TrackedItemDetails,
+} from '../data/types'
 
 function item(
     id: string,
-    rules: Pick<TrackedItem, 'requires' | 'requiresAny'> = {},
+    rules: Pick<TrackedItemDetails, 'requires' | 'requiresAny'> = {},
 ): TrackedItem {
-    return { id, name: id.toUpperCase(), subtitle: '', ...rules}
+    return { id, name: id.toUpperCase(), subtitle: '', details: rules}
 }
 
 function group(id: string, items: TrackedItem[]): TrackedGroup {

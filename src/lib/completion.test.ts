@@ -27,7 +27,7 @@ describe('countTotal / countDone', () => {
 
     test('countTotal uses totalInGame when it is set', () => {
         const groupsWithInGameTotal = [
-            { ...groups[0], totalInGame: 10 },
+            { ...groups[0], details: { totalInGame: 10 } },
             groups[1],
             groups[2],
         ]
@@ -47,10 +47,10 @@ describe('countTotal / countDone', () => {
             id: 'set-1',
             name: 'Collection 1',
             subtitle: '',
-            objectives: [
+            details: { objectives: [
                 { id: 'card-1', text: 'Card 1' },
                 { id: 'card-2', text: 'Card 2' },
-            ],
+            ] },
         }
         const cardGroups = [{ id: 'cards', name: 'Cards', items: [collection] }]
         expect(countTotal(cardGroups)).toBe(2)

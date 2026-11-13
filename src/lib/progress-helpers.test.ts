@@ -7,7 +7,9 @@ function item(id: string, goldIds: string[] = []): TrackedItem {
         id,
         name: id,
         subtitle: '',
-        gold: goldIds.map((goldId) => ({ id: goldId, text: goldId })),
+        details: {
+            gold: goldIds.map((goldId) => ({ id: goldId, text: goldId })),
+        },
     }
 }
 

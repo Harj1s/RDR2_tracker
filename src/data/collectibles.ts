@@ -1,8 +1,12 @@
-import type { TrackedGroup, TrackedItem } from './types.ts'
+import type {
+    TrackedGroup,
+    TrackedItem,
+    TrackedItemDetails,
+} from './types.ts'
 
 // Curated demo sample, not a full game database
 
-export type Collectible = TrackedItem
+export type Collectible = TrackedItem<TrackedItemDetails>
 export type CollectibleCategory = TrackedGroup
 
 const collectible = (
@@ -11,7 +15,13 @@ const collectible = (
     region: string,
     description = '',
     subtitle = '',
-): Collectible => ({ id, name, subtitle, description, region })
+): Collectible => ({
+    id,
+    name,
+    subtitle,
+    description,
+    details: { region },
+})
 
 const cigaretteCardCollections = Array.from({ length: 12 }, (_, collectionIndex) => {
     const collectionNumber = collectionIndex + 1
@@ -19,20 +29,22 @@ const cigaretteCardCollections = Array.from({ length: 12 }, (_, collectionIndex)
 
     return {
         ...collectible(collectionId, `Collection ${collectionNumber}`, '', 'Card titles pending.'),
-        objectives: Array.from({ length: 12 }, (_, cardIndex) => {
-            const cardNumber = cardIndex + 1
-            return {
-                id: `${collectionId}-card-${cardNumber}`,
-                text: `Card ${cardNumber} (title pending)`,
-            }
-        }),
+        details: {
+            objectives: Array.from({ length: 12 }, (_, cardIndex) => {
+                const cardNumber = cardIndex + 1
+                return {
+                    id: `${collectionId}-card-${cardNumber}`,
+                    text: `Card ${cardNumber} (title pending)`,
+                }
+            }),
+        },
     }
 })
 
 export const cigaretteCardCategory: CollectibleCategory = {
     id: 'cigarette-cards',
     name: 'Cigarette Cards',
-    color: 'var(--red)',
+    details: { color: 'var(--red)' },
     items: cigaretteCardCollections,
 }
 
@@ -40,7 +52,7 @@ export const collectibleCategories: CollectibleCategory[] = [
     {
         id: 'bones',
         name: 'Dinosaur bones',
-        color: 'var(--gold)',
+        details: { color: 'var(--gold)' },
         items: [
             collectible('bone-1', 'Bone 1', 'Ambarino', 'North of the "L" in Valentine, on the north side of the Dakota River on a rock cliff.'),
             collectible('bone-2', 'Bone 2', 'Ambarino', 'Slightly west of the bottom of the "I" in "Ambarino" caught in the red rocky outcrop near the top of the hill, hidden by grey rocks.'),
@@ -77,7 +89,7 @@ export const collectibleCategories: CollectibleCategory[] = [
     {
         id: 'carvings',
         name: 'Rock carvings',
-        color: 'var(--slate)',
+        details: { color: 'var(--slate)' },
         items: [
             collectible('carving-1', 'Rock Carving 1', 'Ambarino', 'At the end of the road on Mount Hagen.'),
             collectible('carving-2', 'Rock Carving 2', 'Ambarino', 'At Whinyard Strait, on a rock facing the river. East of the "H" of "Whinyard".'),
@@ -94,7 +106,7 @@ export const collectibleCategories: CollectibleCategory[] = [
     {
         id: 'dreamcatchers',
         name: 'Dreamcatchers',
-        color: 'var(--sage)',
+        details: { color: 'var(--sage)' },
         items: [
             collectible('dreamcatcher-1', 'Dreamcatcher 1', 'Ambarino', 'On the hill northeast of Cattail Pond, south of the "S" in west.'),
             collectible('dreamcatcher-2', 'Dreamcatcher 2', 'Ambarino', 'North of the road between Cattail Pond and Window Rock, due north of the "t" in Dakota River.'),
@@ -121,7 +133,7 @@ export const collectibleCategories: CollectibleCategory[] = [
     {
         id: 'poi',
         name: 'Points of Interest',
-        color: 'var(--red)',
+        details: { color: 'var(--red)' },
         items: [
             collectible('poi-1', 'Abandoned Church', 'Lemoyne', 'An old abandoned church left to decay on the side of the road.', 'Scarlett Meadows'),
             collectible('poi-2', 'Bolger Glade', 'Lemoyne', 'An old battle site.', 'Scarlett Meadows'),

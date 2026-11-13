@@ -41,7 +41,7 @@ export default function StrangerMissions() {
             sortUnlockedFirst
             searchPlaceholder="Search strangers and their missions..."
             modeLabels={{ all: 'All strangers', todo: 'Incomplete', done: 'Completed' }}
-            listTitle={(group) => `${group.label} / ${group.name}`}
+            listTitle={(group) => `${group.details?.label} / ${group.name}`}
             statusLabel={(status) => itemStatusNames[status]}
             listFooter={() =>
                 'Mission order may vary. This view includes representative missions.'
@@ -52,7 +52,7 @@ export default function StrangerMissions() {
                 const status = chapterStatus(strangerMissions, index, done)
                 return (
                     <>
-                        <span className="tile__label">{group.label}</span>
+                        <span className="tile__label">{group.details?.label}</span>
                         <span className="tile__name">{group.name}</span>
                         <span className={`tile__status tile__status--${status}`}>
                             {strangerStatusNames[status]}
@@ -94,7 +94,7 @@ export default function StrangerMissions() {
                             {
                                 label: '',
                                 value: current.name,
-                                detail: `${current.label} · Arthur Morgan`,
+                                detail: `${current.details?.label} · Arthur Morgan`,
                                 tone: 'dark',
                             }
                         ]}
@@ -110,14 +110,15 @@ export default function StrangerMissions() {
 
                 const isDone = done.has(item.id)
                 const isLocked = !isDone && statusOf(item, done) === 'locked'
-                const hasGold = item.gold && item.gold.length > 0
+                const goldObjectives = item.details?.gold
+                const hasGold = Boolean(goldObjectives?.length)
 
                 return (
                     <>
                         <h3 className="detail__title">{item.name}</h3>
                         <span className="detail__badge">Story mission</span>
 
-                        {item.tagline && <p className="detail__lead">{item.tagline}</p>}
+                        {item.details?.tagline && <p className="detail__lead">{item.details.tagline}</p>}
                         {item.description && (
                             <p className="detail__text">{item.description}</p>
                         )}
@@ -126,7 +127,7 @@ export default function StrangerMissions() {
                             <section className="detail__section">
                                 <p className="eyebrow eyebrow--gold">Gold medal objectives</p>
                                 <ul className="objectives">
-                                    {item.gold!.map((objective) => (
+                                    {goldObjectives!.map((objective) => (
                                         <li key={objective.id}>
                                             <label>
                                                 <input

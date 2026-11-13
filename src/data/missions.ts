@@ -1,13 +1,21 @@
-import type { TrackedGroup, TrackedItem } from './types'
+import type {
+    TrackedGroup,
+    TrackedGroupDetails,
+    TrackedItemDetails,
+} from './types'
 
-type MissionChapterLayout = Omit<TrackedGroup, 'items'> & { items: { id: string }[] }
+type MissionChapterLayout = {
+    id: string
+    name: string
+    details: TrackedGroupDetails
+    items: { id: string }[]
+}
 
 const missionChapterLayouts: MissionChapterLayout[] = [
     {
         id: 'ch1',
         name: 'Colter',
-        label: 'Chapter 1',
-        color: 'var(--red)',
+        details: { label: 'Chapter 1', color: 'var(--red)' },
         items: [
             { id: 'm1-1' },
             { id: 'm1-2' },
@@ -20,8 +28,7 @@ const missionChapterLayouts: MissionChapterLayout[] = [
     {
         id: 'ch2',
         name: 'Horseshoe Overlook',
-        label: 'Chapter 2',
-        color: 'var(--gold)',
+        details: { label: 'Chapter 2', color: 'var(--gold)' },
         items: [
             { id: 'm2-1' },
             { id: 'm2-2' },
@@ -50,8 +57,7 @@ const missionChapterLayouts: MissionChapterLayout[] = [
     {
         id: 'ch3',
         name: 'Clemens Point',
-        label: 'Chapter 3',
-        color: 'var(--sage)',
+        details: { label: 'Chapter 3', color: 'var(--sage)' },
         items: [
             { id: 'm3-1' },
             { id: 'm3-2' },
@@ -75,8 +81,7 @@ const missionChapterLayouts: MissionChapterLayout[] = [
     {
         id: 'ch4',
         name: 'Shady Belle',
-        label: 'Chapter 4',
-        color: 'var(--slate)',
+        details: { label: 'Chapter 4', color: 'var(--slate)' },
         items: [
             { id: 'm4-1' },
             { id: 'm4-2' },
@@ -97,8 +102,7 @@ const missionChapterLayouts: MissionChapterLayout[] = [
     {
         id: 'ch5',
         name: 'Guarma',
-        label: 'Chapter 5',
-        color: 'var(--red)',
+        details: { label: 'Chapter 5', color: 'var(--red)' },
         items: [
             { id: 'm5-1' },
             { id: 'm5-2' },
@@ -114,8 +118,7 @@ const missionChapterLayouts: MissionChapterLayout[] = [
     {
         id: 'ch6',
         name: 'Beaver Hollow',
-        label: 'Chapter 6',
-        color: 'var(--gold)',
+        details: { label: 'Chapter 6', color: 'var(--gold)' },
         items: [
             { id: 'm6-1' },
             { id: 'm6-2' },
@@ -143,8 +146,7 @@ const missionChapterLayouts: MissionChapterLayout[] = [
     {
         id: 'ep1',
         name: 'Pronghorn Ranch',
-        label: 'Epilogue Part 1',
-        color: 'var(--sage)',
+        details: { label: 'Epilogue Part 1', color: 'var(--sage)' },
         items: [
             { id: 'epm1-1' },
             { id: 'epm1-2' },
@@ -162,8 +164,7 @@ const missionChapterLayouts: MissionChapterLayout[] = [
     {
         id: 'ep2',
         name: 'Beecher\'s Hope',
-        label: 'Epilogue Part 2',
-        color: 'var(--slate)',
+        details: { label: 'Epilogue Part 2', color: 'var(--slate)' },
         items: [
             { id: 'epm2-1' },
             { id: 'epm2-2' },
@@ -311,7 +312,7 @@ const missionDetails: Record<string, MissionDetails> = {
     'epm2-12': ['The Best of Women', 'Abigail Marston', 'John visits Abigail at Beecher’s Hope after she returns home.', 'West Elizabeth'],
 }
 
-const requirements: Record<string, Pick<TrackedItem, 'requires' | 'requiresAny'>> = {
+const requirements: Record<string, Pick<TrackedItemDetails, 'requires' | 'requiresAny'>> = {
     'm1-1': {requires: []},
     'm1-2': { requires: ['m1-1']},
     'm1-3': { requires: ['m1-2']},
@@ -445,11 +446,13 @@ const makeMissionItem = (id: string) => {
         name,
         subtitle,
         description,
-        region,
-        ...(requirements[id] ?? {}),
-        ...(goldTexts && goldTexts.length > 0
-            ? { gold: goldTexts.map((text, index) => ({ id: `${id}:gold-${index + 1}`, text })) }
-            : {}),
+        details: {
+            region,
+            ...(requirements[id] ?? {}),
+            ...(goldTexts && goldTexts.length > 0
+                ? { gold: goldTexts.map((text, index) => ({ id: `${id}:gold-${index + 1}`, text })) }
+                : {}),
+        },
     }
 }
 

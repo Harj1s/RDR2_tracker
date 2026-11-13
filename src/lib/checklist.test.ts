@@ -5,15 +5,27 @@ import {
     statusOf,
     totalOf,
 } from './checklist'
-import type { TrackedGroup, TrackedItem } from '../data/types'
+import type {
+    TrackedGroup,
+    TrackedGroupDetails,
+    TrackedItem,
+    TrackedItemDetails,
+} from '../data/types'
 
 // ---------- tiny builders so each test stays short ------------
 
-function item(id: string, extra: Partial<TrackedItem> = {}): TrackedItem {
+function item(
+    id: string,
+    extra: Partial<TrackedItem> & { details?: Partial<TrackedItemDetails> } = {},
+): TrackedItem {
     return { id, name: id.toUpperCase(), subtitle: '', ...extra }
 }
 
-function group(id: string, items: TrackedItem[], extra: Partial<TrackedGroup> = {}): TrackedGroup {
+function group(
+    id: string,
+    items: TrackedItem[],
+    extra: { details?: Partial<TrackedGroupDetails> } = {},
+): TrackedGroup {
     return { id, name: id, items, ...extra }
 }
 
@@ -28,7 +40,7 @@ describe('totalOf', () => {
     })
 
     test('uses totalInGame when it is set', () => {
-        const g = group('g', [item('a'), item('b'), item('c')], { totalInGame: 30 })
+        const g = group('g', [item('a'), item('b'), item('c')], { details: { totalInGame: 30 } })
         expect(totalOf(g)).toBe(30)
     })
 
@@ -37,16 +49,16 @@ describe('totalOf', () => {
     })
 
     test('totalInGame of 0 is respected, not treated as missing', () => {
-        const g = group('g', [item('a')], { totalInGame: 0 })
+        const g = group('g', [item('a')], { details: { totalInGame: 0 } })
         expect(totalOf(g)).toBe(0)
     })
 
     test('counts collection objectives instead of collection entries', () => {
         const collection = item('set-1', {
-            objectives: [
+            details: { objectives: [
                 { id: 'card-1', text: 'Card 1' },
                 { id: 'card-2', text: 'Card 2' },
-            ],
+            ] },
         })
         expect(totalOf(group('cards', [collection]))).toBe(2)
     })
@@ -141,12 +153,12 @@ describe('filterItems', () => {
         item('bone-1', {
             name: 'Heartlands cliff bone',
             subtitle: 'South of the oil derrick',
-            region: 'New Hanover',
+            details: { region: 'New Hanover' },
         }),
         item('bone-2', {
             name: "Beryl's Dream overlook",
             subtitle: 'Near Mount Shann',
-            region: 'West Elizabeth',
+            details: { region: 'West Elizabeth' },
         }),
         item('m1', { name: 'The Gilded Cage', subtitle: 'Hosea Matthews' }), // no region
     ]

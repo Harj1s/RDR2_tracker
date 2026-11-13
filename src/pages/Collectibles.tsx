@@ -40,7 +40,7 @@ export default function Collectibles() {
             listTitle={(group) =>
                 group.id === 'cigarette-cards'
                     ? 'Cigarette card collections'
-                    : `${group.label} / ${group.name}`
+                    : `${group.details?.label} / ${group.name}`
             }
             statusLabel={(status) => itemStatusNames[status]}
             renderTile={(group, index) => {
@@ -49,7 +49,7 @@ export default function Collectibles() {
                 return (
                     <>
                         <div className="tile__text">
-                            <span className="tile__label">{group.label}</span>
+                            <span className="tile__label">{group.details?.label}</span>
                             <span className="tile__name">{group.name}</span>
                             <span className={`tile__status tile__status--${status}`}>
                                 {collectibleStatusNames[status]}
@@ -98,16 +98,16 @@ export default function Collectibles() {
                         <h3 className="detail__title">{item.name}</h3>
                         <span className="detail__badge">Collectible</span>
 
-                        {item.tagline && <p className="detail__lead">{item.tagline}</p>}
+                        {item.details?.tagline && <p className="detail__lead">{item.details.tagline}</p>}
                         {item.description && (
                             <p className="detail__text">{item.description}</p>
                         )}
 
-                        {item.objectives && (
+                        {item.details?.objectives && (
                             <section className="detail__section">
                                 <p className="eyebrow eyebrow--gold">Cards in this collection</p>
                                 <ul className="objectives">
-                                    {item.objectives.map((objective) => (
+                                    {item.details.objectives.map((objective) => (
                                         <li key={objective.id}>
                                             <label>
                                                 <input

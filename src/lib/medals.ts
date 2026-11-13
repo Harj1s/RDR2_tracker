@@ -7,7 +7,7 @@ export function getMedalType(
     done: ReadonlySet<string>,
 ): MedalType | undefined {
     const missionCompleted = done.has(item.id)
-    const objectives = item.gold ?? []
+    const objectives = item.details?.gold ?? []
     if (objectives.length === 0) return undefined
 
     const completed = objectives.filter((objective) =>

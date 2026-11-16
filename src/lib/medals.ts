@@ -15,7 +15,7 @@ export function getMedalType(
     ).length
 
     if (completed === objectives.length) return 'gold'
-    if (completed > objectives.length / 2) return 'silver'
+    if (completed >= objectives.length / 2) return 'silver'
     if (missionCompleted) return 'bronze'
     return undefined
 }

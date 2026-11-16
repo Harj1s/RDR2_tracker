@@ -51,6 +51,9 @@ export default function ItemRow({
                 aria-current={selected ? 'true' : undefined}
                 onClick={onSelect}
             >
+                {item.image && (
+                    <img className="row__image" src={item.image} alt="" />
+                )}
                 <span className="row__text">
                     <span className="row__title">{item.name}</span>
                     <span className="row__sub">{item.subtitle}</span>

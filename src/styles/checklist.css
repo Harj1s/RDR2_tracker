@@ -204,6 +204,10 @@
     position: relative;
 }
 
+.split--grid {
+    grid-template-columns: minmax(0, 1fr);
+}
+
 .split .card__detail {
     transform: translateY(var(--detail-offset, 0px));
 }
@@ -222,6 +226,99 @@
     padding: 0;
     list-style: none;
     border-top: 1px solid var(--border);
+}
+
+.list__rows--grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    padding: 16px;
+}
+
+.list__rows--grid .row {
+    position: relative;
+    display: block;
+    aspect-ratio: 1.65;
+    padding: 0;
+    overflow: hidden;
+    background: var(--text-h);
+}
+
+.list__rows--grid .row__select {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+}
+
+.list__rows--grid .row__image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    z-index: 0;
+}
+
+.list__rows--grid .row__select::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: rgb(255 255 255 / 60%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.list__rows--grid .row:hover {
+    background: var(--text-h);
+}
+
+.list__rows--grid .row--selected {
+    box-shadow: none;
+}
+
+.list__rows--grid .row__select::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: 
+        linear-gradient(to top, rgb(0 0 0 / 75%), transparent 48%),
+        radial-gradient(ellipse at center, transparent 48%, rgb(0 0 0 / 40%) 100%);
+}
+
+.list__rows--grid .row__text {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+}
+
+.list__rows--grid .row__title {
+    color: var(--text-on-dark);
+    text-shadow: 0 1px 4px var(--text-h);
+}
+
+.list__rows--grid .row__check,
+.list__rows--grid .row__sub,
+.list__rows--grid .row__status {
+    display: none;
+}
+
+.list__rows--grid .row__select:hover::before,
+.list__rows--grid .row__select:focus-visible::before {
+    opacity: 1;
+}
+
+.list__rows--grid .row__text {
+    z-index: 3;
 }
 
 .list__foot {

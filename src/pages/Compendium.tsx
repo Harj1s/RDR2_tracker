@@ -24,6 +24,7 @@ export default function Compendium() {
             statusLabel={(status) => itemStatusNames[status]}
             renderTile={() => null}
             renderDetail={() => null}
+            itemLayout='grid'
         />
     )
 }

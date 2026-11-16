@@ -4,6 +4,15 @@ import type {
     TrackedItemDetails,
 } from '../types'
 
+import americanAlligator from '../../assets/animals/american_alligator.png'
+import alligatorSmallImage from '../../assets/animals/alligator_small.png'
+import nineBandedArmadillo from '../../assets/animals/nine-banded_armadillo.png'
+import americanBadger from '../../assets/animals/american_badger.png'
+import americanBlackBear from '../../assets/animals/american_black_bear.png'
+import grizzlyBear from '../../assets/animals/grizzly_bear.png'
+import northAmericanBeaver from '../../assets/animals/north_american_beaver.png'
+import blueJay from '../../assets/animals/blue_jay.png'
+
 export type Animal = TrackedItem<AnimalDetails>
 export type AnimalCategory = TrackedGroup<AnimalDetails>
 
@@ -18,6 +27,7 @@ type AnimalRecord = Pick<Animal, 'id' | 'name' | 'description'> & {
     hasStudyTask?: boolean
     hasHarvestTask?: boolean
     harvestTask?: 'skinned' | 'collected' | 'plucked'
+    image?: string
 }
 
 const animalRecords = [
@@ -26,24 +36,28 @@ const animalRecords = [
         name: 'American Alligator',
         description: "Alligators live in the swamp and river delta regions of Lemoyne - in southern Bluewater Marsh and all around Bayou Nwa. They are carnivorous apex predators, feeding on fish, birds, amphibians and mammals. A rifle will pierce through an Alligator's tough, armored body plates. Alligator skins, meat, and teeth are all useful for food or crafting.",
         details: { cleanKillWeapons: ['Rifle'] },
+        image: americanAlligator
     },
     {
         id: 'american-alligator-small',
         name: 'American Alligator (small)',
         description: "Alligators live in the swamp and river delta regions of Lemoyne. They are carnivorous apex predators, feeding on fish, birds, amphibians and mammals. A repeater or a Bow with arrows will pierce through an Alligator's tough, armored body plates. Alligator skins, meat, and teeth are all useful for food or crafting.",
         details: { cleanKillWeapons: ['Repeater', 'Bow'] },
+        image: alligatorSmallImage
     },
     { 
         id: 'nine-banded-armadillo',
         name: 'Nine-Banded Armadillo',
         description: 'Nine-Banded Armadillos can be found in the regions of Gaptooth Ridge, Cholla Springs and Rio Bravo. As omnivores, their main diet consists of insects, small vertebrates and often, carrion. A Varmint Rifle is considered to be one of the best weapons to hunt armadillos, as the bullets can easily pierce through their carapace. Armadillos can be eaten, though the consistency of their meat is stringy. Armadillo carapaces can be used for crafting.',
         details: { cleanKillWeapons: ['Varmint Rifle'] },
+        image: nineBandedArmadillo
     },
     {
         id: 'american-badger',
         name: 'American Badger',
         description: 'The American Badger can be found across the more arid climates of America. It is a fossorial carnivore, preying on squirrels, moles, prairie dogs and voles. Using a Varmint Rifle whilst hunting should result in a clean kill. Badger claws and pelts can be used for crafting, and badger meat can be eaten.',
         details: { cleanKillWeapons: ['Varmint Rifle'] },
+        image: americanBadger
     },
     {
         id: 'little-brown-bat',
@@ -58,18 +72,21 @@ const animalRecords = [
         name: 'American Black Bear',
         description: "The American Black Bear is found in the remote woodlands of Roanoke, Big Valley and Tall Trees. It is smaller than the Grizzly Bear. The main diet of these omnivorous animals consists of salmon, honey, fruit, small mammals and carrion. A long scope rifle should take down a bear of this size. Their claws and fat can be used for crafting and their meat can be consumed.",
         details: { cleanKillWeapons: ['Heavy Rifle'] },
+        image: americanBlackBear
     },
     { 
         id: 'grizzly-bear',
         name: 'Grizzly Bear',
         description: 'Grizzly Bears are endemic to Grizzlies East. As an omnivore, its diet ranges from berries, roots, and grasses to deer, elk, fish, and carrion. The easiest way to take down an animal of this size is with a rifle with either High Velocity or Express Bullets. Bear meat, fat and claws can be used for food or materials to craft with.',
         details: { cleanKillWeapons: ['Heavy Rifle'] },
+        image: grizzlyBear
     },
     { 
         id: 'north-american-beaver',
         name: 'North American Beaver',
         description: 'The North American Beaver can be found along the Kamassa River in Roanoke. Its herbivorous diet consists of tree bark, cambium, roots, buds, and water plants. A Varmint Rifle is the ideal weapon for hunting beavers. Beaver scent glands, skin and fat can all be used for crafting.',
         details: { cleanKillWeapons: ['Varmint Rifle'] },
+        image: northAmericanBeaver
     },
     { 
         id: 'blue-jay',
@@ -78,6 +95,7 @@ const animalRecords = [
         details: { cleanKillWeapons: ['Bow-small'] },
         hasTrackingTask: false,
         harvestTask: 'collected',
+        image: blueJay
     },
     { 
         id: 'wild-boar',

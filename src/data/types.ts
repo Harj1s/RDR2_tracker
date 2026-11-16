@@ -29,6 +29,7 @@ export type TrackedItem<TDetails extends object = TrackedItemDetails> = {
     name: string
     subtitle: string
     description?: string
+    image?: string
     details?: TDetails
 }
 

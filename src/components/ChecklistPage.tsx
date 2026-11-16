@@ -39,6 +39,7 @@ type ChecklistPageProps = {
         done: ReadonlySet<string>,
     ) => MedalType | undefined
     tileClassName?: (group: TrackedGroup, index: number) => string | undefined
+    itemLayout?: 'list' | 'grid'
 }
 
 export default function ChecklistPage({
@@ -60,6 +61,7 @@ export default function ChecklistPage({
     banner,
     getMedalType,
     tileClassName,
+    itemLayout = 'list',
 }: ChecklistPageProps) {
     const {
         done,
@@ -123,7 +125,7 @@ export default function ChecklistPage({
                 onModeChange={updateMode}
             />
 
-            <div className="split" ref={splitRef}>
+            <div className={`split${itemLayout === 'grid' ? ' split--grid' : ''}`} ref={splitRef}>
                 <section className="card list">
                     <header className="list__head">
                         <h3 className="card__title">{listTitle(group)}</h3>
@@ -132,7 +134,7 @@ export default function ChecklistPage({
                     {visibleItems.length === 0 ? (
                         <p className="list__empty">Nothing matches your search.</p>
                     ) : (
-                        <ul className="list__rows">
+                        <ul className={`list__rows${itemLayout === 'grid' ? ' list__rows--grid' : ''}`}>
                             {visibleItems.map((item) => {
                                 const status = statusOf(item, done)
                                 const medalType = getMedalType?.(item, done)
@@ -170,9 +172,11 @@ export default function ChecklistPage({
                     )}
                 </section>
 
-                <aside className="card__detail">
-                    {renderDetail(selectedItem, group, toggleChecklistItem)}
-                </aside>
+                {itemLayout === 'list' && (
+                    <aside className="card__detail">
+                        {renderDetail(selectedItem, group, toggleChecklistItem)}
+                    </aside>
+                )}
             </div>
 
             {banner && <aside className="banner">{banner}</aside>}

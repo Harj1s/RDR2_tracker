@@ -38,6 +38,7 @@ export default function StrangerMissions() {
             subtitle="Find out strangers stories and keep track of your progress."
             groups={strangerMissions}
             defaultGroupId={current.id}
+            pageProgressRingId='strangers'
             sortUnlockedFirst
             searchPlaceholder="Search strangers and their missions..."
             modeLabels={{ all: 'All strangers', todo: 'Incomplete', done: 'Completed' }}

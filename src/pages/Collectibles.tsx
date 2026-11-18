@@ -34,7 +34,6 @@ export default function Collectibles() {
             subtitle="Tick off each discovery as you record it in the field."
             groups={collectibleCategories}
             pageProgressRingId="collectibles"
-            sortUnlockedFirst
             searchPlaceholder="Search collectibles..."
             modeLabels={{ all: 'All collectibles', todo: 'Not found', done: 'Found' }}
             listTitle={(group) =>
@@ -139,6 +138,10 @@ export default function Collectibles() {
             listFooter={() => 
                 'This needs to be replaced.'
             }
+            getGroupLayout={(group) => ({
+                rows: 'grid',
+                showDetail: group.id === 'cigarette-cards' ? false : true
+            })}
         />
     )
 }

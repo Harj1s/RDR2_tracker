@@ -4,7 +4,18 @@ import type {
     TrackedItemDetails,
 } from './types.ts'
 
-// Curated demo sample, not a full game database
+import cigSet1 from '../assets/cig_cards/CIG_CARD_GUN_OVERVIEW.jpg'
+import cigSet2 from '../assets/cig_cards/CIG_CARD_ART_OVERVIEW.jpg'
+import cigSet3 from '../assets/cig_cards/CIG_CARD_LND_OVERVIEW.jpg'
+import cigSet4 from '../assets/cig_cards/CIG_CARD_GRL_OVERVIEW.jpg'
+import cigSet5 from '../assets/cig_cards/CIG_CARD_PLT_OVERVIEW.jpg'
+import cigSet6 from '../assets/cig_cards/CIG_CARD_ACT_OVERVIEW.jpg'
+import cigSet7 from '../assets/cig_cards/CIG_CARD_AML_OVERVIEW.jpg'
+import cigSet8 from '../assets/cig_cards/CIG_CARD_VEH_OVERVIEW.jpg'
+import cigSet9 from '../assets/cig_cards/CIG_CARD_SPT_OVERVIEW.jpg'
+import cigSet10 from '../assets/cig_cards/CIG_CARD_INV_OVERVIEW.jpg'
+import cigSet11 from '../assets/cig_cards/CIG_CARD_HOR_OVERVIEW.jpg'
+import cigSet12 from '../assets/cig_cards/CIG_CARD_PAM_OVERVIEW.jpg'
 
 export type Collectible = TrackedItem<TrackedItemDetails>
 export type CollectibleCategory = TrackedGroup
@@ -15,31 +26,258 @@ const collectible = (
     region: string,
     description = '',
     subtitle = '',
+    image?: string,
 ): Collectible => ({
     id,
     name,
     subtitle,
     description,
+    image,
     details: { region },
 })
 
-const cigaretteCardCollections = Array.from({ length: 12 }, (_, collectionIndex) => {
-    const collectionNumber = collectionIndex + 1
-    const collectionId = `cigarette-card-set-${collectionNumber}`
-
-    return {
-        ...collectible(collectionId, `Collection ${collectionNumber}`, '', 'Card titles pending.'),
+const cigaretteCardCollections: Collectible[] = [
+    {
+        ...collectible('cigarette-card-set-1', 'Famous Gunslingers', '', '', '', cigSet1),
         details: {
-            objectives: Array.from({ length: 12 }, (_, cardIndex) => {
-                const cardNumber = cardIndex + 1
-                return {
-                    id: `${collectionId}-card-${cardNumber}`,
-                    text: `Card ${cardNumber} (title pending)`,
-                }
-            }),
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-1-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-1-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-1-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-1-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-1-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-1-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-1-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-1-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-1-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-1-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-1-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-1-card-12', text: 'Card 12' },
+            ],
         },
-    }
-})
+    },
+    {
+        ...collectible('cigarette-card-set-2', 'Artists', '', '', '', cigSet2),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-2-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-2-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-2-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-2-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-2-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-2-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-2-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-2-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-2-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-2-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-2-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-2-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-3', 'Vistas of America', '', '', '', cigSet3),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-3-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-3-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-3-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-3-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-3-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-3-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-3-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-3-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-3-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-3-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-3-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-3-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-4', 'Gems of Beauty', '', '', '', cigSet4),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-4-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-4-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-4-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-4-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-4-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-4-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-4-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-4-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-4-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-4-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-4-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-4-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-5', 'Flora of America', '', '', '', cigSet5),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-5-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-5-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-5-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-5-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-5-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-5-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-5-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-5-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-5-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-5-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-5-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-5-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-6', 'Start of the Stage', '', '', '', cigSet6),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-6-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-6-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-6-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-6-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-6-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-6-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-6-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-6-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-6-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-6-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-6-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-6-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-7', 'Fauna of America', '', '', '', cigSet7),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-7-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-7-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-7-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-7-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-7-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-7-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-7-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-7-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-7-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-7-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-7-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-7-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-8', 'Marvels of Travel', '', '', '', cigSet8),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-8-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-8-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-8-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-8-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-8-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-8-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-8-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-8-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-8-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-8-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-8-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-8-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-9', 'World Champions', '', '', '', cigSet9),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-9-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-9-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-9-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-9-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-9-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-9-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-9-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-9-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-9-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-9-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-9-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-9-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-10', 'Amazing Inventions', '', '', '', cigSet10),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-10-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-10-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-10-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-10-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-10-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-10-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-10-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-10-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-10-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-10-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-10-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-10-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-11', 'Horses', '', '', '', cigSet11),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-11-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-11-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-11-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-11-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-11-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-11-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-11-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-11-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-11-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-11-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-11-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-11-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+    {
+        ...collectible('cigarette-card-set-12', 'Americans', '', '', '', cigSet12),
+        details: {
+            region: '',
+            objectives: [
+                { id: 'cigarette-card-set-12-card-1', text: 'Card 1' },
+                { id: 'cigarette-card-set-12-card-2', text: 'Card 2' },
+                { id: 'cigarette-card-set-12-card-3', text: 'Card 3' },
+                { id: 'cigarette-card-set-12-card-4', text: 'Card 4' },
+                { id: 'cigarette-card-set-12-card-5', text: 'Card 5' },
+                { id: 'cigarette-card-set-12-card-6', text: 'Card 6' },
+                { id: 'cigarette-card-set-12-card-7', text: 'Card 7' },
+                { id: 'cigarette-card-set-12-card-8', text: 'Card 8' },
+                { id: 'cigarette-card-set-12-card-9', text: 'Card 9' },
+                { id: 'cigarette-card-set-12-card-10', text: 'Card 10' },
+                { id: 'cigarette-card-set-12-card-11', text: 'Card 11' },
+                { id: 'cigarette-card-set-12-card-12', text: 'Card 12' },
+            ],
+        },
+    },
+]
 
 export const cigaretteCardCategory: CollectibleCategory = {
     id: 'cigarette-cards',

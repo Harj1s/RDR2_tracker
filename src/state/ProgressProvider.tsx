@@ -24,12 +24,13 @@ function readIds(key: string, field: string): string[] | null {
 }
 
 function loadDone(): string[] {
-    return (
+    const savedDone =
         readIds(STORAGE_KEY, 'done') ??
         // Migration: v1 stored collectibles only, under "found".
         readIds(OLD_STORAGE_KEY_V1, 'found') ??
         initialDone
-    )
+
+    return savedDone
 }
 
 export default function ProgressProvider({ children }: { children: ReactNode }) {

@@ -14,4 +14,14 @@ describe('cigarette card placeholders', () => {
         expect(new Set(ids).size).toBe(144)
         expect(ids.every((id) => id.startsWith('cigarette-card-set-'))).toBe(true)
     })
+
+    test('leaves collection details blank with editable card labels', () => {
+        const expectedLabels = Array.from({ length: 12 }, (_, index) => `Card ${index + 1}`)
+
+        for (const collection of cigaretteCardCategory.items) {
+            expect(collection.description).toBe('')
+            expect(collection.details?.region).toBe('')
+            expect(collection.details?.objectives?.map((card) => card.text)).toEqual(expectedLabels)
+        }
+    })
 })

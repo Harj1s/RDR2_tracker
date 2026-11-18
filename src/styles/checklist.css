@@ -93,7 +93,7 @@
 
 .tile--locked,
 .tile--locked:hover {
-    background: color-mix(in srgb, var(--red) 50%, var(--slate));
+    background: var(--text);
     color: var(--text-muted-on-dark);
 }
 
@@ -204,12 +204,13 @@
     position: relative;
 }
 
-.split--grid {
-    grid-template-columns: minmax(0, 1fr);
-}
-
 .split .card__detail {
     transform: translateY(var(--detail-offset, 0px));
+}
+
+/* ---------- Single-column split ---------- */
+.split--single {
+    grid-template-columns: minmax(0, 1fr);
 }
 
 /* ---------- Item list ---------- */
@@ -228,6 +229,8 @@
     border-top: 1px solid var(--border);
 }
 
+/* Shared grid rules */
+
 .list__rows--grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -241,14 +244,12 @@
     aspect-ratio: 1.65;
     padding: 0;
     overflow: hidden;
-    background: var(--text-h);
 }
 
 .list__rows--grid .row__select {
     display: block;
-    position: relative;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
     padding: 0;
     overflow: hidden;
 }
@@ -259,11 +260,47 @@
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: cover;
     z-index: 0;
 }
 
-.list__rows--grid .row__select::before {
+.list__rows--grid .row__text {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 3;
+}
+
+.list__rows--grid .row__title {
+    color: var(--text-on-dark);
+    text-shadow: 0 1px 4px var(--text-h);
+    transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.list__rows--grid .row__select:hover .row__title,
+.list__rows--grid .row__select:focus-visible .row__title {
+    color: var(--text-h);
+    text-shadow: 0 1px 4px var(--slate);
+}
+
+.list__rows--grid .row__check,
+.list__rows--grid .row__sub,
+.list__rows--grid .row__status {
+    display: none;
+}
+
+.list__rows--grid .row--selected {
+    box-shadow: none;
+}
+
+/* Compendium animals */
+
+.list__rows--grid--animals .row {
+    background: var(--text-h);
+}
+
+.list__rows--grid--animals .row__select::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -274,15 +311,7 @@
     pointer-events: none;
 }
 
-.list__rows--grid .row:hover {
-    background: var(--text-h);
-}
-
-.list__rows--grid .row--selected {
-    box-shadow: none;
-}
-
-.list__rows--grid .row__select::after {
+.list__rows--grid--animals .row__select::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -293,33 +322,105 @@
         radial-gradient(ellipse at center, transparent 48%, rgb(0 0 0 / 40%) 100%);
 }
 
-.list__rows--grid .row__text {
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    z-index: 2;
+.list__rows--grid--animals .row:hover {
+    background: var(--text-h);
 }
 
-.list__rows--grid .row__title {
-    color: var(--text-on-dark);
-    text-shadow: 0 1px 4px var(--text-h);
-}
-
-.list__rows--grid .row__check,
-.list__rows--grid .row__sub,
-.list__rows--grid .row__status {
-    display: none;
-}
-
-.list__rows--grid .row__select:hover::before,
-.list__rows--grid .row__select:focus-visible::before {
+.list__rows--grid--animals .row__select:hover::before,
+.list__rows--grid--animals .row__select:focus-visible::before {
     opacity: 1;
 }
 
-.list__rows--grid .row__text {
-    z-index: 3;
+/* Dinosaur bones */
+
+.list__rows--grid--bones .row {
+    background-color: var(--text);
+    transition: none;
 }
+
+.list__rows--grid--bones .row:hover {
+    background-color: var(--text-muted-on-dark);
+}
+
+.list__rows--grid--bones .row.row--selected {
+    background-image:
+        linear-gradient(to top, rgb(0 0 0 / 75%), transparent 48%),
+        radial-gradient(ellipse at center, transparent 48%, rgba(69, 2, 2, 0.4) 100%);
+}
+
+/* Rock carvings */
+
+.list__rows--grid--carvings .row {
+    background-color: var(--text);
+    transition: none;
+}
+
+.list__rows--grid--carvings .row:hover {
+    background-color: var(--text-muted-on-dark);
+}
+
+.list__rows--grid--carvings .row.row--selected {
+    background-image:
+        linear-gradient(to top, rgb(0 0 0 / 75%), transparent 48%),
+        radial-gradient(ellipse at center, transparent 48%, rgba(69, 2, 2, 0.4) 100%);
+}
+
+/* Dreamcatchers */
+
+.list__rows--grid--dreamcatchers .row {
+    background-color: var(--text);
+    transition: none;
+}
+
+.list__rows--grid--dreamcatchers .row:hover {
+    background-color: var(--text-muted-on-dark);
+}
+
+.list__rows--grid--dreamcatchers .row.row--selected {
+    background-image:
+        linear-gradient(to top, rgb(0 0 0 / 75%), transparent 48%),
+        radial-gradient(ellipse at center, transparent 48%, rgba(69, 2, 2, 0.4) 100%);
+}
+
+/* Points of Interest */
+
+.list__rows--grid--poi .row {
+    background-color: var(--text);
+    transition: none;
+}
+
+.list__rows--grid--poi .row:hover {
+    background-color: var(--text-muted-on-dark);
+}
+
+.list__rows--grid--poi .row.row--selected {
+    background-image:
+        linear-gradient(to top, rgb(0 0 0 / 75%), transparent 48%),
+        radial-gradient(ellipse at center, transparent 48%, rgba(69, 2, 2, 0.4) 100%);
+}
+
+/* Cigarette cards */
+
+.list__rows--grid--cigarette-cards {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.list__rows--grid--cigarette-cards .row {
+    background-color: var(--text);
+    transition: none;
+}
+
+.list__rows--grid--cigarette-cards .row:hover {
+    background-color: var(--text-muted-on-dark);
+}
+
+.list__rows--grid--cigarette-cards .row.row--selected {
+    background-image:
+        linear-gradient(to top, rgb(0 0 0 / 75%), transparent 48%),
+        radial-gradient(ellipse at center, transparent 48%, rgba(69, 2, 2, 0.4) 100%);
+}
+
+
 
 .list__foot {
     padding: 14px 24px;

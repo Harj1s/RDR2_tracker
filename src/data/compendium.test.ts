@@ -1,6 +1,12 @@
 import { expect, test } from 'vitest'
 import { animalCategory } from './compendium/animals'
 
+test('animal IDs are sequential', () => {
+    expect(animalCategory.items.map(({ id }) => id)).toEqual(
+        Array.from({ length: 178 }, (_, index) => `an-${index + 1}`),
+    )
+})
+
 test('animal tracking tasks and clean-kill guidance are stored in details', () => {
     const alligator = animalCategory.items[0]
 

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { TrackedGroup, TrackedItem } from '../data/types'
 import {
     filterItems,
@@ -14,6 +14,37 @@ type UseChecklistPageOptions = {
     groups: TrackedGroup[]
     defaultGroupId?: string
     sortUnlockedFirst?: boolean
+    storageKey?: string
+}
+
+function isFilterMode(value: string | null): value is FilterMode {
+    return value === 'all' || value === 'todo' || value === 'done'
+}
+
+function loadFilterMode(
+    storageKey: string | undefined,
+    groupId: string,
+    useLegacyValue: boolean,
+): FilterMode {
+    if (!storageKey) return 'all'
+
+    try {
+        const savedMode = localStorage.getItem(
+            `frontier-checklist-filter-${storageKey}-${groupId}`,
+        )
+        if (isFilterMode(savedMode)) {
+            return savedMode
+        }
+
+        if (useLegacyValue) {
+            const legacyMode = localStorage.getItem(`frontier-checklist-filter-${storageKey}`)
+            if (isFilterMode(legacyMode)) return legacyMode
+        }
+    } catch {
+        // Storage blocked or unavailable.
+    }
+
+    return 'all'
 }
 
 const STATUS_ORDER: Record<ItemStatus, number> = {
@@ -53,18 +84,45 @@ export function useChecklistPage({
     groups,
     defaultGroupId,
     sortUnlockedFirst,
+    storageKey,
 }: UseChecklistPageOptions) {
     const { done, toggleItem } = useProgress()
+    const initialGroupId =
+        groups.find((candidate) => candidate.id === defaultGroupId)?.id ??
+        groups[0]?.id
     const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null)
     const [selectedItemId, setSelectedItemId] = useState<string | null>(null)
     const [search, setSearch] = useState('')
-    const [mode, setMode] = useState<FilterMode>('all')
+    const [modeByGroup, setModeByGroup] = useState<Record<string, FilterMode>>(() =>
+        Object.fromEntries(
+            groups.map(({ id }) => [
+                id,
+                loadFilterMode(storageKey, id, id === initialGroupId),
+            ]),
+        ),
+    )
     const [exitingItems, setExitingItems] = useState(new Map<string, ItemStatus>())
+
+    useEffect(() => {
+        if (!storageKey) return
+
+        try {
+            for (const [groupId, mode] of Object.entries(modeByGroup)) {
+                localStorage.setItem(
+                    `frontier-checklist-filter-${storageKey}-${groupId}`,
+                    mode,
+                )
+            }
+        } catch {
+            // Storage full or blocked: the page still works, it just won't persist.
+        }
+    }, [modeByGroup, storageKey])
 
     const group =
         groups.find((candidate) => candidate.id === selectedGroupId) ??
         groups.find((candidate) => candidate.id === defaultGroupId) ??
         groups[0]
+    const mode = modeByGroup[group.id] ?? 'all'
 
     const filteredItems = filterItems(group.items, search, mode, done)
     // Keep completed items visible until their "todo" filter exit animation ends.
@@ -130,7 +188,6 @@ export function useChecklistPage({
         setSelectedGroupId(groupId)
         setSelectedItemId(null)
         setSearch('')
-        setMode('all')
         setExitingItems(new Map())
     }
 
@@ -140,7 +197,7 @@ export function useChecklistPage({
     }
 
     function updateMode(nextMode: FilterMode) {
-        setMode(nextMode)
+        setModeByGroup((current) => ({ ...current, [group.id]: nextMode }))
         setExitingItems(new Map())
     }
 

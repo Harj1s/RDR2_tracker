@@ -13,6 +13,11 @@ import bronzeMedal from '../assets/icons/Bronze Medal.png'
 import silverMedal from '../assets/icons/Silver Medal.png'
 import goldMedal from '../assets/icons/Gold Medal.png'
 
+type ChecklistGroupLayout = {
+    rows: 'list' | 'grid'
+    showDetail: boolean
+}
+
 type ChecklistPageProps = {
     eyebrow: string
     title: string
@@ -39,7 +44,7 @@ type ChecklistPageProps = {
         done: ReadonlySet<string>,
     ) => MedalType | undefined
     tileClassName?: (group: TrackedGroup, index: number) => string | undefined
-    itemLayout?: 'list' | 'grid'
+    getGroupLayout?: (group: TrackedGroup) => ChecklistGroupLayout
 }
 
 export default function ChecklistPage({
@@ -61,7 +66,7 @@ export default function ChecklistPage({
     banner,
     getMedalType,
     tileClassName,
-    itemLayout = 'list',
+    getGroupLayout,
 }: ChecklistPageProps) {
     const {
         done,
@@ -79,7 +84,17 @@ export default function ChecklistPage({
         updateMode,
         updateSearch,
         visibleItems,
-    } = useChecklistPage({ groups, defaultGroupId, sortUnlockedFirst })
+    } = useChecklistPage({
+        groups,
+        defaultGroupId,
+        sortUnlockedFirst,
+        storageKey: pageProgressRingId,
+    })
+
+    const groupLayout = getGroupLayout?.(group) ?? {
+            rows: 'list',
+            showDetail: true,
+        }
 
     return (
         <>
@@ -125,7 +140,7 @@ export default function ChecklistPage({
                 onModeChange={updateMode}
             />
 
-            <div className={`split${itemLayout === 'grid' ? ' split--grid' : ''}`} ref={splitRef}>
+            <div className={`split${groupLayout.showDetail ? '' : ' split--single'}`} ref={splitRef}>
                 <section className="card list">
                     <header className="list__head">
                         <h3 className="card__title">{listTitle(group)}</h3>
@@ -134,7 +149,11 @@ export default function ChecklistPage({
                     {visibleItems.length === 0 ? (
                         <p className="list__empty">Nothing matches your search.</p>
                     ) : (
-                        <ul className={`list__rows${itemLayout === 'grid' ? ' list__rows--grid' : ''}`}>
+                        <ul className={[
+                            'list__rows',
+                            groupLayout.rows === 'grid' && 'list__rows--grid',
+                            groupLayout.rows === 'grid' && `list__rows--grid--${group.id}`,
+                        ].filter(Boolean).join(' ')}>
                             {visibleItems.map((item) => {
                                 const status = statusOf(item, done)
                                 const medalType = getMedalType?.(item, done)
@@ -172,7 +191,7 @@ export default function ChecklistPage({
                     )}
                 </section>
 
-                {itemLayout === 'list' && (
+                {groupLayout.showDetail && (
                     <aside className="card__detail">
                         {renderDetail(selectedItem, group, toggleChecklistItem)}
                     </aside>

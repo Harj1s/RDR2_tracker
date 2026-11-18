@@ -17,14 +17,16 @@ export default function Compendium() {
             subtitle="See how many animals you have seen."
             groups={compendiumCategories}
             pageProgressRingId="compendium"
-            sortUnlockedFirst
             searchPlaceholder='Search...'
             modeLabels={{ all: 'All items', todo: 'Incomplete', done: 'Completed' }}
             listTitle={(group) => `${group.details?.label} / ${group.name}`}
             statusLabel={(status) => itemStatusNames[status]}
             renderTile={() => null}
             renderDetail={() => null}
-            itemLayout='grid'
+            getGroupLayout={() => ({
+                rows: 'grid',
+                showDetail: false
+            })}
         />
     )
 }

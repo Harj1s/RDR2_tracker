@@ -8,10 +8,19 @@ import americanAlligator from '../../assets/animals/american_alligator.png'
 import alligatorSmallImage from '../../assets/animals/alligator_small.png'
 import nineBandedArmadillo from '../../assets/animals/nine-banded_armadillo.png'
 import americanBadger from '../../assets/animals/american_badger.png'
+import littleBrownBat from '../../assets/animals/little_brown_bat.png'
 import americanBlackBear from '../../assets/animals/american_black_bear.png'
 import grizzlyBear from '../../assets/animals/grizzly_bear.png'
 import northAmericanBeaver from '../../assets/animals/north_american_beaver.png'
 import blueJay from '../../assets/animals/blue_jay.png'
+import wildBoar from '../../assets/animals/wild_boar.png'
+import whitetailBuck from '../../assets/animals/whitetail_buck.png'
+import whitetailDeer from '../../assets/animals/whitetail_deer.png'
+import americanBison from '../../assets/animals/american_bison.png'
+import americanBullfrog from '../../assets/animals/american_bullfrog.png'
+import angusBull from '../../assets/animals/angus_bull.png'
+import devonBull from '../../assets/animals/devon_bull.png'
+import herefordBull from '../../assets/animals/hereford_bull.png'
 
 export type Animal = TrackedItem<AnimalDetails>
 export type AnimalCategory = TrackedGroup<AnimalDetails>
@@ -66,6 +75,7 @@ const animalRecords = [
         details: { cleanKillWeapons: ['Bow-small'] },
         hasTrackingTask: false,
         harvestTask: 'collected',
+        image: littleBrownBat
     },
     { 
         id: 'an-6',
@@ -102,24 +112,28 @@ const animalRecords = [
         name: 'Wild Boar',
         description: "Wild Boars can be found across the states of New Hanover, Lemoyne, and West Elizabeth. They are omnivores, preying on amphibians, reptiles, insects, worms, and smaller mammals. They also eat roots and fruit. Using either a rifle or a Bow with Poison Arrows is the easiest way to take down an animal of this size. A boar's tender pork can be eaten, and their fat and tusks can be used to craft with.",
         details: { cleanKillWeapons: ['Rifle'] },
+        image: wildBoar
     },
     { 
         id: 'an-11',
         name: 'Whitetail Buck',
         description: 'The Whitetail Buck can be found in forested areas across the states. It is a herbivore, and consumes nuts, buds, twigs, and green plants. Keeping your distance when hunting deer can increase your chances of a kill. Long range weapons, like a rifle or a Bow with Poison Arrows, are the most successful weapons for hunting. Its venison can be eaten, and the antlers and skin can be used to craft with.',
         details: { cleanKillWeapons: ['Rifle'] },
+        image: whitetailBuck
     },
     { 
         id: 'an-12',
         name: 'Whitetail Deer',
         description: 'Whitetail Deer are found in a variety of habitats across the states, but are common to the forests of New Hanover, Lemoyne and West Elizabeth. Their herbivorous diet includes grasses, nuts, fungi, twigs, and fruit. Keeping your distance when hunting deer can increase your chances of a kill as they are easily startled. Long range weapons such as a rifle, or a Bow with Poison Arrows, are considered to be the best when hunting. Deer hide can be used for crafting, and their venison meat can be used for cooking.',
         details: { cleanKillWeapons: ['Rifle'] },
+        image: whitetailDeer
     },
     { 
         id: 'an-13',
         name: 'American Bison',
         description: 'The American Bison is native to the plains of New Hanover and West Elizabeth. As a herbivore, it grazes on grains, hay, and corn. Due to the size of an average bison, high powered weapons like a Carcano Rifle, or a Bow with Improved Arrows, should also be considered when hunting. Bison meat can be used for cooking.',
         details: { cleanKillWeapons: ['Heavy Rifle'] },
+        image: americanBison
     },
     { 
         id: 'an-14',
@@ -129,6 +143,7 @@ const animalRecords = [
         hasKillTask: false,
         hasTrackingTask: false,
         hasHarvestTask: false,
+        image: angusBull
     },
     { 
         id: 'an-15',
@@ -138,6 +153,7 @@ const animalRecords = [
         hasKillTask: false,
         hasTrackingTask: false,
         hasHarvestTask: false,
+        image: devonBull
     },
     { 
         id: 'an-16',
@@ -147,6 +163,7 @@ const animalRecords = [
         hasKillTask: false,
         hasTrackingTask: false,
         hasHarvestTask: false,
+        image: herefordBull
     },
     { 
         id: 'an-17',
@@ -154,6 +171,7 @@ const animalRecords = [
         description: 'The American Bullfrog is often found near calm and shallow waters in warmer climates like the Bayou and Bluewater Marsh. As carnivores, they prey on small fish and insects. They are cannibalistic, and will eat their own kind. The size of this species of frogs means that a Bow with Small Game Arrows is the ideal weapon when hunting. Their herptile meat can be used for food.',
         details: { cleanKillWeapons: ['Bow-small'] },
         harvestTask: 'collected',
+        image: americanBullfrog
     },
     { 
         id: 'an-18',

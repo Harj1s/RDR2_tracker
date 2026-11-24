@@ -87,6 +87,7 @@ function CigaretteCardGrid({
 }) {
     const cards = item.details?.objectives ?? []
     const foundCount = cards.filter((card) => done.has(card.id)).length
+    const allCardsLandscape = cards.length > 0 && cards.every((card) => card.orientation === 'landscape')
 
     return (
         <section className="cigarette-cards" aria-labelledby="cigarette-cards-title">
@@ -97,27 +98,42 @@ function CigaretteCardGrid({
                 </div>
                 <span className="item-detail__count">{foundCount} / {cards.length} found</span>
             </header>
-            <ul className="cigarette-card-grid">
+            <ul className={`cigarette-card-grid${allCardsLandscape ? ' cigarette-card-grid--landscape' : ''}`}>
                 {cards.map((card, index) => {
                     const isFound = done.has(card.id)
+                    const unfoundImage = item.details?.unfoundCardImage ?? item.image
+                    const foundImage = card.foundImage ?? unfoundImage
 
                     return (
-                        <li key={card.id}>
-                            <label className={`cigarette-card${isFound ? ' cigarette-card--found' : ''}`}>
+                        <li
+                            key={card.id}
+                            className={card.orientation === 'landscape' ? 'cigarette-card-grid__item--landscape' : undefined}
+                        >
+                            <label className={`cigarette-card cigarette-card--${card.orientation ?? 'portrait'}`}>
                                 <input
                                     type="checkbox"
                                     checked={isFound}
                                     onChange={() => onToggle(card.id)}
                                     aria-label={`${card.text}: ${isFound ? 'found' : 'not found'}`}
                                 />
-                                <span className="cigarette-card__picture">
-                                    {item.image && <img src={item.image} alt="" />}
-                                    <span className="cigarette-card__overlay">
-                                        <span className="cigarette-card__number">
-                                            {String(index + 1).padStart(2, '0')}
+                                <span className="cigarette-card__flip" aria-hidden="true">
+                                    <span className="cigarette-card__flipper">
+                                        <span className="cigarette-card__picture cigarette-card__face">
+                                            {unfoundImage && <img src={unfoundImage} alt="" />}
+                                            <span className="cigarette-card__overlay">
+                                                <span className="cigarette-card__number">
+                                                    {String(index + 1).padStart(2, '0')}
+                                                </span>
+                                                <span className="cigarette-card__stamp">Not found</span>
+                                            </span>
                                         </span>
-                                        <span className="cigarette-card__stamp">
-                                            {isFound ? 'Found' : 'Missing'}
+                                        <span className="cigarette-card__picture cigarette-card__face cigarette-card__face--back">
+                                            {foundImage && <img src={foundImage} alt="" />}
+                                            <span className="cigarette-card__overlay">
+                                                <span className="cigarette-card__number">
+                                                    {String(index + 1).padStart(2, '0')}
+                                                </span>
+                                            </span>
                                         </span>
                                     </span>
                                 </span>
@@ -159,6 +175,7 @@ export default function TrackedItemDetail({
         )
     }
 
+    const detailImage = item.photo ?? item.image
     const objectives = item.details?.objectives?.length
         ? item.details.objectives
         : [{ id: item.id, text: 'Completed' }]
@@ -199,8 +216,8 @@ export default function TrackedItemDetail({
             ) : (
                 <div className="item-detail__layout">
                     <div className="item-detail__visual">
-                        {item.image ? (
-                            <img className="item-detail__image" src={item.image} alt={item.name} />
+                        {detailImage ? (
+                            <img className="item-detail__image" src={detailImage} alt={item.name} />
                         ) : (
                             <div className="item-detail__image item-detail__image--empty" aria-label="No item picture available">
                                 <span>{group.name}</span>

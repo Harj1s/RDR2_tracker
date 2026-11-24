@@ -42,3 +42,10 @@ test('animal tracking is optional and the category has 178 unique IDs', () => {
     expect(new Set(animalCategory.items.map(({ id }) => id)).size).toBe(178)
     expect(animalCategory.items[3].details?.objectives?.some(({ text }) => text === 'Tracked')).toBe(false)
 })
+
+test('animals with artwork have both list icons and detail photos', () => {
+    const animalsWithPhotos = animalCategory.items.filter(({ photo }) => photo)
+
+    expect(animalsWithPhotos).toHaveLength(155)
+    expect(animalCategory.items.every(({ image, photo }) => Boolean(image) === Boolean(photo))).toBe(true)
+})

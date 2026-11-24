@@ -1,6 +1,8 @@
 export type TrackedObjective = {
     id: string
     text: string
+    foundImage?: string
+    orientation?: 'portrait' | 'landscape'
 }
 
 export type GoldObjective = TrackedObjective
@@ -13,6 +15,7 @@ export type TrackedItemDetails = {
     requiresAny?: string[]
     gold?: GoldObjective[]
     objectives?: TrackedObjective[]
+    unfoundCardImage?: string
 }
 
 /** Optional metadata used by particular group types. */
@@ -30,6 +33,7 @@ export type TrackedItem<TDetails extends object = TrackedItemDetails> = {
     subtitle: string
     description?: string
     image?: string
+    photo?: string
     details?: TDetails
 }
 

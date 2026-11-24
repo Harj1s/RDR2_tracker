@@ -1,22 +1,28 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useMatch } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 import WearFilter from './WearFilter'
 
 export default function Layout() {
+    const isCompendiumDetail = useMatch('/compendium/:itemId')
+    const isCollectibleDetail = useMatch('/collectibles/:itemId')
+    const isItemDetail = Boolean(isCompendiumDetail || isCollectibleDetail)
+
     return (
-        <div className="app">
+        <div className={`app${isItemDetail ? ' app--detail' : ''}`}>
             <WearFilter />
             <Sidebar />
-            <div className="main">
-                <Topbar />
-                <main className="content">
+            <div className={`main${isItemDetail ? ' main--detail' : ''}`}>
+                {!isItemDetail && <Topbar />}
+                <main className={`content${isItemDetail ? ' content--detail' : ''}`}>
                     <Outlet />
                 </main>
-                <footer className="footer">
-                    <span>The Frontier / Story mode</span>
-                    <span>Unofficial companion · Demo data · Progress saved locally</span>
-                </footer>
+                {!isItemDetail && (
+                    <footer className="footer">
+                        <span>The Frontier / Story mode</span>
+                        <span>Unofficial companion · Demo data · Progress saved locally</span>
+                    </footer>
+                )}
             </div>
         </div>
     )

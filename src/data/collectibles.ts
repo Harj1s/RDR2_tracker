@@ -17,6 +17,10 @@ import cigSet10 from '../assets/cig_cards/CIG_CARD_INV_OVERVIEW.jpg'
 import cigSet11 from '../assets/cig_cards/CIG_CARD_HOR_OVERVIEW.jpg'
 import cigSet12 from '../assets/cig_cards/CIG_CARD_PAM_OVERVIEW.jpg'
 
+import backVOA from '../assets/cig_cards/back_vistas_of_america.jpg'
+
+
+
 export type Collectible = TrackedItem<TrackedItemDetails>
 export type CollectibleCategory = TrackedGroup
 
@@ -78,7 +82,7 @@ const cigaretteCardCollections: Collectible[] = [
         },
     },
     {
-        ...collectible('cigarette-card-set-3', 'Vistas of America', '', '', '', cigSet3),
+        ...collectible('cigarette-card-set-3', 'Vistas of America', '', '', '', backVOA),
         details: {
             region: '',
             objectives: [

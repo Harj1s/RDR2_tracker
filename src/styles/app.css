@@ -27,6 +27,28 @@
     padding: 24px 32px 32px;
 }
 
+.app--detail {
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 0;
+    padding: 0;
+}
+
+.app--detail .sidebar {
+    top: 0;
+    height: 100svh;
+}
+
+.main--detail {
+    min-height: 100svh;
+    border: 0;
+}
+
+.content--detail {
+    display: flex;
+    min-height: 0;
+    padding: 0;
+}
+
 .footer {
     display: flex;
     justify-content: space-between;
@@ -502,17 +524,26 @@
  
 @media (max-width: 900px) {
     .app {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         padding: 0;
         gap: 0;
     }
+
+    .app--detail {
+        grid-template-columns: minmax(0, 1fr);
+    }
  
     .sidebar {
+        min-width: 0;
         gap: 12px;
         padding: 16px 12px 8px;
         position: static;
         height: auto;
         overflow-y: visible;
+    }
+
+    .app--detail .sidebar {
+        height: auto;
     }
  
     .sidebar__rule,
@@ -524,7 +555,13 @@
  
     .nav {
         flex-direction: row;
+        min-width: 0;
         overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .nav::-webkit-scrollbar {
+        display: none;
     }
  
     .nav__link {

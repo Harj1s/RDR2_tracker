@@ -35,6 +35,7 @@ type ChecklistPageProps = {
         group: TrackedGroup,
         toggleChecklistItem: (id: string) => void,
     ) => ReactNode
+    onOpenDetail?: (item: TrackedItem) => void
     statusLabel: (status: ItemStatus) => string
     renderStats?: () => ReactNode
     listFooter?: (group: TrackedGroup) => ReactNode
@@ -60,6 +61,7 @@ export default function ChecklistPage({
     listTitle,
     renderTile,
     renderDetail,
+    onOpenDetail,
     statusLabel,
     renderStats,
     listFooter,
@@ -178,7 +180,13 @@ export default function ChecklistPage({
                                         }
                                         rowRef={registerRow(item.id)}
                                         onToggle={() => toggleChecklistItem(item.id)}
-                                        onSelect={() => setSelectedItemId(item.id)}
+                                        onSelect={() => {
+                                            if (onOpenDetail) {
+                                                onOpenDetail(item)
+                                            } else {
+                                                setSelectedItemId(item.id)
+                                            }
+                                        }}
                                         onExitEnd={() => stopExiting(item.id)}
                                     />
                                 )

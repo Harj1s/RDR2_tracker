@@ -11,6 +11,7 @@ test('animal tracking tasks and clean-kill guidance are stored in details', () =
     const alligator = animalCategory.items[0]
 
     expect(alligator.details?.cleanKillWeapons).toEqual(['Rifle'])
+    expect(alligator.details?.region).toBe('Bluewater Marsh · Bayou Nwa · Lemoyne')
     expect(alligator.details?.objectives?.map(({ text }) => text)).toEqual([
         'Killed',
         'Tracked',

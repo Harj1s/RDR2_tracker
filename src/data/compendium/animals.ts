@@ -1394,9 +1394,42 @@ function createAnimal(record: AnimalRecord): Animal {
         subtitle: '',
         details: {
             ...details,
+            region: getAnimalRange(record.description ?? ''),
             objectives: objectives,
         },
     }
+}
+
+const animalRegions = [
+    'O\'Creagh\'s Run',
+    "Hennigan's Stead",
+    'Cumberland Forest',
+    'Scarlett Meadows',
+    'Bluewater Marsh',
+    'Gaptooth Ridge',
+    'Cholla Springs',
+    'Rio Bravo',
+    'Bayou Nwa',
+    'Grizzlies East',
+    'Grizzlies West',
+    'Roanoke Ridge',
+    'Big Valley',
+    'Tall Trees',
+    'The Heartlands',
+    'New Hanover',
+    'West Elizabeth',
+    'New Austin',
+    'Lemoyne',
+    'Ambarino',
+]
+
+function getAnimalRange(description: string): string {
+    const matches = animalRegions.filter((region) =>
+        new RegExp(`\\b${region.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i')
+            .test(description),
+    )
+
+    return matches.length > 0 ? matches.join(' · ') : 'No fixed location'
 }
 
 export const animalCategory: AnimalCategory = {

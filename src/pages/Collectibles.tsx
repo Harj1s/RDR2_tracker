@@ -11,6 +11,7 @@ import {
     type ItemStatus,
 } from '../lib/checklist'
 import { countDone } from '../lib/completion'
+import { useNavigate } from 'react-router-dom'
 
 const itemStatusNames: Record<ItemStatus, string> = {
     locked: 'Locked',
@@ -26,6 +27,7 @@ const collectibleStatusNames: Record<CollectibleGroupStatus, string> = {
 
 export default function Collectibles() {
     const { done } = useProgress()
+    const navigate = useNavigate()
 
     return (
         <ChecklistPage
@@ -42,6 +44,7 @@ export default function Collectibles() {
                     : `${group.details?.label} / ${group.name}`
             }
             statusLabel={(status) => itemStatusNames[status]}
+            onOpenDetail={(item) => navigate(`/collectibles/${item.id}`)}
             renderTile={(group, index) => {
                 const status = collectibleGroupStatus(collectibleCategories, index, done)
 

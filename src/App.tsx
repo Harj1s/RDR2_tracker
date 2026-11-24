@@ -8,6 +8,9 @@ import ComingSoon from './pages/ComingSoon.tsx'
 import { navItems } from './data/nav.ts'
 import StrangerMissions from './pages/Strangers.tsx'
 import Compendium from './pages/Compendium.tsx'
+import TrackedItemDetail from './pages/TrackedItemDetail.tsx'
+import { collectibleCategories } from './data/collectibles.ts'
+import { compendiumCategories } from './data/compendium.ts'
 
 // Pages that are built. Anything not listed here shows "not built yet".
 
@@ -23,6 +26,26 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route
+          path="compendium/:itemId"
+          element={
+            <TrackedItemDetail
+              groups={compendiumCategories}
+              backTo="/compendium"
+              sectionLabel="Compendium"
+            />
+          }
+        />
+        <Route
+          path="collectibles/:itemId"
+          element={
+            <TrackedItemDetail
+              groups={collectibleCategories}
+              backTo="/collectibles"
+              sectionLabel="Collectibles"
+            />
+          }
+        />
         {navItems
           .filter((item) => item.path !== '/')
           .map((item) => (

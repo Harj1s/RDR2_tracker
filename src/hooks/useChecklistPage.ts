@@ -47,6 +47,25 @@ function loadFilterMode(
     return 'all'
 }
 
+function loadSelectedGroupId(
+    storageKey: string | undefined,
+    groups: TrackedGroup[],
+): string | null {
+    if (!storageKey) return null
+
+    try {
+        const selectedGroupId = localStorage.getItem(
+            `frontier-checklist-group-${storageKey}`,
+        )
+        return groups.some((group) => group.id === selectedGroupId)
+            ? selectedGroupId
+            : null
+    } catch {
+        // Storage blocked or unavailable.
+        return null
+    }
+}
+
 const STATUS_ORDER: Record<ItemStatus, number> = {
     done: 0,
     todo: 1,
@@ -90,7 +109,9 @@ export function useChecklistPage({
     const initialGroupId =
         groups.find((candidate) => candidate.id === defaultGroupId)?.id ??
         groups[0]?.id
-    const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null)
+    const [selectedGroupId, setSelectedGroupId] = useState<string | null>(() =>
+        loadSelectedGroupId(storageKey, groups),
+    )
     const [selectedItemId, setSelectedItemId] = useState<string | null>(null)
     const [search, setSearch] = useState('')
     const [modeByGroup, setModeByGroup] = useState<Record<string, FilterMode>>(() =>
@@ -186,6 +207,13 @@ export function useChecklistPage({
 
     function selectGroup(groupId: string) {
         setSelectedGroupId(groupId)
+        if (storageKey) {
+            try {
+                localStorage.setItem(`frontier-checklist-group-${storageKey}`, groupId)
+            } catch {
+                // Storage blocked or unavailable.
+            }
+        }
         setSelectedItemId(null)
         setSearch('')
         setExitingItems(new Map())

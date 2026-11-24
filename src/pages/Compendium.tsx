@@ -1,7 +1,7 @@
 import ChecklistPage from '../components/ChecklistPage'
-import StatCard from '../components/StatCard'
 import { compendiumCategories } from '../data/compendium'
-import type { ItemStatus, CollectibleGroupStatus } from '../lib/checklist'
+import type { ItemStatus } from '../lib/checklist'
+import { useNavigate } from 'react-router-dom'
 
 const itemStatusNames: Record<ItemStatus, string> = {
     locked: 'Locked',
@@ -10,6 +10,8 @@ const itemStatusNames: Record<ItemStatus, string> = {
 }
 
 export default function Compendium() {
+    const navigate = useNavigate()
+
     return (
         <ChecklistPage
             eyebrow="Compendium"
@@ -19,8 +21,9 @@ export default function Compendium() {
             pageProgressRingId="compendium"
             searchPlaceholder='Search...'
             modeLabels={{ all: 'All items', todo: 'Incomplete', done: 'Completed' }}
-            listTitle={(group) => `${group.details?.label} / ${group.name}`}
+            listTitle={(group) => group.name}
             statusLabel={(status) => itemStatusNames[status]}
+            onOpenDetail={(item) => navigate(`/compendium/${item.id}`)}
             renderTile={() => null}
             renderDetail={() => null}
             getGroupLayout={() => ({
